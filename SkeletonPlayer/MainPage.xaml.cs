@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Controls;
 
-namespace SkeletonPlayer {
+namespace JwslPlayer {
 	public partial class MainPage : UserControl {
 		private readonly HtmlInteraction bridge;
 		private string srcPlaylist = "";
@@ -24,8 +24,11 @@ namespace SkeletonPlayer {
 			if (!String.IsNullOrEmpty(srcPlaylist)) {
 				Player.LoadPlaylist(srcPlaylist);
 			}
-    
-			//ControlBar.AddBinding(Player);
+
+			ControlBarView.AddBinding(Player);
+			DisplayView.AddBinding(Player);
+			DockView.AddBinding(Player);
+			PlaylistView.AddBinding(Player);
 		}
 	}
 }

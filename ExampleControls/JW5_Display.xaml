@@ -5,7 +5,7 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d"
 	x:Class="ExampleControls.JW5_Display"
-	d:DesignWidth="640" d:DesignHeight="480">
+	d:DesignWidth="640" d:DesignHeight="480" Width="64" Height="48">
 
-	<Grid x:Name="LayoutRoot"/>
+	<Grid x:Name="LayoutRoot" Background="#FFF3FD48"/>
 </UserControl>

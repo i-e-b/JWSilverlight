@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows;
-using SkeletonPlayer;
+using JwslPlayer;
 
 namespace jwslPlayer {
 	public partial class App : Application {

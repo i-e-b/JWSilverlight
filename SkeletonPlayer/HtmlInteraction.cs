@@ -4,7 +4,7 @@ using System.Windows.Browser;
 using System.Windows.Media;
 using ComposerCore;
 
-namespace SkeletonPlayer {
+namespace JwslPlayer {
 	public class HtmlInteraction : IPlayerController {
 		private readonly ComposerControlHelper helper;
 
