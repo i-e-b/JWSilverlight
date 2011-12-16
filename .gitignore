@@ -8,4 +8,5 @@ obj
 _ReSharper.*
 /*/obj
 /*/bin
+/*/ClientBin
 packages
