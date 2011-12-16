@@ -5,7 +5,12 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d"
 	x:Class="ExampleControls.JW5_Display"
-	d:DesignWidth="640" d:DesignHeight="480" Width="64" Height="48">
+	d:DesignWidth="640" d:DesignHeight="480">
 
-	<Grid x:Name="LayoutRoot" Background="#FFF3FD48"/>
+	<Grid x:Name="LayoutRoot" Background="#FFD6DE4C">
+		<Image x:Name="Background" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="128" Height="64" Stretch="None"/>
+		<Image x:Name="PlayIcon" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="10" Height="10" Stretch="None"/>
+		<Image x:Name="MuteIcon" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="10" Height="10" Stretch="None"/>
+		<Image x:Name="BufferIcon" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="10" Height="10" Stretch="None"/>
+	</Grid>
 </UserControl>

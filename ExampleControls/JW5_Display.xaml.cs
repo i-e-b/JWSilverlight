@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Linq;
+using System.Xml.Linq;
 using ComposerCore;
 using jwSkinLoader;
 
@@ -65,6 +67,8 @@ namespace ExampleControls {
 			helper.RemoveBinding(PlayerToControl, this);
 		}
 
-		public void SetSkin(JwSkinPackage pkg) {  }
+		public void SetSkin(JwSkinPackage pkg) {
+			Background.Source = pkg.GetNamedElement("display", "background");
+		}
 	}
 }
