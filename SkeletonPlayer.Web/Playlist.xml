@@ -1,18 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Playlist>
-  <AutoLoad>true</AutoLoad>
-  <AutoPlay>false</AutoPlay>
-  <DisplayTimeCode>false</DisplayTimeCode>
-  <EnableCachedComposition>true</EnableCachedComposition>
-  <EnableCaptions>true</EnableCaptions>
-  <EnablePopOut>true</EnablePopOut>
-  <EnableOffline>true</EnableOffline>
-  <StartMuted>false</StartMuted>
-  <StretchMode>Uniform</StretchMode>
-  <Items>
-    <PlaylistItem>
-      <IsAdaptiveStreaming>true</IsAdaptiveStreaming>
-      <MediaSource>http://cdn1.cache.twofourdigital.net/Mediafreedom/Storage/origin/amyprosser/da1908af-3316-4884-b064-9faa00ccb193/video/en/smoothstream/0631e6c4-3b4f-401f-a561-36ed109974d5.ism</MediaSource>
-     </PlaylistItem>
-  </Items>
+	<AutoLoad>true</AutoLoad>
+	<AutoPlay>false</AutoPlay>
+	<DisplayTimeCode>false</DisplayTimeCode>
+	<EnableCachedComposition>true</EnableCachedComposition>
+	<EnableCaptions>true</EnableCaptions>
+	<EnablePopOut>true</EnablePopOut>
+	<EnableOffline>true</EnableOffline>
+	<StartMuted>false</StartMuted>
+	<StretchMode>Uniform</StretchMode>
+	<Items>
+		<PlaylistItem>
+			<ThumbSource>http://localhost:49832/thumbnail.jpg</ThumbSource>
+			<IsAdaptiveStreaming>true</IsAdaptiveStreaming>
+			<MediaSource>http://cdn1.cache.twofourdigital.net/Mediafreedom/Storage/origin/amyprosser/da1908af-3316-4884-b064-9faa00ccb193/video/en/smoothstream/0631e6c4-3b4f-401f-a561-36ed109974d5.ism/MANIFEST</MediaSource>
+		</PlaylistItem>
+	</Items>
 </Playlist>

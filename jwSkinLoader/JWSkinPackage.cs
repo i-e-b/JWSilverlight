@@ -109,5 +109,17 @@ namespace jwSkinLoader {
 			target.Height = source.PixelHeight;
 			target.Width = source.PixelWidth;
 		}
+
+		public string GetSettingValue(string componentName, string elementName) {
+			var element = GetComponent(componentName)
+				.Elements("settings").Elements("setting")
+				.Where(x=> HasAttributeWithValue(x, "name", elementName))
+				.FirstOrDefault();
+
+			if (element == null) return null;
+			var attr = element.Attribute("value");
+			if (attr == null) return null;
+			return attr.Value;
+		}
 	}
 }

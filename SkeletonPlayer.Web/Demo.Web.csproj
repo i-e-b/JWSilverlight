@@ -46,6 +46,7 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="thumbnail.jpg" />
     <Content Include="ClientBin\jwslPlayer.xap" />
     <Content Include="ExampleSkins\Read Me.txt" />
     <Content Include="Playlist.xml">

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Media;
+using Microsoft.Web.Media.SmoothStreaming;
 
 namespace ComposerCore {
 	/// <summary>
@@ -10,7 +10,7 @@ namespace ComposerCore {
 		/// <summary>
 		/// Last reported play state
 		/// </summary>
-		public MediaElementState CurrentPlayState;
+		public SmoothStreamingMediaElementState CurrentPlayState;
 
 		/// <summary>
 		/// Playhead position, as a proportion of the video to be played (clip or entire media).

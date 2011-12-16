@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using ComposerCore;
+using Microsoft.Web.Media.SmoothStreaming;
 
 namespace ExampleControls {
 	public partial class PlayPauseButton : UserControl, IPlayerController {
@@ -28,13 +29,13 @@ namespace ExampleControls {
 			WorkingGlyph.Visibility = Visibility.Collapsed;
 
 			switch (NewStatus.CurrentPlayState) {
-				case MediaElementState.Playing:
+				case SmoothStreamingMediaElementState.Playing:
 					PlayingGlyph.Visibility = Visibility.Visible;
 					break;
 
-				case MediaElementState.Paused:
-				case MediaElementState.Closed:
-				case MediaElementState.Stopped:
+				case SmoothStreamingMediaElementState.Paused:
+				case SmoothStreamingMediaElementState.Closed:
+				case SmoothStreamingMediaElementState.Stopped:
 					PausedGlyph.Visibility = Visibility.Visible;
 					break;
 

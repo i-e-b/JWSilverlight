@@ -4,10 +4,12 @@ using System.Windows.Media;
 using System.Windows;
 using ComposerCore;
 using jwSkinLoader;
+using Microsoft.Web.Media.SmoothStreaming;
 
 namespace ExampleControls {
 	public partial class JW5_Display : UserControl, IPlayerController, IXmlSkinReader {
 		private readonly RotateTransform rot;
+		private double degreesPerMillisecond;
 		private readonly ComposerControlHelper players;
 
 		public void PlaylistChanged (Playlist NewPlaylist) { }
@@ -17,14 +19,13 @@ namespace ExampleControls {
 		public JW5_Display () {
 			InitializeComponent();
 			players = new ComposerControlHelper();
-			rot = new RotateTransform {Angle = 15};
+			rot = new RotateTransform();
 		}
 
 		public void StateChanged (PlayerStatus NewStatus) {
 			StatusUpdate(NewStatus);
 		}
 		public void StatusUpdate (PlayerStatus NewStatus) {
-			// todo: work out the rotation speed of (bufferroatation / bufferinterval) and do the actual rotation by real time.
 			Background.Visibility = Visibility.Collapsed;
 			PlayIcon.Visibility = Visibility.Collapsed;
 			PlayIconOver.Visibility =Visibility.Collapsed;
@@ -33,12 +34,12 @@ namespace ExampleControls {
 			BufferIcon.Visibility = Visibility.Collapsed;
 
 			switch (NewStatus.CurrentPlayState) {
-				case MediaElementState.Playing:
+				case SmoothStreamingMediaElementState.Playing:
 					break;
 
-				case MediaElementState.Paused:
-				case MediaElementState.Closed:
-				case MediaElementState.Stopped:
+				case SmoothStreamingMediaElementState.Paused:
+				case SmoothStreamingMediaElementState.Closed:
+				case SmoothStreamingMediaElementState.Stopped:
 					PlayIcon.Visibility = Visibility.Visible;
 					Background.Visibility = Visibility.Visible;
 					break;
@@ -50,14 +51,8 @@ namespace ExampleControls {
 			}
 
 			if (BufferIcon.Visibility == Visibility.Visible) {
-				if (rot.Angle <= 355) {
-					rot.Angle += 5;
-				} else {
-					rot.Angle = 0;
-				}
-				rot.CenterX = 24;
-				rot.CenterY = 24;
-
+				rot.Angle = ((DateTime.Now - DateTime.Today).TotalMilliseconds * degreesPerMillisecond) % 360;
+				// todo: add an animation to improve animation smoothness here.
 				BufferIcon.RenderTransform = rot;
 			}
 		}
@@ -76,6 +71,13 @@ namespace ExampleControls {
 			pkg.BindAndResize(MuteIcon, "display", "muteIcon");
 			pkg.BindAndResize(MuteIconOver, "display", "muteIconOver");
 			pkg.BindAndResize(BufferIcon, "display", "bufferIcon");
+
+			var interval = pkg.GetSettingValue("display", "bufferinterval") ?? "100";
+			var rotation = pkg.GetSettingValue("display", "bufferrotation") ?? "15";
+			degreesPerMillisecond = double.Parse(rotation) / double.Parse(interval);
+			
+			rot.CenterX = BufferIcon.Width / 2.0;
+			rot.CenterY = BufferIcon.Height / 2.0;
 		}
 
 		private void LayoutRoot_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e) {

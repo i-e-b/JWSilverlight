@@ -66,7 +66,7 @@ namespace ComposerCore {
 				if (MediaPlayer.SmoothStreamingSource != null) return MediaPlayer.CanSeek;
 
 				// WME Live and live-archive don't report properly in MediaElement. Hack:
-				if (MediaPlayer.Duration == TimeSpan.Zero
+				if (MediaPlayer.NaturalDuration == TimeSpan.Zero
 					&& MediaPlayer.Position > TimeSpan.Zero)
 					return false;
 				return MediaPlayer.CanSeek;
@@ -78,7 +78,7 @@ namespace ComposerCore {
 				if (MediaPlayer.SmoothStreamingSource != null) return MediaPlayer.IsLive;
 
 				try {
-					if (MediaPlayer.Duration == TimeSpan.Zero
+					if (MediaPlayer.NaturalDuration == TimeSpan.Zero
 						&& MediaPlayer.Position > TimeSpan.Zero)
 						return true;
 				} catch (InvalidOperationException) {
@@ -99,7 +99,7 @@ namespace ComposerCore {
 				if (MediaPlayer.SmoothStreamingSource != null) return MediaPlayer.CanPause;
 
 				// WME Live and live-archive don't report properly in MediaElement. Hack:
-				if (MediaPlayer.Duration == TimeSpan.Zero
+				if (MediaPlayer.NaturalDuration == TimeSpan.Zero
 					&& MediaPlayer.Position > TimeSpan.Zero) return false;
 				return MediaPlayer.CanPause;
 			}
@@ -177,6 +177,13 @@ namespace ComposerCore {
 			}
 		}
 
+		void TryPlay () {
+			try { MediaPlayer.Play(); } catch (Exception ex) { drop(ex); }
+		}
+		void TryPause () {
+			try { MediaPlayer.Pause(); } catch (Exception ex) { drop(ex); }
+		}
+
 		/// <summary>
 		/// Stops playback without changing position, regardless of current play-state
 		/// </summary>
@@ -184,22 +191,22 @@ namespace ComposerCore {
 			WantToPlay = false;
 			InPlayMode = false;
 			switch (MediaPlayer.CurrentState) {
-				case MediaElementState.Closed:
-				case MediaElementState.Stopped:
-					MediaPlayer.Play(); // load the player state again.
+				case SmoothStreamingMediaElementState.Closed:
+				case SmoothStreamingMediaElementState.Stopped:
+					TryPlay(); // load the player state again.
 					break;
 			}
-			if (MediaPlayer.CurrentState == MediaElementState.Playing) {
+			if (MediaPlayer.CurrentState == SmoothStreamingMediaElementState.Playing) {
 				ResumeTime = MediaPlayer.Position;
 			}
-			MediaPlayer.Pause();
+			TryPause();
 		}
 
 		/// <summary>
 		/// Continues playback without changing position, regardless of current play-state
 		/// </summary>
 		public void Play () {
-			if (MediaPlayer.CurrentState == MediaElementState.Playing) {
+			if (MediaPlayer.CurrentState == SmoothStreamingMediaElementState.Playing) {
 				return;
 			}
 			ForcePlay();
@@ -209,7 +216,7 @@ namespace ComposerCore {
 		/// Restarts playback from last resume time.
 		/// </summary>
 		private void ForcePlay () {
-			if (MediaPlayer.CurrentState == MediaElementState.Closed) {
+			if (MediaPlayer.CurrentState == SmoothStreamingMediaElementState.Closed) {
 				PreparePlayer(); // Something about the MediaPlayer breaks when it enters 'Closed' mode.
 				GoToPlaylistIndex(CurrentIndex);
 			}
@@ -222,7 +229,7 @@ namespace ComposerCore {
 			}
 			// ReSharper restore RedundantCheckBeforeAssignment
 			WantToPlay = true;
-			MediaPlayer.Play();
+			TryPlay();
 		}
 
 		/// <summary>
@@ -273,7 +280,7 @@ namespace ComposerCore {
 				if (!CurrentItem.IsAdaptiveStreaming) return Status.PlayTime;
 
 				TimeSpan base_start = Status.ClipStart;
-				ResumeTime = TimeSpan.FromSeconds(MediaPlayer.Duration.TotalSeconds * Proportion).Add(base_start);
+				ResumeTime = TimeSpan.FromSeconds(MediaPlayer.NaturalDuration.TimeSpan.TotalSeconds * Proportion).Add(base_start);
 
 				ShouldSeek = true;
 				return ResumeTime;
@@ -333,11 +340,11 @@ namespace ComposerCore {
 		/// </summary>
 		public bool IsPlayerActive () {
 			switch (MediaPlayer.CurrentState) {
-				case MediaElementState.AcquiringLicense:
-				case MediaElementState.Buffering:
-				case MediaElementState.Individualizing:
-				case MediaElementState.Opening:
-				case MediaElementState.Playing:
+				case SmoothStreamingMediaElementState.AcquiringLicense:
+				case SmoothStreamingMediaElementState.Buffering:
+				case SmoothStreamingMediaElementState.Individualizing:
+				case SmoothStreamingMediaElementState.Opening:
+				case SmoothStreamingMediaElementState.Playing:
 					return true;
 
 				default:
@@ -496,12 +503,12 @@ window.onbeforeunload = function() {
 		/// </summary>
 		/// <remarks>At all other times, the play state should either  be 'paused' or 'closed'</remarks>
 		protected void ExitHandler (object sender, EventArgs e) {
-			if (Status.PlaylistItemIndex < 0 && Status.CurrentPlayState == MediaElementState.Stopped) return; // no need to signal.
+			if (Status.PlaylistItemIndex < 0 && Status.CurrentPlayState == SmoothStreamingMediaElementState.Stopped) return; // no need to signal.
 
 			var new_status = new PlayerStatus{
 				ClipEnd = TimeSpan.Zero,
 				ClipStart = TimeSpan.Zero,
-				CurrentPlayState = MediaElementState.Stopped,
+				CurrentPlayState = SmoothStreamingMediaElementState.Stopped,
 				NaturalDuration = TimeSpan.Zero,
 				PlaylistItemIndex = -1,
 				PlayTime = TimeSpan.Zero,
@@ -542,7 +549,7 @@ window.onbeforeunload = function() {
 
 			MediaPlayer.MediaOpened += MediaPlayer_MediaOpened;
 			MediaPlayer.MediaEnded += MediaPlayer_MediaEnded;
-			MediaPlayer.PlaybackStateChange += MediaPlayer_PlaybackStateChange;
+			MediaPlayer.ClipStateChanged += MediaPlayer_PlaybackStateChange;
 			MediaPlayer.MarkerReached += MediaPlayer_MarkerReached;
 			MediaPlayer.BufferingProgressChanged += MediaPlayer_BufferingProgressChanged;
 			MediaPlayer.ClipError += MediaPlayer_ClipError;
@@ -605,7 +612,7 @@ window.onbeforeunload = function() {
 		void MediaPlayer_ClipError (object sender, ClipEventArgs e) {
 			foreach (var ctrl in ControlSets) {
 				try {
-					ctrl.ErrorOccured(new Exception(e.Context.ClipInformation.ClipUrl + " failed"));
+					ctrl.ErrorOccured(new Exception(e.Context.ClipInformation.ClipUri + " failed"));
 				} catch (Exception ex) { drop(ex); }
 			}
 		}
@@ -628,10 +635,10 @@ window.onbeforeunload = function() {
 
 
 
-		void MediaPlayer_PlaybackStateChange (object sender, PlaybackStateChangeEventArgs e) {
+		void MediaPlayer_PlaybackStateChange (object sender, ClipEventArgs e) {
 			UpdateSubscribers_MajorStatus();
-
-			if (e.CurrentState.PlaybackState == PlaybackState.Playing) {
+			//this.MediaPlayer.CurrentState
+			if (e.Context.CurrentClipState == MediaElementState.Playing) {
 				WantToPlay = false;
 			}
 		}
@@ -653,7 +660,7 @@ window.onbeforeunload = function() {
 
 		private void SetupTimer () {
 			if (ActionTimer == null) {
-				ActionTimer = new DispatcherTimer{Interval = TimeSpan.FromMilliseconds(200)};
+				ActionTimer = new DispatcherTimer{Interval = TimeSpan.FromMilliseconds(350)};
 				ActionTimer.Tick += ActionTimer_Tick;
 			}
 
@@ -677,7 +684,7 @@ window.onbeforeunload = function() {
 			}
 		}
 
-		private double GetProportion (PlayerStatus NewStatus) {
+		private static double GetProportion (PlayerStatus NewStatus) {
 			TimeSpan min = NewStatus.ClipStart;
 			TimeSpan max = NewStatus.ClipEnd;
 			if (NewStatus.NaturalDuration.HasTimeSpan) {
@@ -703,7 +710,7 @@ window.onbeforeunload = function() {
 
 			if (!PosterMode) {
 				if (CurrentItem != null) {
-					if (!SmoothstreamBeginVariablesSet && CurrentItem.IsAdaptiveStreaming && MediaPlayer.CurrentState == MediaElementState.Playing) {
+					if (!SmoothstreamBeginVariablesSet && CurrentItem.IsAdaptiveStreaming && MediaPlayer.CurrentState == SmoothStreamingMediaElementState.Playing) {
 						SmoothstreamBeginVariablesSet = true;
 						MediaPlayer.Position = TimeSpan.FromSeconds(Math.Max(CurrentItem.ResumePosition, CurrentItem.StartPosition));
 					}
@@ -732,7 +739,7 @@ window.onbeforeunload = function() {
 				} else {
 					new_status.ClipEnd = TimeSpan.Zero;
 					new_status.ClipStart = TimeSpan.Zero;
-					new_status.CurrentPlayState = MediaElementState.Stopped;
+					new_status.CurrentPlayState = SmoothStreamingMediaElementState.Stopped;
 					new_status.NaturalDuration = TimeSpan.Zero;
 					new_status.PlaylistItemIndex = CurrentIndex; // helpful during poster mode.
 					new_status.PlayTime = TimeSpan.Zero;
@@ -745,7 +752,7 @@ window.onbeforeunload = function() {
 			} else {
 				new_status.ClipEnd = TimeSpan.Zero;
 				new_status.ClipStart = TimeSpan.Zero;
-				new_status.CurrentPlayState = MediaElementState.Buffering;
+				new_status.CurrentPlayState = SmoothStreamingMediaElementState.Buffering;
 				new_status.NaturalDuration = TimeSpan.Zero;
 				new_status.PlaylistItemIndex = CurrentIndex; // helpful during poster mode.
 				new_status.PlayTime = TimeSpan.Zero;
@@ -780,7 +787,7 @@ window.onbeforeunload = function() {
 					TryToSeek();
 				}
 
-				if (MediaPlayer.CurrentState == MediaElementState.Playing) {
+				if (MediaPlayer.CurrentState == SmoothStreamingMediaElementState.Playing) {
 					InPlayMode = true; // this player is now active. Keep trying to play until we've been paused!
 					WantToPlay = false; // no longer need to re-issue.
 					ClearPosterImage(); // make sure we're not covering the video!
@@ -809,11 +816,11 @@ window.onbeforeunload = function() {
 		/// </summary>
 		private void TryToSeek () {
 			switch (MediaPlayer.CurrentState) { // states invalid for seeking:
-				case MediaElementState.AcquiringLicense:
-				case MediaElementState.Closed:
-				case MediaElementState.Individualizing:
-				case MediaElementState.Opening:
-				case MediaElementState.Stopped:
+				case SmoothStreamingMediaElementState.AcquiringLicense:
+				case SmoothStreamingMediaElementState.Closed:
+				case SmoothStreamingMediaElementState.Individualizing:
+				case SmoothStreamingMediaElementState.Opening:
+				case SmoothStreamingMediaElementState.Stopped:
 					return;
 			}
 			try {
@@ -822,7 +829,7 @@ window.onbeforeunload = function() {
 				TimeSpan live_pos = TimeSpan.FromSeconds(MediaPlayer.LivePosition);
 				TimeSpan safe_end = live_pos;
 				try {
-					safe_end = (live_pos > MediaPlayer.Duration) ? (live_pos) : (MediaPlayer.Duration);
+					safe_end = (live_pos > MediaPlayer.NaturalDuration.TimeSpan) ? (live_pos) : (MediaPlayer.NaturalDuration.TimeSpan);
 					safe_end += MediaPlayer.StartPosition;
 				} catch (Exception ex) { drop(ex); }
 
@@ -951,7 +958,7 @@ window.onbeforeunload = function() {
 		private TimeSpan BestDuration () {
 			try {
 				double nd = 0.0, dd = 0.0;
-				try { dd = MediaPlayer.Duration.TotalSeconds; } catch(Exception e) {drop(e);} // MediaPlayer.Duration can be problematic.
+				try { dd = MediaPlayer.NaturalDuration.TimeSpan.TotalSeconds; } catch(Exception e) {drop(e);} // MediaPlayer.Duration can be problematic.
 				if (MediaPlayer.NaturalDuration.HasTimeSpan) nd = MediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
 
 				if (MediaPlayer.IsLive) nd = MediaPlayer.LivePosition;
@@ -993,29 +1000,27 @@ window.onbeforeunload = function() {
 		/// </summary>
 		private void SeekToItem () {
 			if (CurrentItem == null) { Pause(); return; }
-
-			if (CurrentItem.ThumbSource != null && CurrentItem.ThumbDuration > 0.0) {
+			
+			if (CurrentItem.ThumbSource != null) DisplayPoster(CurrentIndex);
+			if (CurrentItem.ThumbDuration > 0.0) {
 				MediaPlayer.AutoPlay = false; // don't play, but allow pre-loading.
 				ShouldSeek = true; // we should keep trying to load on the timer.
-				DisplayPoster(CurrentIndex);
 			} else {
 				MediaPlayer.AutoPlay = InPlayMode;
 			}
 
 			ResumeTime = TimeSpan.FromSeconds(Math.Max(CurrentItem.ResumePosition, CurrentItem.StartPosition));
 			if (CurrentItem.IsAdaptiveStreaming) {
-				var rnd = (new Random()).Next(100, 999).ToString();
-				MediaPlayer.SmoothStreamingSource = new Uri(CurrentItem.MediaSource, "MANIFEST?v=" + rnd);
+				MediaPlayer.SmoothStreamingSource = CurrentItem.MediaSource;
 			} else {
 				MediaPlayer.Source = CurrentItem.MediaSource;
 			}
 
-			if (!PosterMode && InPlayMode) {
-				MediaPlayer.Position = ResumeTime;
-				MediaPlayer.Play();
-
+			if (!PosterMode && InPlayMode && MediaPlayer.CanSeek) {
+				TrySetPosition(ResumeTime);
+				TryPlay();
 			}
-
+			
 			RefreshStatus();
 			foreach (var ctrl in ControlSets) {
 				try {
@@ -1028,9 +1033,13 @@ window.onbeforeunload = function() {
 			}
 		}
 
+		void TrySetPosition(TimeSpan resumeTime) {
+			try { MediaPlayer.Position = resumeTime; } catch (Exception ex) { drop(ex); }
+		}
+
 		// ReSharper disable UnusedParameter.Local
 		// explicitly ignore an exception
-		private void drop (Exception e) { }
+		static void drop (Exception e) { }
 		// ReSharper restore UnusedParameter.Local
 
 		#endregion
