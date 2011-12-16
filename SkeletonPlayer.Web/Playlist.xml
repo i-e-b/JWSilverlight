@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Playlist>
+  <AutoLoad>true</AutoLoad>
+  <AutoPlay>true</AutoPlay>
+  <DisplayTimeCode>false</DisplayTimeCode>
+  <EnableCachedComposition>true</EnableCachedComposition>
+  <EnableCaptions>true</EnableCaptions>
+  <EnablePopOut>true</EnablePopOut>
+  <EnableOffline>true</EnableOffline>
+  <StartMuted>false</StartMuted>
+  <StretchMode>Uniform</StretchMode>
+  <Items>
+    <PlaylistItem>
+      <IsAdaptiveStreaming>true</IsAdaptiveStreaming>
+      <MediaSource>http://exampel.com/test.isml/Manifest</MediaSource>
+     </PlaylistItem>
+  </Items>
+</Playlist>
