@@ -7,10 +7,12 @@
 	x:Class="ExampleControls.JW5_Display"
 	d:DesignWidth="640" d:DesignHeight="480">
 
-	<Grid x:Name="LayoutRoot" Background="#FFD6DE4C">
-		<Image x:Name="Background" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="128" Height="64" Stretch="None"/>
-		<Image x:Name="PlayIcon" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="10" Height="10" Stretch="None"/>
-		<Image x:Name="MuteIcon" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="10" Height="10" Stretch="None"/>
+	<Grid x:Name="LayoutRoot" HorizontalAlignment="Center" VerticalAlignment="Center" MouseLeftButtonUp="LayoutRoot_MouseLeftButtonUp">
+		<Image x:Name="Background" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="10" Height="10" Stretch="None"/>
+		<Image x:Name="MuteIconOver" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="10" Height="10" Stretch="None"/>
+		<Image x:Name="PlayIconOver" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="10" Height="10" Stretch="None"/>
 		<Image x:Name="BufferIcon" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="10" Height="10" Stretch="None"/>
+		<Image x:Name="MuteIcon" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="10" Height="10" Stretch="None"/>
+		<Image x:Name="PlayIcon" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="10" Height="10" Stretch="None"/>
 	</Grid>
 </UserControl>

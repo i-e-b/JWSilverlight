@@ -3,9 +3,8 @@ using System.IO;
 using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Net;
-using System.Windows.Media;
+using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using System.Xml;
 using System.Xml.Linq;
 using ICSharpCode.SharpZipLib.Zip;
 
@@ -88,18 +87,27 @@ namespace jwSkinLoader {
 		static bool HasAttributeWithValue(XElement xml, string attribute, string value) { 
 			var attrib = xml.Attribute(attribute);
 			if (attrib == null) return false;
-			return attrib.Value.ToLower() == value; 
+			return attrib.Value.ToLower() == value.ToLower(); 
 		}
 
-		public ImageSource GetNamedElement(string componentName, string elementName) {
-			var element = GetComponent(componentName).Elements("elements").Elements("element").
-				Where(x=> HasAttributeWithValue(x, "name", elementName))
-					.FirstOrDefault();
+		public BitmapImage GetNamedElement(string componentName, string elementName) {
+			var element = GetComponent(componentName)
+				.Elements("elements").Elements("element")
+				.Where(x=> HasAttributeWithValue(x, "name", elementName))
+				.FirstOrDefault();
 
 			if (element == null) return null;
 			var src = element.Attribute("src");
 			if (src == null) return null;
-			return files[componentName +"/" +src.Value] as ImageSource;
+			return files[componentName +"/" +src.Value] as BitmapImage;
+		}
+
+		public void BindAndResize(Image target, string componentName, string elementName) {
+			var source = GetNamedElement(componentName, elementName);
+			if (source == null) return;
+			target.Source = source;
+			target.Height = source.PixelHeight;
+			target.Width = source.PixelWidth;
 		}
 	}
 }

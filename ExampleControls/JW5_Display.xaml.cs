@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Linq;
-using System.Xml.Linq;
+using System.Windows;
 using ComposerCore;
 using jwSkinLoader;
 
 namespace ExampleControls {
 	public partial class JW5_Display : UserControl, IPlayerController, IXmlSkinReader {
 		private readonly RotateTransform rot;
-		private readonly ComposerControlHelper helper;
+		private readonly ComposerControlHelper players;
 
 		public void PlaylistChanged (Playlist NewPlaylist) { }
 		public void CaptionFired (TimelineMarker Caption) { }
@@ -17,9 +16,8 @@ namespace ExampleControls {
 
 		public JW5_Display () {
 			InitializeComponent();
-			helper = new ComposerControlHelper();
-			rot = new RotateTransform();
-			rot.Angle = 15;
+			players = new ComposerControlHelper();
+			rot = new RotateTransform {Angle = 15};
 		}
 
 		public void StateChanged (PlayerStatus NewStatus) {
@@ -27,27 +25,31 @@ namespace ExampleControls {
 		}
 		public void StatusUpdate (PlayerStatus NewStatus) {
 			// todo: work out the rotation speed of (bufferroatation / bufferinterval) and do the actual rotation by real time.
-			/*PlayingGlyph.Visibility = Visibility.Collapsed;
-			PausedGlyph.Visibility = Visibility.Collapsed;
-			WorkingGlyph.Visibility = Visibility.Collapsed;
+			Background.Visibility = Visibility.Collapsed;
+			PlayIcon.Visibility = Visibility.Collapsed;
+			PlayIconOver.Visibility =Visibility.Collapsed;
+			MuteIcon.Visibility = Visibility.Collapsed;
+			MuteIconOver.Visibility = Visibility.Collapsed;
+			BufferIcon.Visibility = Visibility.Collapsed;
 
 			switch (NewStatus.CurrentPlayState) {
 				case MediaElementState.Playing:
-					PlayingGlyph.Visibility = Visibility.Visible;
 					break;
 
 				case MediaElementState.Paused:
 				case MediaElementState.Closed:
 				case MediaElementState.Stopped:
-					PausedGlyph.Visibility = Visibility.Visible;
+					PlayIcon.Visibility = Visibility.Visible;
+					Background.Visibility = Visibility.Visible;
 					break;
 
 				default:
-					WorkingGlyph.Visibility = Visibility.Visible;
+					BufferIcon.Visibility = Visibility.Visible;
+					Background.Visibility = Visibility.Visible;
 					break;
 			}
 
-			if (WorkingGlyph.Visibility == Visibility.Visible) {
+			if (BufferIcon.Visibility == Visibility.Visible) {
 				if (rot.Angle <= 355) {
 					rot.Angle += 5;
 				} else {
@@ -56,19 +58,31 @@ namespace ExampleControls {
 				rot.CenterX = 24;
 				rot.CenterY = 24;
 
-				WorkingGlyph.RenderTransform = rot;
-			}*/
+				BufferIcon.RenderTransform = rot;
+			}
 		}
 		public void AddBinding (IPlayer PlayerToControl) {
-			helper.AddBinding(PlayerToControl, this);
+			players.AddBinding(PlayerToControl, this);
 		}
 
 		public void RemoveBinding (IPlayer PlayerToControl) {
-			helper.RemoveBinding(PlayerToControl, this);
+			players.RemoveBinding(PlayerToControl, this);
 		}
 
 		public void SetSkin(JwSkinPackage pkg) {
-			Background.Source = pkg.GetNamedElement("display", "background");
+			pkg.BindAndResize(Background, "display", "background");
+			pkg.BindAndResize(PlayIcon, "display", "playIcon");
+			pkg.BindAndResize(PlayIconOver, "display", "playIconOver");
+			pkg.BindAndResize(MuteIcon, "display", "muteIcon");
+			pkg.BindAndResize(MuteIconOver, "display", "muteIconOver");
+			pkg.BindAndResize(BufferIcon, "display", "bufferIcon");
 		}
+
+		private void LayoutRoot_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+			if (PlayIcon.Visibility == Visibility.Visible) {
+				players.EachPlayer(p => p.Play());
+			}
+		}
+		
 	}
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ComposerCore {
 	/// <summary>
@@ -46,6 +47,10 @@ namespace ComposerCore {
 				new_list.Remove(PlayerToControl);
 				PlayerList = new_list;
 			}
+		}
+
+		public void EachPlayer(Action<IPlayer> action) {
+			foreach (var p in PlayerList) action(p);
 		}
 	}
 }
