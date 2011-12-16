@@ -67,7 +67,7 @@
     <form id="form1" runat="server" style="height:100%">
     <div id="silverlightControlHost">
         <object id="slPlugin" data="data:application/x-silverlight-2," type="application/x-silverlight-2" width="100%" height="100%">
-		  <param name="source" value="ClientBin/SkeletonPlayer.xap"/>
+		  <param name="source" value="ClientBin/jwslPlayer.xap"/>
 		  <param name="onError" value="onSilverlightError" />
 		  <param name="background" value="white" />
 		  <param name="minRuntimeVersion" value="3.0.40624.0" />

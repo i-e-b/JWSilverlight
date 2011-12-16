@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 namespace SkeletonPlayer {
 	public partial class MainPage : UserControl {
-
+		private HtmlInteraction bridge;
 		private string srcPlaylist = "";
 
 		public string SourcePlaylist {
@@ -18,6 +18,8 @@ namespace SkeletonPlayer {
 
 		public MainPage () {
 			InitializeComponent();
+			bridge = new HtmlInteraction();
+			bridge.AddBinding(Player);
 
 			if (!String.IsNullOrEmpty(srcPlaylist)) {
 				Player.LoadPlaylist(srcPlaylist);

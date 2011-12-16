@@ -1,19 +1,42 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Browser;
 using System.Windows.Media;
 using ComposerCore;
 
 namespace SkeletonPlayer {
 	public class HtmlInteraction : IPlayerController {
-		private readonly ComposerControlHelper _helper;
-		private readonly string _captionInvokeScriptMethod;
+		private readonly ComposerControlHelper helper;
 
-		public HtmlInteraction (string captionInvokeScriptMethod) {
-			_helper = new ComposerControlHelper();
-			_captionInvokeScriptMethod = captionInvokeScriptMethod;
+		public HtmlInteraction () {
+			helper = new ComposerControlHelper();
+			HtmlPage.RegisterScriptableObject("jwplayer", this);
 		}
 
-		#region IPlayerController Members
+		[ScriptableMember]
+		public double GetMilliseconds () {
+			return helper.PlayerList.First().Status.PlayTime.TotalMilliseconds;
+		}
+		[ScriptableMember]
+		public void GotoMilliseconds (double milliseconds) {
+			foreach (var player in helper.PlayerList) {
+				player.SeekTo(TimeSpan.FromMilliseconds(milliseconds));
+			}
+		}
+
+		[ScriptableMember]
+		public void Pause () {
+			foreach (var player in helper.PlayerList) {
+				player.Pause();
+			}
+		}
+
+		[ScriptableMember]
+		public void Play () {
+			foreach (var player in helper.PlayerList) {
+				player.Play();
+			}
+		}
 
 		public void PlaylistChanged (Playlist NewPlaylist) {
 		}
@@ -25,22 +48,17 @@ namespace SkeletonPlayer {
 		}
 
 		public void CaptionFired (TimelineMarker Caption) {
-			if (string.IsNullOrEmpty(_captionInvokeScriptMethod)) return;
-
-			string formattedCaption = (HttpUtility.UrlDecode(Caption.Text) ?? "").Replace("/ScriptEvent.html?", "").Trim();
-			HtmlPage.Window.Invoke(_captionInvokeScriptMethod, formattedCaption);
 		}
 
 		public void ErrorOccured (Exception Error) {
 		}
 
 		public void AddBinding (IPlayer PlayerToControl) {
-			_helper.AddBinding(PlayerToControl, this);
+			helper.AddBinding(PlayerToControl, this);
 		}
 
 		public void RemoveBinding (IPlayer PlayerToControl) {
 		}
 
-		#endregion
 	}
 }

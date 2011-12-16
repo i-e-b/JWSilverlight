@@ -1,28 +1,29 @@
 ﻿using System;
 using System.Windows;
+using SkeletonPlayer;
 
-namespace SkeletonPlayer {
+namespace jwslPlayer {
 	public partial class App : Application {
 
 		public App () {
-			this.Startup += this.Application_Startup;
-			this.Exit += this.Application_Exit;
-			this.UnhandledException += this.Application_UnhandledException;
+			Startup += Application_Startup;
+			Exit += Application_Exit;
+			UnhandledException += Application_UnhandledException;
 
 			InitializeComponent();
 		}
 
 		private void Application_Startup (object sender, StartupEventArgs e)
         {
-			string playlist_value = null;
+			string playlist_value;
 			if (e.InitParams.TryGetValue("playlist", out playlist_value)) {	}
 
-            string captionMethod = null;
+            string captionMethod;
             if(e.InitParams.TryGetValue("captionMethod", out captionMethod))
             { }
 
             var root = new MainPage();
-            this.RootVisual = root;
+            RootVisual = root;
             root.SourcePlaylist = playlist_value;
 		}
 
@@ -40,7 +41,7 @@ namespace SkeletonPlayer {
 				// For production applications this error handling should be replaced with something that will 
 				// report the error to the website and stop the application.
 				e.Handled = true;
-				Deployment.Current.Dispatcher.BeginInvoke(delegate { ReportErrorToDOM(e); });
+				Deployment.Current.Dispatcher.BeginInvoke(() => ReportErrorToDOM(e));
 			}
 		}
 		private void ReportErrorToDOM (ApplicationUnhandledExceptionEventArgs e) {
@@ -49,7 +50,7 @@ namespace SkeletonPlayer {
 				errorMsg = errorMsg.Replace('"', '\'').Replace("\r\n", @"\n");
 
 				System.Windows.Browser.HtmlPage.Window.Eval("throw new Error(\"Unhandled Error in Silverlight Application " + errorMsg + "\");");
-			} catch (Exception) {
+			} catch {
 			}
 		}
 	}
