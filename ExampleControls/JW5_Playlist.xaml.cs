@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 using ComposerCore;
+using jwSkinLoader;
 
 namespace ExampleControls {
 	public partial class JW5_Playlist : UserControl, IPlayerController, IXmlSkinReader {

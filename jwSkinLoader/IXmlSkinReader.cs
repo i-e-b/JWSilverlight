@@ -1,4 +1,4 @@
-﻿namespace ExampleControls {
+﻿namespace jwSkinLoader {
 	public interface IXmlSkinReader {
 		void SetSkin (string xmlContents);
 	}

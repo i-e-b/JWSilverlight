@@ -120,9 +120,17 @@
       <Project>{0BA6B194-F022-42DC-BAD0-8846D543FE40}</Project>
       <Name>ComposerCore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ExampleControls\jwskin_Controls.csproj">
+    <ProjectReference Include="..\ExampleControls\jwSkinControls.csproj">
       <Project>{6DD7E94F-5314-4042-93D0-E4FD4E70444C}</Project>
-      <Name>jwskin_Controls</Name>
+      <Name>jwSkinControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\jwSkinLoader\jwSkinLoader.csproj">
+      <Project>{D66B6E8A-4790-4F55-8525-B0A2673750EF}</Project>
+      <Name>jwSkinLoader</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharpZipLib\SharpZipLib.csproj">
+      <Project>{C20AFEE1-A9F6-41F7-AA7E-51F68A26B84A}</Project>
+      <Name>SharpZipLib</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +150,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

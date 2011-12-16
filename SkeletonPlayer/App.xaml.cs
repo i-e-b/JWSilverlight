@@ -15,16 +15,16 @@ namespace jwslPlayer {
 
 		private void Application_Startup (object sender, StartupEventArgs e)
         {
-			string playlist_value;
-			if (e.InitParams.TryGetValue("playlist", out playlist_value)) {	}
-
-            string captionMethod;
-            if(e.InitParams.TryGetValue("captionMethod", out captionMethod))
-            { }
-
             var root = new MainPage();
             RootVisual = root;
-            root.SourcePlaylist = playlist_value;
+
+			string playlist_value;
+			if (e.InitParams.TryGetValue("playlist", out playlist_value))
+				root.SourcePlaylist = playlist_value;
+
+			string skinPackage;
+			if (e.InitParams.TryGetValue("skin", out skinPackage))
+				root.SkinPackageUrl = skinPackage;
 		}
 
 		private void Application_Exit (object sender, EventArgs e) {
