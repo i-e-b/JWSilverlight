@@ -37,13 +37,13 @@ namespace JwslPlayer {
 			DisplayView.AddBinding(Player);
 			DockView.AddBinding(Player);
 			PlaylistView.AddBinding(Player);
-
-			DebugInfo.Text += "\r\nControls bound to player";
 		}
 
 		void JwSkinPackageSkinPackageReady(object sender, EventArgs e) {
-			DebugInfo.Text += "\r\nSkin loaded:\r\n" +jwSkinPackage.AllFiles;
-			//ControlBarView.SetSkin(
+			ControlBarView.SetSkin(jwSkinPackage);
+			DisplayView.SetSkin(jwSkinPackage);
+			DockView.SetSkin(jwSkinPackage);
+			PlaylistView.SetSkin(jwSkinPackage);
 		}
 	}
 }

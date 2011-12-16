@@ -57,7 +57,7 @@
   <ItemGroup>
     <Compile Include="Extensions.cs" />
     <Compile Include="IXmlSkinReader.cs" />
-    <Compile Include="JWSkinPackage.cs" />
+    <Compile Include="JwSkinPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -669,6 +669,7 @@ window.onbeforeunload = function() {
 		}
 
 		private void CaptionTimer_Tick (object sender, EventArgs e) {
+			if (CurrentItem == null) return;
 			CurrentItem.LoadCaptionsFromSource(CurrentSliderPosition);
 
 			if (MediaPlayer.Markers != null && CurrentItem.IsAdaptiveStreaming && CurrentItem.CaptionItems != null) {

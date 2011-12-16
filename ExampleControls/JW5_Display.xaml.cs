@@ -65,6 +65,6 @@ namespace ExampleControls {
 			helper.RemoveBinding(PlayerToControl, this);
 		}
 
-		public void SetSkin(string xmlContents) {  }
+		public void SetSkin(JwSkinPackage pkg) {  }
 	}
 }

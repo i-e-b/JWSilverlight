@@ -128,10 +128,6 @@
       <Project>{D66B6E8A-4790-4F55-8525-B0A2673750EF}</Project>
       <Name>jwSkinLoader</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SharpZipLib\SharpZipLib.csproj">
-      <Project>{C20AFEE1-A9F6-41F7-AA7E-51F68A26B84A}</Project>
-      <Name>SharpZipLib</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

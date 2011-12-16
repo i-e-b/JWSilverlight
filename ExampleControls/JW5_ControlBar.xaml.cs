@@ -18,6 +18,6 @@ namespace ExampleControls {
 			InitializeComponent();
 		}
 
-		public void SetSkin(string xmlContents) {  }
+		public void SetSkin(JwSkinPackage pkg) {  }
 	}
 }
