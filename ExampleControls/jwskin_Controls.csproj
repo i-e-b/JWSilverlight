@@ -18,7 +18,7 @@
     <SilverlightApplication>false</SilverlightApplication>
     <ValidateXaml>true</ValidateXaml>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
-    <ExpressionBlendVersion>3.0.1927.0</ExpressionBlendVersion>
+    <ExpressionBlendVersion>4.0.20525.0</ExpressionBlendVersion>
     <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
     <FileUpgradeFlags>
@@ -41,6 +41,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <Utf8Output>true</Utf8Output>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -74,11 +75,25 @@
     <Reference Include="mscorlib" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml" />
     <Reference Include="System.Net" />
     <Reference Include="System.Windows.Browser" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IXmlSkinReader.cs" />
+    <Compile Include="JW5_ControlBar.xaml.cs">
+      <DependentUpon>JW5_ControlBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="JW5_Display.xaml.cs">
+      <DependentUpon>JW5_Display.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="JW5_Dock.xaml.cs">
+      <DependentUpon>JW5_Dock.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="JW5_Playlist.xaml.cs">
+      <DependentUpon>JW5_Playlist.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PlayPauseButton.xaml.cs">
       <DependentUpon>PlayPauseButton.xaml</DependentUpon>
     </Compile>
@@ -97,6 +112,22 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="JW5_ControlBar.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="JW5_Display.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="JW5_Dock.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="JW5_Playlist.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="PlayPauseButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:MarkupCompilePass1</Generator>

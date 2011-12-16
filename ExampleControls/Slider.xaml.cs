@@ -1,19 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using ComposerCore;
 
 namespace ExampleControls {
 	public partial class Slider : UserControl, IPlayerController {
-		private ComposerControlHelper helper;
+		private readonly ComposerControlHelper helper;
 		private bool isDragging;
 		private TimeSpan baseTime;
 
@@ -46,7 +39,6 @@ namespace ExampleControls {
 				try {
 					SeekGuess.Text = NewStatus.PlayTime.Add(baseTime).ToString().Substring(0, 8);
 				} catch { }
-			} else {
 			}
 		}
 
@@ -78,7 +70,7 @@ namespace ExampleControls {
 		public void RemoveBinding (IPlayer PlayerToControl) {helper.RemoveBinding(PlayerToControl, this);}
 
 		private void PositionButtonByProportion (double Prop) {
-			double max = (this.ActualWidth - PositionButton.ActualWidth);
+			double max = (ActualWidth - PositionButton.ActualWidth);
 			double pbp = (max) * Prop;
 
 			pbp = Math.Max(0, Math.Min(max, pbp));
