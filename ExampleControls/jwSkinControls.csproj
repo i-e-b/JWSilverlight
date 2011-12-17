@@ -93,6 +93,12 @@
     <Compile Include="JW5_Playlist.xaml.cs">
       <DependentUpon>JW5_Playlist.xaml</DependentUpon>
     </Compile>
+    <Compile Include="JwSilderHorizontal.xaml.cs">
+      <DependentUpon>JwSilderHorizontal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="JwSliderVertical.xaml.cs">
+      <DependentUpon>JwSliderVertical.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PlayPauseButton.xaml.cs">
       <DependentUpon>PlayPauseButton.xaml</DependentUpon>
     </Compile>
@@ -130,6 +136,14 @@
     <Page Include="JW5_Playlist.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="JwSilderHorizontal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="JwSliderVertical.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PlayPauseButton.xaml">
       <SubType>Designer</SubType>

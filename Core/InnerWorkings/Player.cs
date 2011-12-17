@@ -29,6 +29,14 @@ namespace ComposerCore {
 		/// </summary>
 		public PlaylistItem CurrentItem { get; private set; }
 
+		public Color BackgroundColor {
+			set {
+				MediaPlayer.Background = new SolidColorBrush(value);
+				PosterDisplay.Fill = new SolidColorBrush(value);
+			}
+			get { return ((MediaPlayer.Background as SolidColorBrush) ?? new SolidColorBrush(Color.FromArgb(0, 0, 0, 0))).Color; }
+		}
+
 		/// <summary>
 		/// Index of the current playlist item.
 		/// If there is not current item, this will be invalid.
@@ -546,7 +554,7 @@ window.onbeforeunload = function() {
 
 			MediaPlayer = new SmoothStreamingMediaElement();
 			Children.Insert(0, MediaPlayer);
-
+			
 			MediaPlayer.MediaOpened += MediaPlayer_MediaOpened;
 			MediaPlayer.MediaEnded += MediaPlayer_MediaEnded;
 			MediaPlayer.ClipStateChanged += MediaPlayer_PlaybackStateChange;
@@ -904,7 +912,7 @@ window.onbeforeunload = function() {
 			try {
 				if (HasVideo()) { // don't clear poster for audio-only
 					if (Background is ImageBrush) {
-						Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
+						Background = new SolidColorBrush(BackgroundColor);
 					}
 					if (PosterDisplay.Visibility == Visibility.Visible) {
 						PosterDisplay.Visibility = Visibility.Collapsed;

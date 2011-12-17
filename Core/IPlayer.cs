@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Media;
 
 namespace ComposerCore {
 	public interface IPlayer {
@@ -18,6 +19,11 @@ namespace ComposerCore {
 		/// Get the playlist item currently being played, if any.
 		/// </summary>
 		PlaylistItem CurrentItem { get; }
+
+		/// <summary>
+		/// Set the background color for the player (shown around aspect ratio gaps)
+		/// </summary>
+		Color BackgroundColor { set; }
 
 		/// <summary>
 		/// Index of the current playlist item.

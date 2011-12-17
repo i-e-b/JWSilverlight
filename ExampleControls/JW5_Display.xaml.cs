@@ -6,6 +6,8 @@ using ComposerCore;
 using jwSkinLoader;
 using Microsoft.Web.Media.SmoothStreaming;
 
+// Still to be done: Mute icon, hover states.
+
 namespace ExampleControls {
 	public partial class JW5_Display : UserControl, IPlayerController, IXmlSkinReader {
 		private readonly RotateTransform rot;
@@ -78,6 +80,10 @@ namespace ExampleControls {
 			
 			rot.CenterX = BufferIcon.Width / 2.0;
 			rot.CenterY = BufferIcon.Height / 2.0;
+
+			var bgHex = pkg.GetSettingValue("display", "backgroundcolor") ?? "0x000000";
+			players.EachPlayer(p => p.BackgroundColor = Colors.Purple);
+			
 		}
 
 		private void LayoutRoot_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e) {
