@@ -39,11 +39,16 @@ namespace ExampleControls {
 		/// </summary>
 		public bool AutoScale { get; set; }
 
-		public void SetSkin (BitmapImage rail, BitmapImage buffer, BitmapImage progress, BitmapImage thumb) {
+		public void SetSkin (BitmapImage rail, BitmapImage buffer, BitmapImage progress, BitmapImage thumb, BitmapImage leftCap, BitmapImage rightCap) {
 			SetWithHeight(Rail, rail);
 			SetWithHeight(Buffer, buffer);
 			SetWithHeight(Progress, progress);
 			SetWithHeight(Thumb, thumb);
+			SetWithHeight(LeftCap, leftCap);
+			SetWithHeight(RightCap, rightCap);
+
+			LeftCap.Width = leftCap.PixelWidth;
+			RightCap.Width = rightCap.PixelWidth;
 
 			if (AutoScale) return;
 

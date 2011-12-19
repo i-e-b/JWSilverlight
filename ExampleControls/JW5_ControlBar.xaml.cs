@@ -7,17 +7,27 @@ using jwSkinLoader;
 namespace ExampleControls {
 	public partial class JW5_ControlBar : UserControl, IPlayerController, IXmlSkinReader {
 		public void PlaylistChanged (Playlist NewPlaylist) { }
-		public void StateChanged (PlayerStatus NewStatus) { }
-		public void StatusUpdate (PlayerStatus NewStatus) { }
 		public void CaptionFired (TimelineMarker Caption) { }
 		public void ErrorOccured (Exception Error) { }
-		public void AddBinding (IPlayer PlayerToControl) { }
-		public void RemoveBinding (IPlayer PlayerToControl) { }
+		private readonly ComposerControlHelper players;
 
 		public JW5_ControlBar () {
 			InitializeComponent();
+			players = new ComposerControlHelper();
+		}
+		public void StateChanged (PlayerStatus NewStatus) {
+			StatusUpdate(NewStatus);
+		}
+		public void StatusUpdate (PlayerStatus NewStatus) {
+		}
+		public void AddBinding (IPlayer PlayerToControl) {
+			players.AddBinding(PlayerToControl, this);
 		}
 
-		public void SetSkin(JwSkinPackage pkg) {  }
+		public void RemoveBinding (IPlayer PlayerToControl) {
+			players.RemoveBinding(PlayerToControl, this);
+		}
+
+		public void SetSkin (JwSkinPackage pkg) { }
 	}
 }

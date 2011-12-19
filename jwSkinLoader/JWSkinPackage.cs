@@ -110,6 +110,11 @@ namespace jwSkinLoader {
 			target.Width = source.PixelWidth;
 		}
 
+		public void BindHoverButton (IImageHoverControl target, string componentName, string outElementName, string overElementName) {
+			target.OutImage = GetNamedElement(componentName, outElementName);
+			target.OverImage = GetNamedElement(componentName, overElementName);
+		}
+
 		public string GetSettingValue(string componentName, string elementName) {
 			var element = GetComponent(componentName)
 				.Elements("settings").Elements("setting")

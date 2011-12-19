@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows;
 using ComposerCore;
@@ -30,9 +31,7 @@ namespace ExampleControls {
 		public void StatusUpdate (PlayerStatus NewStatus) {
 			Background.Visibility = Visibility.Collapsed;
 			PlayIcon.Visibility = Visibility.Collapsed;
-			PlayIconOver.Visibility =Visibility.Collapsed;
 			MuteIcon.Visibility = Visibility.Collapsed;
-			MuteIconOver.Visibility = Visibility.Collapsed;
 			BufferIcon.Visibility = Visibility.Collapsed;
 
 			switch (NewStatus.CurrentPlayState) {
@@ -68,10 +67,8 @@ namespace ExampleControls {
 
 		public void SetSkin(JwSkinPackage pkg) {
 			pkg.BindAndResize(Background, "display", "background");
-			pkg.BindAndResize(PlayIcon, "display", "playIcon");
-			pkg.BindAndResize(PlayIconOver, "display", "playIconOver");
-			pkg.BindAndResize(MuteIcon, "display", "muteIcon");
-			pkg.BindAndResize(MuteIconOver, "display", "muteIconOver");
+			pkg.BindHoverButton(PlayIcon, "display", "playIcon", "playIconOver");
+			pkg.BindHoverButton(MuteIcon, "display", "muteIcon", "muteIconOver");
 			pkg.BindAndResize(BufferIcon, "display", "bufferIcon");
 
 			var interval = pkg.GetSettingValue("display", "bufferinterval") ?? "100";
@@ -84,10 +81,10 @@ namespace ExampleControls {
 			var bgHex = Tools.HexToColor(pkg.GetSettingValue("display", "backgroundcolor") ?? "0x000000");
 
 			players.EachPlayer(p => p.BackgroundColor = bgHex);
-			
+			PlayIcon.Clicked += PlayIconClicked;
 		}
 
-		private void LayoutRoot_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+		void PlayIconClicked(object sender, MouseButtonEventArgs e) { 
 			if (PlayIcon.Visibility == Visibility.Visible) {
 				players.EachPlayer(p => p.Play());
 			}

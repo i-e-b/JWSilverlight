@@ -3,16 +3,15 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:local="clr-namespace:ExampleControls"
 	mc:Ignorable="d"
 	x:Class="ExampleControls.JW5_Display"
 	d:DesignWidth="640" d:DesignHeight="480">
 
-	<Grid x:Name="LayoutRoot" HorizontalAlignment="Center" VerticalAlignment="Center" MouseLeftButtonUp="LayoutRoot_MouseLeftButtonUp">
+	<Grid x:Name="LayoutRoot" HorizontalAlignment="Center" VerticalAlignment="Center" >
 		<Image x:Name="Background" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="10" Height="10" Stretch="None"/>
-		<Image x:Name="MuteIconOver" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="10" Height="10" Stretch="None"/>
-		<Image x:Name="PlayIconOver" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="10" Height="10" Stretch="None"/>
 		<Image x:Name="BufferIcon" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="10" Height="10" Stretch="None"/>
-		<Image x:Name="MuteIcon" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="10" Height="10" Stretch="None"/>
-		<Image x:Name="PlayIcon" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="10" Height="10" Stretch="None"/>
+		<local:ImageHoverButton x:Name="PlayIcon" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+		<local:ImageHoverButton x:Name="MuteIcon" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 	</Grid>
 </UserControl>
