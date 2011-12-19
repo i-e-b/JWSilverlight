@@ -12,12 +12,6 @@ namespace jwSkinLoader {
 	public class JwSkinPackage {
 		readonly IsolatedStorageSettings files = IsolatedStorageSettings.ApplicationSettings;
 		public string XmlContent {get; private set;}
-		public string AllFiles {
-			get {
-				if (files.Keys.Count < 1) return "no files loaded";
-				return files.Keys.Cast<string>().Aggregate((a, b) => a + ", " + b);
-			}
-		}
 
 		public void Load (string packageUrl) {
 			var wc = new WebClient();
@@ -100,6 +94,10 @@ namespace jwSkinLoader {
 			var src = element.Attribute("src");
 			if (src == null) return null;
 			return files[componentName +"/" +src.Value] as BitmapImage;
+		}
+
+		public bool HasNamedElement (string componentName, string elementName) {
+			return GetNamedElement(componentName, elementName) != null;
 		}
 
 		public void BindAndResize(Image target, string componentName, string elementName) {
