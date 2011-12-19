@@ -93,8 +93,8 @@
     <Compile Include="JW5_Playlist.xaml.cs">
       <DependentUpon>JW5_Playlist.xaml</DependentUpon>
     </Compile>
-    <Compile Include="JwSilderHorizontal.xaml.cs">
-      <DependentUpon>JwSilderHorizontal.xaml</DependentUpon>
+    <Compile Include="JwSliderHorizontal.xaml.cs">
+      <DependentUpon>JwSliderHorizontal.xaml</DependentUpon>
     </Compile>
     <Compile Include="JwSliderVertical.xaml.cs">
       <DependentUpon>JwSliderVertical.xaml</DependentUpon>
@@ -109,6 +109,7 @@
     <Compile Include="Slider.xaml.cs">
       <DependentUpon>Slider.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Tools.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\ComposerCore.csproj">
@@ -137,7 +138,7 @@
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="JwSilderHorizontal.xaml">
+    <Page Include="JwSliderHorizontal.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

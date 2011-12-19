@@ -81,8 +81,9 @@ namespace ExampleControls {
 			rot.CenterX = BufferIcon.Width / 2.0;
 			rot.CenterY = BufferIcon.Height / 2.0;
 
-			var bgHex = pkg.GetSettingValue("display", "backgroundcolor") ?? "0x000000";
-			players.EachPlayer(p => p.BackgroundColor = Colors.Purple);
+			var bgHex = Tools.HexToColor(pkg.GetSettingValue("display", "backgroundcolor") ?? "0x000000");
+
+			players.EachPlayer(p => p.BackgroundColor = bgHex);
 			
 		}
 
