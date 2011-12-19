@@ -1,9 +1,16 @@
 ﻿using System;
 using System.IO;
+using System.Xml.Linq;
 using ICSharpCode.SharpZipLib.Zip;
 
 namespace jwSkinLoader {
 	public static class Extensions {
+		public static string AttributeValue (this XElement elem, string attributeName) {
+			var attr = elem.Attribute(attributeName);
+			if (attr == null) return null;
+			return attr.Value;
+		}
+		
 		public static MemoryStream ReadAll (this ZipInputStream zip) {
 			var buffer = new byte[2048];
 			int bytesRead;
@@ -15,6 +22,7 @@ namespace jwSkinLoader {
 			ms.Position = 0;
 			return ms;
 		}
+
 		/// <summary>
 		/// Return the substring up to but not including the first instance of 'c'.
 		/// If 'c' is not found, the entire string is returned.
@@ -26,7 +34,6 @@ namespace jwSkinLoader {
 			if (idx < 0) return src;
 			return src.Substring(0, idx);
 		}
-
 
 		/// <summary>
 		/// Return the substring up to but not including the last instance of 'c'.
@@ -51,7 +58,6 @@ namespace jwSkinLoader {
 			if (idx < 0) return src;
 			return src.Substring(idx);
 		}
-
 
 		/// <summary>
 		/// Return the substring after to but not including the last instance of 'c'.

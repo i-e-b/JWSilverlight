@@ -74,7 +74,7 @@ namespace jwSkinLoader {
 		public XElement GetComponent (string name) {
 			return XElement.Parse(XmlContent)
 				.Descendants("component")
-				.Where(x => HasAttributeWithValue(x, "name", "display"))
+				.Where(x => HasAttributeWithValue(x, "name", name))
 				.FirstOrDefault();
 		}
 

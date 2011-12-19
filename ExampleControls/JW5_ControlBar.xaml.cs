@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Media;
 using ComposerCore;
@@ -28,6 +29,9 @@ namespace ExampleControls {
 			players.RemoveBinding(PlayerToControl, this);
 		}
 
-		public void SetSkin (JwSkinPackage pkg) { }
+		public void SetSkin (JwSkinPackage pkg) {
+			var layout = new ControlBarLayout(pkg);
+			// todo: map the layout into sliders, buttons and images; make columns and add.
+		}
 	}
 }
