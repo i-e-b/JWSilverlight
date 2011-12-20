@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using ComposerCore;
 using jwSkinLoader;
+using Microsoft.Web.Media.SmoothStreaming;
 
 namespace ExampleControls {
 	public partial class JW5_ControlBar : UserControl, IPlayerController, IXmlSkinReader {
@@ -12,8 +14,10 @@ namespace ExampleControls {
 
 		JwElapsedText elapsedText;
 		JwDurationText durationText;
-		JwSliderHorizontal VolumeSlider;
-		JwSliderHorizontal TimeSlider;
+		JwSliderHorizontal volumeSlider;
+		JwSliderHorizontal timeSlider;
+		ImageHoverButton playButton;
+		ImageHoverButton pauseButton;
 
 		public JW5_ControlBar () {
 			InitializeComponent();
@@ -69,9 +73,7 @@ namespace ExampleControls {
 						break;
 
 					case ControlBarElement.ElementType.Button:
-						c = new ImageHoverButton();
-						pkg.BindHoverButton((ImageHoverButton)c, ControlBarComponent, element.ElementName(), element.ElementName() + "Over");
-						// todo: bind to an event!
+						c = BindButton(element, pkg);
 						break;
 
 					case ControlBarElement.ElementType.TimeSlider:
@@ -92,10 +94,36 @@ namespace ExampleControls {
 			}
 		}
 
+		FrameworkElement BindButton(ControlBarElement element, JwSkinPackage pkg) {
+			var btn = new ImageHoverButton();
+			pkg.BindHoverButton(btn, ControlBarComponent, element.ElementName(), element.ElementName() + "Over");
+			btn.Clicked += GetBinding(element.Name);
+
+			if (element.Name == "play") playButton = btn;
+			if (element.Name == "pause") pauseButton = btn;
+
+			return btn;
+		}
+
+		private EventHandler<MouseButtonEventArgs> GetBinding (string name) {
+			switch (name) {
+				case "play":
+					return Play;
+				case "pause":
+					return Pause;
+				default:
+					return Ignore;
+			}
+		}
+
+		void Play (object sender, MouseButtonEventArgs e) { players.EachPlayer(p => p.Play()); }
+		void Pause (object sender, MouseButtonEventArgs e) { players.EachPlayer(p => p.Pause()); }
+		void Ignore (object sender, MouseButtonEventArgs e) { }
+
 		FrameworkElement BuildVolumeSlider(JwSkinPackage pkg) {
 			// todo: bind events
-			VolumeSlider = new JwSliderHorizontal();
-			VolumeSlider.SetSkin(
+			volumeSlider = new JwSliderHorizontal();
+			volumeSlider.SetSkin(
 				pkg.GetNamedElement(ControlBarComponent, "volumeSliderRail"),
 				pkg.GetNamedElement(ControlBarComponent, "volumeSliderBuffer"),
 				pkg.GetNamedElement(ControlBarComponent, "volumeSliderProgress"),
@@ -103,17 +131,17 @@ namespace ExampleControls {
 				pkg.GetNamedElement(ControlBarComponent, "volumeSliderCapLeft"),
 				pkg.GetNamedElement(ControlBarComponent, "volumeSliderCapRight"));
 
-			VolumeSlider.BufferProgress = 0.75;
-			VolumeSlider.SliderProgress = 0.25;
-			VolumeSlider.Margin = new Thickness(0);
-			return VolumeSlider;
+			volumeSlider.BufferProgress = 0.75;
+			volumeSlider.SliderProgress = 0.25;
+			volumeSlider.Margin = new Thickness(0);
+			return volumeSlider;
 		}
 
 		FrameworkElement BuildTimeSlider(JwSkinPackage pkg) {
 			// todo: bind events
-			TimeSlider = new JwSliderHorizontal();
-			TimeSlider.AutoScale = true;
-			TimeSlider.SetSkin(
+			timeSlider = new JwSliderHorizontal();
+			timeSlider.AutoScale = true;
+			timeSlider.SetSkin(
 				pkg.GetNamedElement(ControlBarComponent, "timeSliderRail"),
 				pkg.GetNamedElement(ControlBarComponent, "timeSliderBuffer"),
 				pkg.GetNamedElement(ControlBarComponent, "timeSliderProgress"),
@@ -121,13 +149,13 @@ namespace ExampleControls {
 				pkg.GetNamedElement(ControlBarComponent, "timeSliderCapLeft"),
 				pkg.GetNamedElement(ControlBarComponent, "timeSliderCapRight"));
 
-			TimeSlider.BufferProgress = 0.75;
-			TimeSlider.SliderProgress = 0.25;
-			TimeSlider.Margin = new Thickness(0);
+			timeSlider.BufferProgress = 0.75;
+			timeSlider.SliderProgress = 0.25;
+			timeSlider.Margin = new Thickness(0);
 
-			TimeSlider.TargetProportionChanged += TimeSlider_TargetProportionChanged;
+			timeSlider.TargetProportionChanged += TimeSlider_TargetProportionChanged;
 
-			return TimeSlider;
+			return timeSlider;
 		}
 
 		void TimeSlider_TargetProportionChanged(object sender, ProportionEventArgs e) {
@@ -152,9 +180,21 @@ namespace ExampleControls {
 			StatusUpdate(NewStatus);
 		}
 		public void StatusUpdate (PlayerStatus NewStatus) {
-			if (TimeSlider != null) {
-				TimeSlider.SliderProgress = NewStatus.PlayProgress;
-				TimeSlider.BufferProgress = NewStatus.BufferingProgress;
+			if (timeSlider != null) {
+				timeSlider.SliderProgress = NewStatus.PlayProgress;
+				timeSlider.BufferProgress = NewStatus.BufferingProgress;
+			}
+
+			switch (NewStatus.CurrentPlayState) {
+				case SmoothStreamingMediaElementState.Playing:
+					playButton.Visibility = Visibility.Collapsed;
+					pauseButton.Visibility = Visibility.Visible;
+					break;
+
+				default:
+					playButton.Visibility = Visibility.Visible;
+					pauseButton.Visibility = Visibility.Collapsed;
+					break;
 			}
 		}
 		public void AddBinding (IPlayer PlayerToControl) {

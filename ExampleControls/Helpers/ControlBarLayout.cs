@@ -43,6 +43,15 @@ namespace ExampleControls {
 			}
 			elements.Add(ControlBarElement.Button("capRight"));
 
+			// if no pause button defined, add one after the play button (if there is one)
+			if (!elements.Any(e => (e.Type == ControlBarElement.ElementType.Button) && (e.Name == "pause"))) {
+				for (var i = 0; i < elements.Count; i++) {
+					if ((elements[i].Type != ControlBarElement.ElementType.Button) || (elements[i].Name != "play")) continue;
+					elements.Insert(i, ControlBarElement.Button("pause"));
+					break;
+				}
+			}
+
 			for (var i = 0; i < elements.Count; i++) {
 				if (elements[i].Type != ControlBarElement.ElementType.Button) continue;
 				
@@ -86,23 +95,23 @@ namespace ExampleControls {
 		}
 
 		void SetupDefaults () {
-			elements.Add(ControlBarElement.Button("playButton"));
-			elements.Add(ControlBarElement.Button("pauseButton"));
-			elements.Add(ControlBarElement.Button("prevButton"));
-			elements.Add(ControlBarElement.Button("nextButton"));
-			elements.Add(ControlBarElement.Button("stopButton"));
+			elements.Add(ControlBarElement.Button("play"));
+			elements.Add(ControlBarElement.Button("pause"));
+			elements.Add(ControlBarElement.Button("prev"));
+			elements.Add(ControlBarElement.Button("next"));
+			elements.Add(ControlBarElement.Button("stop"));
 			elements.Add(ControlBarElement.Divider("divider"));
-			elements.Add(ControlBarElement.Button("elapsedText"));
+			elements.Add(ControlBarElement.Button("elapsed"));
 			elements.Add(ControlBarElement.TimeSlider());
-			elements.Add(ControlBarElement.Button("durationText"));
+			elements.Add(ControlBarElement.Button("duration"));
 			elements.Add(ControlBarElement.Divider("divider"));
-			elements.Add(ControlBarElement.Button("blankButton"));
+			elements.Add(ControlBarElement.Button("blank"));
 			elements.Add(ControlBarElement.Divider("divider"));
-			elements.Add(ControlBarElement.Button("fullscreenButton"));
-			elements.Add(ControlBarElement.Button("normalscreenButton"));
+			elements.Add(ControlBarElement.Button("fullscreen"));
+			elements.Add(ControlBarElement.Button("normalscreen"));
 			elements.Add(ControlBarElement.Divider("divider"));
-			elements.Add(ControlBarElement.Button("muteButton"));
-			elements.Add(ControlBarElement.Button("unmuteButton"));
+			elements.Add(ControlBarElement.Button("mute"));
+			elements.Add(ControlBarElement.Button("unmute"));
 			elements.Add(ControlBarElement.VolumeSlider());
 		}
 
