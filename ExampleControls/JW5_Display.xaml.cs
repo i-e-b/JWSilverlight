@@ -14,6 +14,7 @@ namespace ExampleControls {
 		private readonly RotateTransform rot;
 		private double degreesPerMillisecond;
 		private readonly ComposerControlHelper players;
+		const string componentName = "display";
 
 		public void PlaylistChanged (Playlist NewPlaylist) { }
 		public void CaptionFired (TimelineMarker Caption) { }
@@ -66,19 +67,19 @@ namespace ExampleControls {
 		}
 
 		public void SetSkin(JwSkinPackage pkg) {
-			pkg.BindAndResize(Background, "display", "background");
-			pkg.BindHoverButton(PlayIcon, "display", "playIcon", "playIconOver");
-			pkg.BindHoverButton(MuteIcon, "display", "muteIcon", "muteIconOver");
-			pkg.BindAndResize(BufferIcon, "display", "bufferIcon");
+			pkg.BindAndResize(Background, componentName, "background");
+			pkg.BindHoverButton(PlayIcon, componentName, "playIcon", "playIconOver");
+			pkg.BindHoverButton(MuteIcon, componentName, "muteIcon", "muteIconOver");
+			pkg.BindAndResize(BufferIcon, componentName, "bufferIcon");
 
-			var interval = pkg.GetSettingValue("display", "bufferinterval") ?? "100";
-			var rotation = pkg.GetSettingValue("display", "bufferrotation") ?? "15";
+			var interval = pkg.GetSettingValue(componentName, "bufferinterval") ?? "100";
+			var rotation = pkg.GetSettingValue(componentName, "bufferrotation") ?? "15";
 			degreesPerMillisecond = double.Parse(rotation) / double.Parse(interval);
 			
 			rot.CenterX = BufferIcon.Width / 2.0;
 			rot.CenterY = BufferIcon.Height / 2.0;
 
-			var bgHex = Tools.HexToColor(pkg.GetSettingValue("display", "backgroundcolor") ?? "0x000000");
+			var bgHex = Tools.HexToColor(pkg.GetSettingValue(componentName, "backgroundcolor") ?? "0x000000");
 
 			players.EachPlayer(p => p.BackgroundColor = bgHex);
 			PlayIcon.Clicked += PlayIconClicked;

@@ -81,8 +81,8 @@
     <Reference Include="System.Xml.Linq, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ControlBarLayout.cs" />
-    <Compile Include="ImageHoverButton.xaml.cs">
+    <Compile Include="Helpers\ControlBarLayout.cs" />
+    <Compile Include="ControlFragments\ImageHoverButton.xaml.cs">
       <DependentUpon>ImageHoverButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="JW5_ControlBar.xaml.cs">
@@ -97,11 +97,14 @@
     <Compile Include="JW5_Playlist.xaml.cs">
       <DependentUpon>JW5_Playlist.xaml</DependentUpon>
     </Compile>
-    <Compile Include="JwSliderHorizontal.xaml.cs">
-      <DependentUpon>JwSliderHorizontal.xaml</DependentUpon>
+    <Compile Include="ControlFragments\JwDurationText.xaml.cs">
+      <DependentUpon>JwDurationText.xaml</DependentUpon>
     </Compile>
-    <Compile Include="JwSliderVertical.xaml.cs">
-      <DependentUpon>JwSliderVertical.xaml</DependentUpon>
+    <Compile Include="ControlFragments\JwElapsedText.xaml.cs">
+      <DependentUpon>JwElapsedText.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ControlFragments\JwSliderHorizontal.xaml.cs">
+      <DependentUpon>JwSliderHorizontal.xaml</DependentUpon>
     </Compile>
     <Compile Include="PlayPauseButton.xaml.cs">
       <DependentUpon>PlayPauseButton.xaml</DependentUpon>
@@ -113,7 +116,7 @@
     <Compile Include="Slider.xaml.cs">
       <DependentUpon>Slider.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Tools.cs" />
+    <Compile Include="Helpers\Tools.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\ComposerCore.csproj">
@@ -126,7 +129,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="ImageHoverButton.xaml">
+    <Page Include="ControlFragments\ImageHoverButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -146,11 +149,15 @@
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="JwSliderHorizontal.xaml">
+    <Page Include="ControlFragments\JwDurationText.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="JwSliderVertical.xaml">
+    <Page Include="ControlFragments\JwElapsedText.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ControlFragments\JwSliderHorizontal.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

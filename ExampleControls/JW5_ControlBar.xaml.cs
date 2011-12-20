@@ -7,32 +7,34 @@ using jwSkinLoader;
 
 namespace ExampleControls {
 	public partial class JW5_ControlBar : UserControl, IPlayerController, IXmlSkinReader {
-		public void PlaylistChanged (Playlist NewPlaylist) { }
-		public void CaptionFired (TimelineMarker Caption) { }
-		public void ErrorOccured (Exception Error) { }
-		private readonly ComposerControlHelper players;
 		const string ControlBarComponent = "controlbar";
+		readonly ComposerControlHelper players;
+
+		JwElapsedText elapsedText;
+		JwDurationText durationText;
 
 		public JW5_ControlBar () {
 			InitializeComponent();
 			players = new ComposerControlHelper();
 		}
-		public void StateChanged (PlayerStatus NewStatus) {
-			StatusUpdate(NewStatus);
-		}
-		public void StatusUpdate (PlayerStatus NewStatus) {
-		}
-		public void AddBinding (IPlayer PlayerToControl) {
-			players.AddBinding(PlayerToControl, this);
-		}
 
-		public void RemoveBinding (IPlayer PlayerToControl) {
-			players.RemoveBinding(PlayerToControl, this);
-		}
-
+		#region Skinning
 		public void SetSkin (JwSkinPackage pkg) {
 			var layout = new ControlBarLayout(pkg);
 			BuildControls(pkg, layout);
+
+			SetBackground(pkg);
+			// todo: margin on full-screen.
+
+
+		}
+
+		void SetBackground(JwSkinPackage pkg) {
+			var img = pkg.GetNamedElement(ControlBarComponent, "background");
+			if (img == null) return;
+
+			var bgBrush = new ImageBrush{ImageSource = img, Stretch = Stretch.Fill};
+			LayoutRoot.Background = bgBrush;
 		}
 
 		void BuildControls(JwSkinPackage pkg, ControlBarLayout layout) {
@@ -46,8 +48,17 @@ namespace ExampleControls {
 						i++; continue;
 
 					case ControlBarElement.ElementType.Text:
-						// todo: ... c = new TextBoundControl(...); ...
-						c = new TextBlock { Text = element.Name };
+						if (element.Name == "elapsed") {
+							elapsedText = new JwElapsedText();
+							c = elapsedText;
+							players.EachPlayer(p => players.AddBinding(p, elapsedText));
+						} else if (element.Name == "duration") {
+							durationText = new JwDurationText();
+							c = durationText;
+							players.EachPlayer(p => players.AddBinding(p, durationText));
+						} else {
+							i++; continue;
+						}
 						break;
 
 					case ControlBarElement.ElementType.Divider:
@@ -125,5 +136,25 @@ namespace ExampleControls {
 				}
 			}
 		}
+		#endregion
+
+		#region Player controls
+		public void StateChanged (PlayerStatus NewStatus) {
+		}
+		public void StatusUpdate (PlayerStatus NewStatus) {
+		}
+		public void AddBinding (IPlayer PlayerToControl) {
+			players.AddBinding(PlayerToControl, this);
+			if (elapsedText != null) players.AddBinding(PlayerToControl, elapsedText); 
+		}
+
+		public void RemoveBinding (IPlayer PlayerToControl) {
+			players.RemoveBinding(PlayerToControl, this);
+			if (elapsedText != null) players.RemoveBinding(PlayerToControl, elapsedText); 
+		}
+		public void PlaylistChanged (Playlist NewPlaylist) { }
+		public void CaptionFired (TimelineMarker Caption) { }
+		public void ErrorOccured (Exception Error) { }
+		#endregion
 	}
 }

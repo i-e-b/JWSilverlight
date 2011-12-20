@@ -38,11 +38,7 @@ namespace ExampleControls {
 				SetupDefaults();
 			} else {
 				ReadPlaceholders(layout[0], "left");
-				if (elements.Last().Type != ControlBarElement.ElementType.Divider)
-					elements.Add(ControlBarElement.Divider(null));
 				ReadPlaceholders(layout[0], "center");
-				if (elements.Last().Type != ControlBarElement.ElementType.Divider)
-					elements.Add(ControlBarElement.Divider(null));
 				ReadPlaceholders(layout[0], "right");
 			}
 			elements.Add(ControlBarElement.Button("capRight"));
