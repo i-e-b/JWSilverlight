@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using ComposerCore;
@@ -32,6 +33,22 @@ namespace ExampleControls {
 		public void SetSkin (JwSkinPackage pkg) {
 			var layout = new ControlBarLayout(pkg);
 			// todo: map the layout into sliders, buttons and images; make columns and add.
+
+			SetColumnDefinitions(layout);
+			foreach (var element in layout.Elements) {
+				
+			}
+		}
+
+		void SetColumnDefinitions(ControlBarLayout layout) {
+			LayoutRoot.ColumnDefinitions.Clear();
+			foreach (var element in layout.Elements) {
+				if (element.Type == ControlBarElement.ElementType.VolumeSlider) {
+					LayoutRoot.ColumnDefinitions.Add(new ColumnDefinition {Width = new GridLength(1, GridUnitType.Star)});
+				} else {
+					LayoutRoot.ColumnDefinitions.Add(new ColumnDefinition {Width = GridLength.Auto});
+				}
+			}
 		}
 	}
 }
