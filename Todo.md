@@ -15,3 +15,4 @@ Misc
 * Cleanup or re-write ComposerCore for Smooth 1.5 player
 * Background colour on poster view
 * Keyboard commands
+* Trace usage in ZIP library, exclude unused parts (for size)

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -32,18 +31,67 @@ namespace ExampleControls {
 
 		public void SetSkin (JwSkinPackage pkg) {
 			var layout = new ControlBarLayout(pkg);
-			// todo: map the layout into sliders, buttons and images; make columns and add.
+			// todo: bind controls to events & player!
+			// todo: background image & settings
 
 			SetColumnDefinitions(layout);
+			int i = 0;
 			foreach (var element in layout.Elements) {
-				
+				FrameworkElement c;
+
+				switch (element.Type) {
+					case ControlBarElement.ElementType.Gap:
+						i++; continue;
+
+					case ControlBarElement.ElementType.Text:
+						//c = new TextBoundControl(...);
+						c = new TextBlock { Text = element.Name };
+						break;
+
+					case ControlBarElement.ElementType.Divider:
+						c = new Image();
+						pkg.BindAndResize((Image)c, "controlbar", element.Name ?? "divider");
+						break;
+
+					case ControlBarElement.ElementType.Button:
+						c = new ImageHoverButton();
+						pkg.BindHoverButton((ImageHoverButton)c, "controlbar", element.ElementName(), element.ElementName() + "Over");
+						// todo: bind to an event!
+						break;
+
+					case ControlBarElement.ElementType.TimeSlider:
+						c = BuildTimeSlider(pkg);
+						break;
+
+					case ControlBarElement.ElementType.VolumeSlider:
+						c = BuildVolumeSlider(pkg);
+						break;
+
+					default:
+						i++; continue;
+				}
+
+				LayoutRoot.Children.Add(c);
+				c.SetValue(Grid.ColumnProperty, i);
+				i++;
 			}
+		}
+
+		FrameworkElement BuildVolumeSlider(JwSkinPackage pkg) { 
+			// todo: build volume slider
+			return new TextBlock { Text = "Vol" };
+		}
+
+		FrameworkElement BuildTimeSlider(JwSkinPackage pkg) {
+			// todo: build time slider
+			return new TextBlock { Text = "TimeSliderHere" };
 		}
 
 		void SetColumnDefinitions(ControlBarLayout layout) {
 			LayoutRoot.ColumnDefinitions.Clear();
 			foreach (var element in layout.Elements) {
-				if (element.Type == ControlBarElement.ElementType.VolumeSlider) {
+				// This isn't what the spec says, but behaves like the actual player.
+				if (element.Type == ControlBarElement.ElementType.TimeSlider) {
 					LayoutRoot.ColumnDefinitions.Add(new ColumnDefinition {Width = new GridLength(1, GridUnitType.Star)});
 				} else {
 					LayoutRoot.ColumnDefinitions.Add(new ColumnDefinition {Width = GridLength.Auto});

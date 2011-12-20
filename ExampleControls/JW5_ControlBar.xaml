@@ -7,5 +7,5 @@
 	x:Class="ExampleControls.JW5_ControlBar"
 	d:DesignWidth="640" d:DesignHeight="480">
 
-	<Grid x:Name="LayoutRoot" Background="#FF4DB2FF"/>
+	<Grid x:Name="LayoutRoot" VerticalAlignment="Bottom"/>
 </UserControl>
