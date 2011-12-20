@@ -25,6 +25,7 @@ namespace ExampleControls {
 		ImageHoverButton unmuteButton;
 		ImageBrush backgroundBrush;
 		double TargetFontSize;
+		Color FontColour;
 
 		public JW5_ControlBar () {
 			InitializeComponent();
@@ -43,13 +44,35 @@ namespace ExampleControls {
 
 			FullScreenMargin = double.Parse(pkg.GetSettingValue(ControlBarComponent, "margin") ?? "0.0");
 			TargetFontSize = double.Parse(pkg.GetSettingValue(ControlBarComponent, "fontsize") ?? "10.0");
+			FontColour = (pkg.GetSettingValue(ControlBarComponent, "fontcolor") ?? "0xffffff").HexToColor();
 
 			var layout = new ControlBarLayout(pkg);
 			BuildControls(pkg, layout);
+			ResetControlHeights();
 
 			UpdateFullScreenButtonState(null, null);
 			UpdateSoundButtonState();
 			ShowPlayButton();
+		}
+
+		/// <summary>
+		/// Some skins have invalid button heights;
+		/// This corrects the container controls to compensate.
+		/// </summary>
+		void ResetControlHeights() {
+			var targetHeight = LayoutRoot.Height;
+			foreach (var child in LayoutRoot.Children) {
+				var elem = child as FrameworkElement;
+				if (elem != null) {
+					elem.Height = targetHeight;
+					continue;
+				}
+				var img = child as Image;
+				if (img != null) {
+					img.Height = targetHeight;
+					continue;
+				}
+			}
 		}
 
 		void GetBackground (JwSkinPackage pkg) {
@@ -70,11 +93,19 @@ namespace ExampleControls {
 
 					case ControlBarElement.ElementType.Text:
 						if (element.Name == "elapsed") {
-							elapsedText = new JwElapsedText { Background = backgroundBrush, FontSize = TargetFontSize };
+							elapsedText = new JwElapsedText {
+								Background = backgroundBrush,
+								FontSize = TargetFontSize,
+								FontColour = FontColour
+							};
 							c = elapsedText;
 							players.EachPlayer(p => players.AddBinding(p, elapsedText));
 						} else if (element.Name == "duration") {
-							durationText = new JwDurationText { Background = backgroundBrush, FontSize = TargetFontSize };
+							durationText = new JwDurationText {
+								Background = backgroundBrush,
+								FontSize = TargetFontSize,
+								FontColour = FontColour
+							};
 							c = durationText;
 							players.EachPlayer(p => players.AddBinding(p, durationText));
 						} else {
@@ -293,18 +324,20 @@ namespace ExampleControls {
 		}
 
 		void UpdateSoundButtonState () {
-			if (muteButton == null || unmuteButton == null) return;
-			if (players.Any(p => p.Mute)) {
-				muteButton.Visibility = Visibility.Collapsed;
-				unmuteButton.Visibility = Visibility.Visible;
-				if (volumeSlider != null) {
+			if (muteButton != null && unmuteButton != null) {
+				if (players.Any(p => p.Mute)) {
+					muteButton.Visibility = Visibility.Collapsed;
+					unmuteButton.Visibility = Visibility.Visible;
+				} else {
+					muteButton.Visibility = Visibility.Visible;
+					unmuteButton.Visibility = Visibility.Collapsed;
+				}
+			}
+			if (volumeSlider != null) {
+				if (players.Any(p => p.Mute)) {
 					volumeSlider.BufferProgress = 0.0;
 					volumeSlider.SliderProgress = 0.0;
-				}
-			} else {
-				muteButton.Visibility = Visibility.Visible;
-				unmuteButton.Visibility = Visibility.Collapsed;
-				if (volumeSlider != null) {
+				} else {
 					volumeSlider.BufferProgress = 1.0;
 					volumeSlider.SliderProgress = players.PlayerList[0].AudioVolume;
 				}

@@ -12,6 +12,7 @@ namespace ExampleControls {
 		double sliderProg;
 		double thumbProg;
 		bool isDragging;
+		bool ignoreJump;
 
 		public JwSliderHorizontal () {
 			InitializeComponent();
@@ -110,7 +111,11 @@ namespace ExampleControls {
 			if (handler != null) handler(this, new ProportionEventArgs { Proportion = prop });
 		}
 
-		private void Rail_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
+		private void JumpToPositionClick (object sender, MouseButtonEventArgs e) {
+			if (ignoreJump) {
+				ignoreJump = false;
+				return;
+			}
 			if (Rail.ActualWidth < 1.0 || double.IsNaN(Rail.ActualWidth)) return;
 			double prop = e.GetPosition(Rail).X / Rail.ActualWidth;
 			if (prop < 0.0) prop = 0.0;
@@ -121,6 +126,7 @@ namespace ExampleControls {
 		private void Thumb_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
 		{
 			isDragging = Thumb.CaptureMouse();
+			ignoreJump = isDragging;
 			thumbProg = sliderProg;
 		}
 

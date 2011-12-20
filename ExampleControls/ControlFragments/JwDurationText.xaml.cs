@@ -24,6 +24,12 @@ namespace ExampleControls {
 			}
 		}
 
+		public Color FontColour {
+			set {
+				DurationTime.Foreground = new SolidColorBrush(value);
+			}
+		}
+
 		public void PlaylistChanged(Playlist NewPlaylist) { }
 		public void StateChanged(PlayerStatus NewStatus) { }
 		public void StatusUpdate(PlayerStatus NewStatus) {
