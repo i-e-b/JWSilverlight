@@ -157,8 +157,17 @@ namespace ExampleControls {
 
 			volumeSlider.BufferProgress = 0.75;
 			volumeSlider.SliderProgress = 0.25;
+
+			volumeSlider.TargetProportionChanged += VolumeSlider_TargetProportionChanged;
+
 			volumeSlider.Margin = new Thickness(0);
 			return volumeSlider;
+		}
+
+		void VolumeSlider_TargetProportionChanged(object sender, ProportionEventArgs e) {
+			players.EachPlayer(p => p.AudioVolume = e.Proportion);
+			Unmute(null,null);
+			UpdateSoundButtonState();
 		}
 
 		FrameworkElement BuildTimeSlider(JwSkinPackage pkg) {
@@ -275,9 +284,17 @@ namespace ExampleControls {
 			if (players.Any(p => p.Mute)) {
 				muteButton.Visibility = Visibility.Collapsed;
 				unmuteButton.Visibility = Visibility.Visible;
+				if (volumeSlider != null) {
+					volumeSlider.BufferProgress = 0.0;
+					volumeSlider.SliderProgress = 0.0;
+				}
 			} else {
 				muteButton.Visibility = Visibility.Visible;
 				unmuteButton.Visibility = Visibility.Collapsed;
+				if (volumeSlider != null) {
+					volumeSlider.BufferProgress = 1.0;
+					volumeSlider.SliderProgress = players.PlayerList[0].AudioVolume;
+				}
 			}
 		}
 

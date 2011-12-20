@@ -94,8 +94,6 @@ namespace ExampleControls {
 		}
 
 		void ResizeBars () {
-			if (!AutoScale) return; // todo: trim/mask if not auto scale.
-
 			Buffer.Width = ActualWidth * BufferProgress;
 			Progress.Width = ActualWidth * SliderProgress;
 			if (ActualWidth > 0)
