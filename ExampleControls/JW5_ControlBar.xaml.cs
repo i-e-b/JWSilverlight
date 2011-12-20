@@ -12,6 +12,8 @@ namespace ExampleControls {
 
 		JwElapsedText elapsedText;
 		JwDurationText durationText;
+		JwSliderHorizontal VolumeSlider;
+		JwSliderHorizontal TimeSlider;
 
 		public JW5_ControlBar () {
 			InitializeComponent();
@@ -92,8 +94,8 @@ namespace ExampleControls {
 
 		FrameworkElement BuildVolumeSlider(JwSkinPackage pkg) {
 			// todo: bind events
-			var slider = new JwSliderHorizontal();
-			slider.SetSkin(
+			VolumeSlider = new JwSliderHorizontal();
+			VolumeSlider.SetSkin(
 				pkg.GetNamedElement(ControlBarComponent, "volumeSliderRail"),
 				pkg.GetNamedElement(ControlBarComponent, "volumeSliderBuffer"),
 				pkg.GetNamedElement(ControlBarComponent, "volumeSliderProgress"),
@@ -101,17 +103,17 @@ namespace ExampleControls {
 				pkg.GetNamedElement(ControlBarComponent, "volumeSliderCapLeft"),
 				pkg.GetNamedElement(ControlBarComponent, "volumeSliderCapRight"));
 
-			slider.BufferProgress = 0.75;
-			slider.SliderProgress = 0.25;
-			slider.Margin = new Thickness(0);
-			return slider;
+			VolumeSlider.BufferProgress = 0.75;
+			VolumeSlider.SliderProgress = 0.25;
+			VolumeSlider.Margin = new Thickness(0);
+			return VolumeSlider;
 		}
 
 		FrameworkElement BuildTimeSlider(JwSkinPackage pkg) {
 			// todo: bind events
-			var slider = new JwSliderHorizontal();
-			slider.AutoScale = true;
-			slider.SetSkin(
+			TimeSlider = new JwSliderHorizontal();
+			TimeSlider.AutoScale = true;
+			TimeSlider.SetSkin(
 				pkg.GetNamedElement(ControlBarComponent, "timeSliderRail"),
 				pkg.GetNamedElement(ControlBarComponent, "timeSliderBuffer"),
 				pkg.GetNamedElement(ControlBarComponent, "timeSliderProgress"),
@@ -119,10 +121,17 @@ namespace ExampleControls {
 				pkg.GetNamedElement(ControlBarComponent, "timeSliderCapLeft"),
 				pkg.GetNamedElement(ControlBarComponent, "timeSliderCapRight"));
 
-			slider.BufferProgress = 0.75;
-			slider.SliderProgress = 0.25;
-			slider.Margin = new Thickness(0);
-			return slider;
+			TimeSlider.BufferProgress = 0.75;
+			TimeSlider.SliderProgress = 0.25;
+			TimeSlider.Margin = new Thickness(0);
+
+			TimeSlider.TargetProportionChanged += TimeSlider_TargetProportionChanged;
+
+			return TimeSlider;
+		}
+
+		void TimeSlider_TargetProportionChanged(object sender, ProportionEventArgs e) {
+			players.EachPlayer(p => p.SeekTo(e.Proportion));
 		}
 
 		void SetColumnDefinitions(ControlBarLayout layout) {
@@ -140,8 +149,13 @@ namespace ExampleControls {
 
 		#region Player controls
 		public void StateChanged (PlayerStatus NewStatus) {
+			StatusUpdate(NewStatus);
 		}
 		public void StatusUpdate (PlayerStatus NewStatus) {
+			if (TimeSlider != null) {
+				TimeSlider.SliderProgress = NewStatus.PlayProgress;
+				TimeSlider.BufferProgress = NewStatus.BufferingProgress;
+			}
 		}
 		public void AddBinding (IPlayer PlayerToControl) {
 			players.AddBinding(PlayerToControl, this);

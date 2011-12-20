@@ -1,12 +1,17 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
 namespace ExampleControls {
 	public partial class JwSliderHorizontal : UserControl {
 		double bufferProg;
 		double sliderProg;
+		double thumbProg;
+		bool isDragging;
+
 		public JwSliderHorizontal () {
 			InitializeComponent();
 		}
@@ -29,9 +34,13 @@ namespace ExampleControls {
 			get { return sliderProg; }
 			set {
 				sliderProg = value;
+				if (!isDragging) thumbProg = value;
 				ResizeBars();
 			}
 		}
+
+
+		public event EventHandler<ProportionEventArgs> TargetProportionChanged;
 
 		/// <summary>
 		/// If true, slider will scale to horizontal size of control.
@@ -86,7 +95,45 @@ namespace ExampleControls {
 			Buffer.Width = ActualWidth * BufferProgress;
 			Progress.Width = ActualWidth * SliderProgress;
 			if (ActualWidth > 0)
-				Thumb.Margin = new Thickness(ActualWidth * SliderProgress, 0, 0, 0);
+				Thumb.Margin = new Thickness(ActualWidth * thumbProg, 0, 0, 0);
+		}
+
+		public void InvokeTargetProportionChanged (double prop) {
+			EventHandler<ProportionEventArgs> handler = TargetProportionChanged;
+			if (handler != null) handler(this, new ProportionEventArgs { Proportion = prop });
+		}
+
+		private void Rail_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
+			if (Rail.ActualWidth < 1.0 || double.IsNaN(Rail.ActualWidth)) return;
+			double prop = e.GetPosition(Rail).X / Rail.ActualWidth;
+			if (prop < 0.0) prop = 0.0;
+			if (prop > 1.0) prop = 1.0;
+			InvokeTargetProportionChanged(prop);
+		}
+
+		private void Thumb_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+		{
+			isDragging = Thumb.CaptureMouse();
+			thumbProg = sliderProg;
+		}
+
+		private void Thumb_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+		{
+			if (isDragging) Thumb.ReleaseMouseCapture();
+			isDragging = false;
+			InvokeTargetProportionChanged(thumbProg);
+		}
+
+		private void Thumb_MouseMove(object sender, MouseEventArgs e) {
+			if (!isDragging) return;
+
+			if (Rail.ActualWidth < 1.0 || double.IsNaN(Rail.ActualWidth)) return;
+			double prop = e.GetPosition(Rail).X / Rail.ActualWidth;
+			if (prop < 0.0) prop = 0.0;
+			if (prop > 1.0) prop = 1.0;
+
+			thumbProg = prop;
+			ResizeBars();
 		}
 	}
 }

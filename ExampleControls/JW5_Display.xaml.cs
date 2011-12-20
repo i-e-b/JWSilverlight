@@ -30,7 +30,7 @@ namespace ExampleControls {
 			StatusUpdate(NewStatus);
 		}
 		public void StatusUpdate (PlayerStatus NewStatus) {
-			Background.Visibility = Visibility.Collapsed;
+			BackgroundIcon.Visibility = Visibility.Collapsed;
 			PlayIcon.Visibility = Visibility.Collapsed;
 			MuteIcon.Visibility = Visibility.Collapsed;
 			BufferIcon.Visibility = Visibility.Collapsed;
@@ -43,12 +43,12 @@ namespace ExampleControls {
 				case SmoothStreamingMediaElementState.Closed:
 				case SmoothStreamingMediaElementState.Stopped:
 					PlayIcon.Visibility = Visibility.Visible;
-					Background.Visibility = Visibility.Visible;
+					BackgroundIcon.Visibility = Visibility.Visible;
 					break;
 
 				default:
 					BufferIcon.Visibility = Visibility.Visible;
-					Background.Visibility = Visibility.Visible;
+					BackgroundIcon.Visibility = Visibility.Visible;
 					break;
 			}
 
@@ -67,7 +67,7 @@ namespace ExampleControls {
 		}
 
 		public void SetSkin(JwSkinPackage pkg) {
-			pkg.BindAndResize(Background, componentName, "background");
+			pkg.BindAndResize(BackgroundIcon, componentName, "background");
 			pkg.BindHoverButton(PlayIcon, componentName, "playIcon", "playIconOver");
 			pkg.BindHoverButton(MuteIcon, componentName, "muteIcon", "muteIconOver");
 			pkg.BindAndResize(BufferIcon, componentName, "bufferIcon");

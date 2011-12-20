@@ -12,11 +12,11 @@
     		<ColumnDefinition/>
     		<ColumnDefinition Width="Auto"/>
     	</Grid.ColumnDefinitions>
-    	<Image x:Name="LeftCap" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Center"/>
-    	<Image x:Name="RightCap" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" Grid.Column="2"/>
-    	<Image x:Name="Rail" Margin="0" Stretch="Fill" VerticalAlignment="Center" Grid.Column="1"/>
-    	<Image x:Name="Buffer" Margin="0" HorizontalAlignment="Left" Width="150" Stretch="Fill" VerticalAlignment="Center" Grid.Column="1"/>
-    	<Image x:Name="Progress" HorizontalAlignment="Left" Margin="0" Width="100" Stretch="Fill" VerticalAlignment="Center" Grid.Column="1"/>
-    	<Image x:Name="Thumb" Margin="100,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Stretch="Fill" Grid.Column="1" Width="1" Height="1"/>
+    	<Image x:Name="LeftCap" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Center" IsHitTestVisible="False"/>
+    	<Image x:Name="RightCap" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" Grid.Column="2" IsHitTestVisible="False"/>
+    	<Image x:Name="Rail" Margin="0" Stretch="Fill" VerticalAlignment="Center" Grid.Column="1" MouseLeftButtonUp="Rail_MouseLeftButtonUp"/>
+    	<Image x:Name="Buffer" Margin="0" HorizontalAlignment="Left" Width="150" Stretch="Fill" VerticalAlignment="Center" Grid.Column="1" IsHitTestVisible="False"/>
+    	<Image x:Name="Progress" HorizontalAlignment="Left" Margin="0" Width="100" Stretch="Fill" VerticalAlignment="Center" Grid.Column="1" IsHitTestVisible="False"/>
+    	<Image x:Name="Thumb" Margin="100,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Stretch="Fill" Grid.Column="1" Width="1" Height="1" MouseLeftButtonDown="Thumb_MouseLeftButtonDown" MouseLeftButtonUp="Thumb_MouseLeftButtonUp" MouseMove="Thumb_MouseMove"/>
     </Grid>
 </UserControl>
