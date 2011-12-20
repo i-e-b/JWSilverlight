@@ -12,6 +12,7 @@ namespace ExampleControls {
 		const string ControlBarComponent = "controlbar";
 		readonly ComposerControlHelper players;
 
+		double FullScreenMargin;
 		JwElapsedText elapsedText;
 		JwDurationText durationText;
 		JwSliderHorizontal volumeSlider;
@@ -22,6 +23,7 @@ namespace ExampleControls {
 		ImageHoverButton normalScreenButton;
 		ImageHoverButton muteButton;
 		ImageHoverButton unmuteButton;
+
 
 		public JW5_ControlBar () {
 			InitializeComponent();
@@ -41,6 +43,7 @@ namespace ExampleControls {
 
 			SetBackground(pkg);
 			// todo: margin on full-screen, other settings
+			FullScreenMargin = double.Parse(pkg.GetSettingValue(ControlBarComponent, "margin") ?? "0.0");
 
 			UpdateFullScreenButtonState(null, null);
 			UpdateSoundButtonState();
@@ -263,9 +266,13 @@ namespace ExampleControls {
 			if (Application.Current.Host.Content.IsFullScreen) {
 				fullScreenButton.Visibility = Visibility.Collapsed;
 				normalScreenButton.Visibility = Visibility.Visible;
+
+				PaddingBorder.Padding = new Thickness(FullScreenMargin);
 			} else {
 				normalScreenButton.Visibility = Visibility.Collapsed;
 				fullScreenButton.Visibility = Visibility.Visible;
+
+				PaddingBorder.Padding = new Thickness(0);
 			}
 		}
 
