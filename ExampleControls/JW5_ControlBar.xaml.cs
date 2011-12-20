@@ -24,6 +24,7 @@ namespace ExampleControls {
 		ImageHoverButton muteButton;
 		ImageHoverButton unmuteButton;
 		ImageBrush backgroundBrush;
+		double TargetFontSize;
 
 		public JW5_ControlBar () {
 			InitializeComponent();
@@ -40,11 +41,11 @@ namespace ExampleControls {
 		public void SetSkin (JwSkinPackage pkg) {
 			GetBackground(pkg);
 
+			FullScreenMargin = double.Parse(pkg.GetSettingValue(ControlBarComponent, "margin") ?? "0.0");
+			TargetFontSize = double.Parse(pkg.GetSettingValue(ControlBarComponent, "fontsize") ?? "10.0");
+
 			var layout = new ControlBarLayout(pkg);
 			BuildControls(pkg, layout);
-
-			// todo: margin on full-screen, other settings
-			FullScreenMargin = double.Parse(pkg.GetSettingValue(ControlBarComponent, "margin") ?? "0.0");
 
 			UpdateFullScreenButtonState(null, null);
 			UpdateSoundButtonState();
@@ -69,11 +70,11 @@ namespace ExampleControls {
 
 					case ControlBarElement.ElementType.Text:
 						if (element.Name == "elapsed") {
-							elapsedText = new JwElapsedText { Background = backgroundBrush };
+							elapsedText = new JwElapsedText { Background = backgroundBrush, FontSize = TargetFontSize };
 							c = elapsedText;
 							players.EachPlayer(p => players.AddBinding(p, elapsedText));
 						} else if (element.Name == "duration") {
-							durationText = new JwDurationText { Background = backgroundBrush };
+							durationText = new JwDurationText { Background = backgroundBrush, FontSize = TargetFontSize };
 							c = durationText;
 							players.EachPlayer(p => players.AddBinding(p, durationText));
 						} else {

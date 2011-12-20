@@ -18,6 +18,12 @@ namespace ExampleControls {
 			}
 		}
 
+		public new double FontSize {
+			set {
+				DurationTime.FontSize = value;
+			}
+		}
+
 		public void PlaylistChanged(Playlist NewPlaylist) { }
 		public void StateChanged(PlayerStatus NewStatus) { }
 		public void StatusUpdate(PlayerStatus NewStatus) {
