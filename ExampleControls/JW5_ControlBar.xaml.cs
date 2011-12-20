@@ -23,7 +23,7 @@ namespace ExampleControls {
 		ImageHoverButton normalScreenButton;
 		ImageHoverButton muteButton;
 		ImageHoverButton unmuteButton;
-
+		ImageBrush backgroundBrush;
 
 		public JW5_ControlBar () {
 			InitializeComponent();
@@ -38,10 +38,11 @@ namespace ExampleControls {
 
 		#region Skinning
 		public void SetSkin (JwSkinPackage pkg) {
+			GetBackground(pkg);
+
 			var layout = new ControlBarLayout(pkg);
 			BuildControls(pkg, layout);
 
-			SetBackground(pkg);
 			// todo: margin on full-screen, other settings
 			FullScreenMargin = double.Parse(pkg.GetSettingValue(ControlBarComponent, "margin") ?? "0.0");
 
@@ -50,12 +51,10 @@ namespace ExampleControls {
 			ShowPlayButton();
 		}
 
-		void SetBackground(JwSkinPackage pkg) {
+		void GetBackground (JwSkinPackage pkg) {
 			var img = pkg.GetNamedElement(ControlBarComponent, "background");
 			if (img == null) return;
-
-			var bgBrush = new ImageBrush{ImageSource = img, Stretch = Stretch.Fill};
-			LayoutRoot.Background = bgBrush;
+			backgroundBrush = new ImageBrush { ImageSource = img, Stretch = Stretch.Fill };
 		}
 
 		void BuildControls(JwSkinPackage pkg, ControlBarLayout layout) {
@@ -70,11 +69,11 @@ namespace ExampleControls {
 
 					case ControlBarElement.ElementType.Text:
 						if (element.Name == "elapsed") {
-							elapsedText = new JwElapsedText();
+							elapsedText = new JwElapsedText { Background = backgroundBrush };
 							c = elapsedText;
 							players.EachPlayer(p => players.AddBinding(p, elapsedText));
 						} else if (element.Name == "duration") {
-							durationText = new JwDurationText();
+							durationText = new JwDurationText { Background = backgroundBrush };
 							c = durationText;
 							players.EachPlayer(p => players.AddBinding(p, durationText));
 						} else {
@@ -88,15 +87,21 @@ namespace ExampleControls {
 						break;
 
 					case ControlBarElement.ElementType.Button:
-						c = BindButton(element, pkg);
+						var btn = BindButton(element, pkg);
+						btn.Background = backgroundBrush;
+						c = btn;
 						break;
 
 					case ControlBarElement.ElementType.TimeSlider:
-						c = BuildTimeSlider(pkg);
+						var tsl = BuildTimeSlider(pkg);
+						tsl.Background = backgroundBrush;
+						c = tsl;
 						break;
 
 					case ControlBarElement.ElementType.VolumeSlider:
-						c = BuildVolumeSlider(pkg);
+						var vsl = BuildVolumeSlider(pkg);
+						vsl.Background = backgroundBrush;
+						c = vsl;
 						break;
 
 					default:
@@ -109,7 +114,7 @@ namespace ExampleControls {
 			}
 		}
 
-		FrameworkElement BindButton(ControlBarElement element, JwSkinPackage pkg) {
+		ImageHoverButton BindButton (ControlBarElement element, JwSkinPackage pkg) {
 			var btn = new ImageHoverButton();
 			pkg.BindHoverButton(btn, ControlBarComponent, element.ElementName(), element.ElementName() + "Over");
 			btn.Clicked += GetBinding(element.Name);
@@ -148,7 +153,7 @@ namespace ExampleControls {
 			}
 		}
 
-		FrameworkElement BuildVolumeSlider(JwSkinPackage pkg) {
+		JwSliderHorizontal BuildVolumeSlider (JwSkinPackage pkg) {
 			volumeSlider = new JwSliderHorizontal();
 			volumeSlider.SetSkin(
 				pkg.GetNamedElement(ControlBarComponent, "volumeSliderRail"),
@@ -173,7 +178,7 @@ namespace ExampleControls {
 			UpdateSoundButtonState();
 		}
 
-		FrameworkElement BuildTimeSlider(JwSkinPackage pkg) {
+		JwSliderHorizontal BuildTimeSlider (JwSkinPackage pkg) {
 			timeSlider = new JwSliderHorizontal();
 			timeSlider.AutoScale = true;
 			timeSlider.SetSkin(

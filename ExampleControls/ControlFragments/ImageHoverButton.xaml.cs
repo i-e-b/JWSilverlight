@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using jwSkinLoader;
 
@@ -24,6 +25,12 @@ namespace ExampleControls {
 			set {
 				Out.Source = value;
 				Resize();
+			}
+		}
+
+		public new Brush Background {
+			set {
+				LayoutRoot.Background = value;
 			}
 		}
 

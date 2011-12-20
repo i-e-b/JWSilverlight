@@ -33,7 +33,7 @@ namespace ExampleControls {
 			var component = pkg.GetComponent("controlbar");
 			var layout = component.Elements("layout").ToArray();
 
-			elements.Add(ControlBarElement.Button("capLeft"));
+			elements.Add(ControlBarElement.Divider("capLeft"));
 			if (layout.Length < 1) {
 				SetupDefaults();
 			} else {
@@ -41,7 +41,7 @@ namespace ExampleControls {
 				ReadPlaceholders(layout[0], "center");
 				ReadPlaceholders(layout[0], "right");
 			}
-			elements.Add(ControlBarElement.Button("capRight"));
+			elements.Add(ControlBarElement.Divider("capRight"));
 
 			InjectImplicitButton("pause", "play");
 			InjectImplicitButton("normalscreen", "fullscreen");

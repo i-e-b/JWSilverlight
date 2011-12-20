@@ -12,6 +12,12 @@ namespace ExampleControls {
 			players = new ComposerControlHelper();
 		}
 
+		public new Brush Background {
+			set {
+				LayoutRoot.Background = value;
+			}
+		}
+
 		public void PlaylistChanged(Playlist NewPlaylist) { }
 		public void StateChanged(PlayerStatus NewStatus) { }
 		public void StatusUpdate(PlayerStatus NewStatus) {
