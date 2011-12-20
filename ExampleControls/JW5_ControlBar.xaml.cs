@@ -18,10 +18,18 @@ namespace ExampleControls {
 		JwSliderHorizontal timeSlider;
 		ImageHoverButton playButton;
 		ImageHoverButton pauseButton;
+		ImageHoverButton fullScreenButton;
+		ImageHoverButton normalScreenButton;
 
 		public JW5_ControlBar () {
 			InitializeComponent();
 			players = new ComposerControlHelper();
+			BindFullScreenEvents();
+		}
+
+		void BindFullScreenEvents() { 
+			if (Application.Current == null) return;
+			Application.Current.Host.Content.FullScreenChanged+=UpdateFullScreenButtonState;
 		}
 
 		#region Skinning
@@ -32,7 +40,8 @@ namespace ExampleControls {
 			SetBackground(pkg);
 			// todo: margin on full-screen.
 
-
+			UpdateFullScreenButtonState(null, null);
+			ShowPlayButton();
 		}
 
 		void SetBackground(JwSkinPackage pkg) {
@@ -102,6 +111,9 @@ namespace ExampleControls {
 			if (element.Name == "play") playButton = btn;
 			if (element.Name == "pause") pauseButton = btn;
 
+			if (element.Name == "fullscreen") fullScreenButton = btn;
+			if (element.Name == "normalscreen") normalScreenButton = btn;
+
 			return btn;
 		}
 
@@ -111,6 +123,9 @@ namespace ExampleControls {
 					return Play;
 				case "pause":
 					return Pause;
+				case "fullscreen":
+				case "normalscreen":
+					return SwitchFullScreen;
 				default:
 					return Ignore;
 			}
@@ -119,6 +134,17 @@ namespace ExampleControls {
 		void Play (object sender, MouseButtonEventArgs e) { players.EachPlayer(p => p.Play()); }
 		void Pause (object sender, MouseButtonEventArgs e) { players.EachPlayer(p => p.Pause()); }
 		void Ignore (object sender, MouseButtonEventArgs e) { }
+		void SwitchFullScreen (object sender, MouseButtonEventArgs e) {
+			if (Application.Current == null) return;
+
+			if (Application.Current.Host.Content.IsFullScreen) {
+				Application.Current.Host.Content.IsFullScreen = false;
+			} else {
+				players.EachPlayer(p => p.Pause());
+				Application.Current.Host.Content.IsFullScreen = true;
+				players.EachPlayer(p => p.Play());
+			}
+		}
 
 		FrameworkElement BuildVolumeSlider(JwSkinPackage pkg) {
 			// todo: bind events
@@ -187,16 +213,39 @@ namespace ExampleControls {
 
 			switch (NewStatus.CurrentPlayState) {
 				case SmoothStreamingMediaElementState.Playing:
-					playButton.Visibility = Visibility.Collapsed;
-					pauseButton.Visibility = Visibility.Visible;
+					ShowPauseButton();
 					break;
 
 				default:
-					playButton.Visibility = Visibility.Visible;
-					pauseButton.Visibility = Visibility.Collapsed;
+					ShowPlayButton();
 					break;
 			}
 		}
+
+		void ShowPlayButton () {
+			if (pauseButton == null || playButton == null) return;
+			playButton.Visibility = Visibility.Visible;
+			pauseButton.Visibility = Visibility.Collapsed;
+		}
+
+		void ShowPauseButton() {
+			if (pauseButton == null || playButton == null) return;
+			playButton.Visibility = Visibility.Collapsed;
+			pauseButton.Visibility = Visibility.Visible;
+		}
+
+		void UpdateFullScreenButtonState(object sender, EventArgs e) {
+			if (Application.Current == null) return;
+			if (fullScreenButton == null || normalScreenButton == null) return;
+			if (Application.Current.Host.Content.IsFullScreen) {
+				fullScreenButton.Visibility = Visibility.Collapsed;
+				normalScreenButton.Visibility = Visibility.Visible;
+			} else {
+				normalScreenButton.Visibility = Visibility.Collapsed;
+				fullScreenButton.Visibility = Visibility.Visible;
+			}
+		}
+
 		public void AddBinding (IPlayer PlayerToControl) {
 			players.AddBinding(PlayerToControl, this);
 			if (elapsedText != null) players.AddBinding(PlayerToControl, elapsedText); 

@@ -43,22 +43,49 @@ namespace ExampleControls {
 			}
 			elements.Add(ControlBarElement.Button("capRight"));
 
-			// if no pause button defined, add one after the play button (if there is one)
-			if (!elements.Any(e => (e.Type == ControlBarElement.ElementType.Button) && (e.Name == "pause"))) {
-				for (var i = 0; i < elements.Count; i++) {
-					if ((elements[i].Type != ControlBarElement.ElementType.Button) || (elements[i].Name != "play")) continue;
-					elements.Insert(i, ControlBarElement.Button("pause"));
-					break;
-				}
-			}
+			InjectImplicitButton("pause", "play");
+			InjectImplicitButton("normalscreen", "fullscreen");
 
+			RemoveUnrenderableElements(pkg);
+			RemoveRepeatedDividers();
+		}
+
+		/// <summary>
+		/// If two or more dividers are placed with no other elements between then
+		/// replace with a single divider
+		/// </summary>
+		void RemoveRepeatedDividers() {
+			for (var i = 1; i < elements.Count; i++) {
+				if (elements[i].Type != ControlBarElement.ElementType.Divider
+					|| elements[i - 1].Type != ControlBarElement.ElementType.Divider) continue;
+
+				elements.RemoveAt(i);
+				i--;
+			}
+		}
+
+		/// <summary>
+		/// if no implicit button defined, add one after the target button (if there is one)
+		/// </summary>
+		void InjectImplicitButton (string implicitButton, string targetButton) {
+			if (elements.Any(e => (e.Type == ControlBarElement.ElementType.Button) && (e.Name == implicitButton))) return;
+			for (var i = 0; i < elements.Count; i++) {
+				if ((elements[i].Type != ControlBarElement.ElementType.Button) || (elements[i].Name != targetButton)) continue;
+				elements.Insert(i, ControlBarElement.Button(implicitButton));
+				break;
+			}
+		}
+
+		/// <summary>
+		/// If elements are declared, but have no graphics, we won't try to render them.
+		/// </summary>
+		void RemoveUnrenderableElements(JwSkinPackage pkg) {
 			for (var i = 0; i < elements.Count; i++) {
 				if (elements[i].Type != ControlBarElement.ElementType.Button) continue;
-				
-				if (!pkg.HasNamedElement("controlbar", elements[i].ElementName())) {
-					elements.RemoveAt(i);
-					i--;
-				}
+				if (pkg.HasNamedElement("controlbar", elements[i].ElementName())) continue;
+
+				elements.RemoveAt(i);
+				i--;
 			}
 		}
 
@@ -69,7 +96,7 @@ namespace ExampleControls {
 				var width = item.AttributeValue("width");
 				switch (item.Name.LocalName.ToLower()) {
 					case "button":
-						if (name != null) elements.Add(ControlBarElement.Button(name));
+						if (name != null && name != "blank") elements.Add(ControlBarElement.Button(name));
 						break;
 
 					case "text":
