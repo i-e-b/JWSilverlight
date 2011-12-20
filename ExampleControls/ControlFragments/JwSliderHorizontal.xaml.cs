@@ -67,8 +67,8 @@ namespace ExampleControls {
 
 			if (AutoScale) return;
 
-			Width = Max(rail.PixelWidth, buffer.PixelWidth, progress.PixelWidth);
-			Height = Max(rail.PixelHeight, buffer.PixelHeight, progress.PixelHeight);
+			LayoutRoot.Width = Max(rail.PixelWidth, buffer.PixelWidth, progress.PixelWidth);
+			LayoutRoot.Height = Max(rail.PixelHeight, buffer.PixelHeight, progress.PixelHeight);
 		}
 
 		static int Max (params int[] values) { return values.Max(); }

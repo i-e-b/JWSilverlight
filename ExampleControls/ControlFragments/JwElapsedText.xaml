@@ -5,8 +5,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400">
-    
-    <Grid x:Name="LayoutRoot">
-    	<TextBlock x:Name="ElapsedTime" Margin="0" TextWrapping="Wrap" Text="00:00" FontFamily="Arial" Foreground="White" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="6,0" Width="Auto" FontSize="10" FontWeight="Bold"/>
+
+    <Grid x:Name="LayoutRoot" Margin="4,0">
+    	<TextBlock x:Name="ElapsedTime" Margin="0" TextWrapping="Wrap" Text="00:00" FontFamily="Arial" Foreground="White" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Width="Auto" FontSize="10" FontWeight="Bold"/>
     </Grid>
 </UserControl>

@@ -6,7 +6,7 @@
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400" SizeChanged="UserControl_SizeChanged">
     
-    <Grid x:Name="LayoutRoot">
+    <Grid x:Name="LayoutRoot" Margin="4,0">
     	<Grid.ColumnDefinitions>
     		<ColumnDefinition Width="Auto"/>
     		<ColumnDefinition/>
