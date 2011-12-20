@@ -20,6 +20,8 @@ namespace ExampleControls {
 		ImageHoverButton pauseButton;
 		ImageHoverButton fullScreenButton;
 		ImageHoverButton normalScreenButton;
+		ImageHoverButton muteButton;
+		ImageHoverButton unmuteButton;
 
 		public JW5_ControlBar () {
 			InitializeComponent();
@@ -38,9 +40,10 @@ namespace ExampleControls {
 			BuildControls(pkg, layout);
 
 			SetBackground(pkg);
-			// todo: margin on full-screen.
+			// todo: margin on full-screen, other settings
 
 			UpdateFullScreenButtonState(null, null);
+			UpdateSoundButtonState();
 			ShowPlayButton();
 		}
 
@@ -114,6 +117,9 @@ namespace ExampleControls {
 			if (element.Name == "fullscreen") fullScreenButton = btn;
 			if (element.Name == "normalscreen") normalScreenButton = btn;
 
+			if (element.Name == "mute") muteButton = btn;
+			if (element.Name == "unmute") unmuteButton = btn;
+
 			return btn;
 		}
 
@@ -126,28 +132,20 @@ namespace ExampleControls {
 				case "fullscreen":
 				case "normalscreen":
 					return SwitchFullScreen;
+				case "prev":
+					return PrevClip;
+				case "next":
+					return NextClip;
+				case "mute":
+					return Mute;
+				case "unmute":
+					return Unmute;
 				default:
 					return Ignore;
 			}
 		}
 
-		void Play (object sender, MouseButtonEventArgs e) { players.EachPlayer(p => p.Play()); }
-		void Pause (object sender, MouseButtonEventArgs e) { players.EachPlayer(p => p.Pause()); }
-		void Ignore (object sender, MouseButtonEventArgs e) { }
-		void SwitchFullScreen (object sender, MouseButtonEventArgs e) {
-			if (Application.Current == null) return;
-
-			if (Application.Current.Host.Content.IsFullScreen) {
-				Application.Current.Host.Content.IsFullScreen = false;
-			} else {
-				players.EachPlayer(p => p.Pause());
-				Application.Current.Host.Content.IsFullScreen = true;
-				players.EachPlayer(p => p.Play());
-			}
-		}
-
 		FrameworkElement BuildVolumeSlider(JwSkinPackage pkg) {
-			// todo: bind events
 			volumeSlider = new JwSliderHorizontal();
 			volumeSlider.SetSkin(
 				pkg.GetNamedElement(ControlBarComponent, "volumeSliderRail"),
@@ -164,7 +162,6 @@ namespace ExampleControls {
 		}
 
 		FrameworkElement BuildTimeSlider(JwSkinPackage pkg) {
-			// todo: bind events
 			timeSlider = new JwSliderHorizontal();
 			timeSlider.AutoScale = true;
 			timeSlider.SetSkin(
@@ -202,6 +199,23 @@ namespace ExampleControls {
 		#endregion
 
 		#region Player controls
+		void Play (object sender, MouseButtonEventArgs e) { players.EachPlayer(p => p.Play()); }
+		void Pause (object sender, MouseButtonEventArgs e) { players.EachPlayer(p => p.Pause()); }
+		void PrevClip (object sender, MouseButtonEventArgs e) { players.EachPlayer(p => p.GoToPlaylistIndex(p.CurrentIndex - 1)); }
+		void NextClip (object sender, MouseButtonEventArgs e) { players.EachPlayer(p => p.GoToPlaylistIndex(p.CurrentIndex + 1)); }
+		void Ignore (object sender, MouseButtonEventArgs e) { }
+		void SwitchFullScreen (object sender, MouseButtonEventArgs e) {
+			if (Application.Current == null) return;
+
+			if (Application.Current.Host.Content.IsFullScreen) {
+				Application.Current.Host.Content.IsFullScreen = false;
+			} else {
+				players.EachPlayer(p => p.Pause());
+				Application.Current.Host.Content.IsFullScreen = true;
+				players.EachPlayer(p => p.Play());
+			}
+		}
+
 		public void StateChanged (PlayerStatus NewStatus) {
 			StatusUpdate(NewStatus);
 		}
@@ -243,6 +257,27 @@ namespace ExampleControls {
 			} else {
 				normalScreenButton.Visibility = Visibility.Collapsed;
 				fullScreenButton.Visibility = Visibility.Visible;
+			}
+		}
+
+		void Mute (object sender, MouseButtonEventArgs e) {
+			players.EachPlayer(p => p.Mute = true);
+			UpdateSoundButtonState();
+		}
+
+		void Unmute (object sender, MouseButtonEventArgs e) {
+			players.EachPlayer(p => p.Mute = false);
+			UpdateSoundButtonState();
+		}
+
+		void UpdateSoundButtonState () {
+			if (muteButton == null || unmuteButton == null) return;
+			if (players.Any(p => p.Mute)) {
+				muteButton.Visibility = Visibility.Collapsed;
+				unmuteButton.Visibility = Visibility.Visible;
+			} else {
+				muteButton.Visibility = Visibility.Visible;
+				unmuteButton.Visibility = Visibility.Collapsed;
 			}
 		}
 

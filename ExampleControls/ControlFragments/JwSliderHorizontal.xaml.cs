@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace ExampleControls {
@@ -75,12 +76,15 @@ namespace ExampleControls {
 		static void SetWithHeight(Image dst, BitmapImage src) {
 			if (src == null) return;
 			dst.Source = src;
+			dst.Stretch = Stretch.Fill;
 			dst.Height = src.PixelHeight;
 		}
 
 		static void SetWithHeightAndWidth (Image dst, BitmapImage src) {
 			if (src == null) return;
 			dst.Source = src;
+			dst.Stretch = Stretch.None;
+			dst.HorizontalAlignment = HorizontalAlignment.Left;
 			dst.Height = src.PixelHeight;
 			dst.Width = src.PixelWidth;
 		}

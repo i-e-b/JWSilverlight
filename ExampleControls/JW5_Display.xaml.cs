@@ -79,7 +79,7 @@ namespace ExampleControls {
 			rot.CenterX = BufferIcon.Width / 2.0;
 			rot.CenterY = BufferIcon.Height / 2.0;
 
-			var bgHex = Tools.HexToColor(pkg.GetSettingValue(componentName, "backgroundcolor") ?? "0x000000");
+			var bgHex = (pkg.GetSettingValue(componentName, "backgroundcolor") ?? "0x000000").HexToColor();
 
 			players.EachPlayer(p => p.BackgroundColor = bgHex);
 			PlayIcon.Clicked += PlayIconClicked;

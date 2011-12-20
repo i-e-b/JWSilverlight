@@ -45,6 +45,7 @@ namespace ExampleControls {
 
 			InjectImplicitButton("pause", "play");
 			InjectImplicitButton("normalscreen", "fullscreen");
+			InjectImplicitButton("unmute", "mute");
 
 			RemoveUnrenderableElements(pkg);
 			RemoveRepeatedDividers();

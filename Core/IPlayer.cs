@@ -127,6 +127,10 @@ namespace ComposerCore {
 
         TimeSpan CurrentSliderPosition {get; set;}
 
+		/// <summary>
+		/// If true, audio output will be silenced.
+		/// </summary>
+		bool Mute { get; set; }
 		#endregion
 
 		#region Setup and Hook-up Methods (connecting players to controllers, setting playlists)

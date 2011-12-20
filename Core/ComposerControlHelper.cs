@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ComposerCore {
 	/// <summary>
@@ -52,5 +53,7 @@ namespace ComposerCore {
 		public void EachPlayer(Action<IPlayer> action) {
 			foreach (var p in PlayerList) action(p);
 		}
+
+		public bool Any(Func<IPlayer, bool> predicate) { return PlayerList.Any(predicate); }
 	}
 }

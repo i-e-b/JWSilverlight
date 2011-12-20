@@ -52,6 +52,11 @@ namespace ComposerCore {
 
 		public TimeSpan CurrentSliderPosition { get; set; }
 
+		public bool Mute {
+			get { return MediaPlayer.IsMuted; }
+			set { MediaPlayer.IsMuted = value; }
+		}
+
 		/// <summary>
 		/// Gets or Sets the player's audio volume. Range is 0..1
 		/// </summary>

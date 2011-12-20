@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
+using System.Windows.Media;
 using System.Xml.Linq;
 using ICSharpCode.SharpZipLib.Zip;
 
@@ -10,6 +12,14 @@ namespace jwSkinLoader {
 			if (attr == null) return null;
 			return attr.Value;
 		}
+		public static Color HexToColor (this string hex) {
+			if (hex.Length != 8) return Colors.Black;
+			var r = byte.Parse(hex.Substring(2, 2), NumberStyles.HexNumber);
+			var g = byte.Parse(hex.Substring(4, 2), NumberStyles.HexNumber);
+			var b = byte.Parse(hex.Substring(6, 2), NumberStyles.HexNumber);
+			return Color.FromArgb(255, r, g, b);
+		}
+
 		
 		public static MemoryStream ReadAll (this ZipInputStream zip) {
 			var buffer = new byte[2048];
