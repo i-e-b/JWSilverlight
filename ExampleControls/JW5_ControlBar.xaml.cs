@@ -11,6 +11,7 @@ namespace ExampleControls {
 		public void CaptionFired (TimelineMarker Caption) { }
 		public void ErrorOccured (Exception Error) { }
 		private readonly ComposerControlHelper players;
+		const string ControlBarComponent = "controlbar";
 
 		public JW5_ControlBar () {
 			InitializeComponent();
@@ -31,9 +32,10 @@ namespace ExampleControls {
 
 		public void SetSkin (JwSkinPackage pkg) {
 			var layout = new ControlBarLayout(pkg);
-			// todo: bind controls to events & player!
-			// todo: background image & settings
+			BuildControls(pkg, layout);
+		}
 
+		void BuildControls(JwSkinPackage pkg, ControlBarLayout layout) {
 			SetColumnDefinitions(layout);
 			int i = 0;
 			foreach (var element in layout.Elements) {
@@ -44,18 +46,18 @@ namespace ExampleControls {
 						i++; continue;
 
 					case ControlBarElement.ElementType.Text:
-						//c = new TextBoundControl(...);
+						// todo: ... c = new TextBoundControl(...); ...
 						c = new TextBlock { Text = element.Name };
 						break;
 
 					case ControlBarElement.ElementType.Divider:
 						c = new Image();
-						pkg.BindAndResize((Image)c, "controlbar", element.Name ?? "divider");
+						pkg.BindAndResize((Image)c, ControlBarComponent, element.Name ?? "divider");
 						break;
 
 					case ControlBarElement.ElementType.Button:
 						c = new ImageHoverButton();
-						pkg.BindHoverButton((ImageHoverButton)c, "controlbar", element.ElementName(), element.ElementName() + "Over");
+						pkg.BindHoverButton((ImageHoverButton)c, ControlBarComponent, element.ElementName(), element.ElementName() + "Over");
 						// todo: bind to an event!
 						break;
 
@@ -77,14 +79,39 @@ namespace ExampleControls {
 			}
 		}
 
-		FrameworkElement BuildVolumeSlider(JwSkinPackage pkg) { 
-			// todo: build volume slider
-			return new TextBlock { Text = "Vol" };
+		FrameworkElement BuildVolumeSlider(JwSkinPackage pkg) {
+			// todo: bind events
+			var slider = new JwSliderHorizontal();
+			slider.SetSkin(
+				pkg.GetNamedElement(ControlBarComponent, "volumeSliderRail"),
+				pkg.GetNamedElement(ControlBarComponent, "volumeSliderBuffer"),
+				pkg.GetNamedElement(ControlBarComponent, "volumeSliderProgress"),
+				pkg.GetNamedElement(ControlBarComponent, "volumeSliderThumb"),
+				pkg.GetNamedElement(ControlBarComponent, "volumeSliderCapLeft"),
+				pkg.GetNamedElement(ControlBarComponent, "volumeSliderCapRight"));
+
+			slider.BufferProgress = 0.75;
+			slider.SliderProgress = 0.25;
+			slider.Margin = new Thickness(0);
+			return slider;
 		}
 
 		FrameworkElement BuildTimeSlider(JwSkinPackage pkg) {
-			// todo: build time slider
-			return new TextBlock { Text = "TimeSliderHere" };
+			// todo: bind events
+			var slider = new JwSliderHorizontal();
+			slider.AutoScale = true;
+			slider.SetSkin(
+				pkg.GetNamedElement(ControlBarComponent, "timeSliderRail"),
+				pkg.GetNamedElement(ControlBarComponent, "timeSliderBuffer"),
+				pkg.GetNamedElement(ControlBarComponent, "timeSliderProgress"),
+				pkg.GetNamedElement(ControlBarComponent, "timeSliderThumb"),
+				pkg.GetNamedElement(ControlBarComponent, "timeSliderCapLeft"),
+				pkg.GetNamedElement(ControlBarComponent, "timeSliderCapRight"));
+
+			slider.BufferProgress = 0.75;
+			slider.SliderProgress = 0.25;
+			slider.Margin = new Thickness(0);
+			return slider;
 		}
 
 		void SetColumnDefinitions(ControlBarLayout layout) {

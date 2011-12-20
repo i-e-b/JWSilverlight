@@ -40,15 +40,20 @@ namespace ExampleControls {
 		public bool AutoScale { get; set; }
 
 		public void SetSkin (BitmapImage rail, BitmapImage buffer, BitmapImage progress, BitmapImage thumb, BitmapImage leftCap, BitmapImage rightCap) {
-			SetWithHeight(Rail, rail);
-			SetWithHeight(Buffer, buffer);
-			SetWithHeight(Progress, progress);
-			SetWithHeight(Thumb, thumb);
-			SetWithHeight(LeftCap, leftCap);
-			SetWithHeight(RightCap, rightCap);
 
-			LeftCap.Width = leftCap.PixelWidth;
-			RightCap.Width = rightCap.PixelWidth;
+			if (AutoScale) {
+				SetWithHeight(Rail, rail);
+				SetWithHeight(Buffer, buffer);
+				SetWithHeight(Progress, progress);
+			} else {
+				SetWithHeightAndWidth(Rail, rail);
+				SetWithHeightAndWidth(Buffer, buffer);
+				SetWithHeightAndWidth(Progress, progress);
+			}
+
+			SetWithHeightAndWidth(Thumb, thumb);
+			SetWithHeightAndWidth(LeftCap, leftCap);
+			SetWithHeightAndWidth(RightCap, rightCap);
 
 			if (AutoScale) return;
 
@@ -64,16 +69,24 @@ namespace ExampleControls {
 			dst.Height = src.PixelHeight;
 		}
 
+		static void SetWithHeightAndWidth (Image dst, BitmapImage src) {
+			if (src == null) return;
+			dst.Source = src;
+			dst.Height = src.PixelHeight;
+			dst.Width = src.PixelWidth;
+		}
+
 		void UserControl_SizeChanged(object sender, SizeChangedEventArgs e) {
 			ResizeBars();
 		}
 
 		void ResizeBars () {
-			if (!AutoScale) return;
+			if (!AutoScale) return; // todo: trim/mask if not auto scale.
 
-			Buffer.Width = Width * BufferProgress;
-			Progress.Width = Width * SliderProgress;
-			Thumb.Margin = new Thickness(Width * SliderProgress, 0, 0, 0);
+			Buffer.Width = ActualWidth * BufferProgress;
+			Progress.Width = ActualWidth * SliderProgress;
+			if (ActualWidth > 0)
+				Thumb.Margin = new Thickness(ActualWidth * SliderProgress, 0, 0, 0);
 		}
 	}
 }
