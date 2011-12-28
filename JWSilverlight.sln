@@ -5,11 +5,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComposerCore", "Core\Compos
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpZipLib", "SharpZipLib\SharpZipLib.csproj", "{C20AFEE1-A9F6-41F7-AA7E-51F68A26B84A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jwSkinControls", "ExampleControls\jwSkinControls.csproj", "{6DD7E94F-5314-4042-93D0-E4FD4E70444C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jwSkinControls", "jwSkinControls\jwSkinControls.csproj", "{6DD7E94F-5314-4042-93D0-E4FD4E70444C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jwsl_Player", "SkeletonPlayer\jwsl_Player.csproj", "{31FFF8ED-31F2-42CC-B0AE-CF218A9312AD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jwsl_Player", "jwsl_Player\jwsl_Player.csproj", "{31FFF8ED-31F2-42CC-B0AE-CF218A9312AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Web", "SkeletonPlayer.Web\Demo.Web.csproj", "{165D8B54-A1E8-4B0F-9980-6ECC296A21AC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Web", "Demo.Web\Demo.Web.csproj", "{165D8B54-A1E8-4B0F-9980-6ECC296A21AC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platform", "Platform", "{D6280761-B566-4270-839F-60773FDFC804}"
 EndProject

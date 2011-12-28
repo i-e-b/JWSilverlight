@@ -121,7 +121,7 @@
       <Project>{0BA6B194-F022-42DC-BAD0-8846D543FE40}</Project>
       <Name>ComposerCore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ExampleControls\jwSkinControls.csproj">
+    <ProjectReference Include="..\jwSkinControls\jwSkinControls.csproj">
       <Project>{6DD7E94F-5314-4042-93D0-E4FD4E70444C}</Project>
       <Name>jwSkinControls</Name>
     </ProjectReference>
