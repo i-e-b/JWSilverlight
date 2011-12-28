@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using ExampleControls;
 using jwSkinLoader;
 
 namespace JwslPlayer {
@@ -29,10 +31,26 @@ namespace JwslPlayer {
 			DisplayView.AddBinding(Player);
 			DockView.AddBinding(Player);
 			PlaylistView.AddBinding(Player);
+			CaptionView.AddBinding(Player);
+
+			DockView.CaptionVisibilityChanged += DockView_CaptionVisibilityChanged;
 
 			controlBarFader = new OpacityFader(ControlBarView);
 			dockFader = new OpacityFader(DockView);
 			SetFadeTimer();
+		}
+
+		void DockView_CaptionVisibilityChanged(object sender, ToggleVisibilityEventArgs e) {
+			CaptionView.Visibility = e.Visibility;
+			UpdateCaptionsMargin();
+		}
+
+		void UpdateCaptionsMargin() {
+			if (!ControlsAreFaded) {
+				CaptionView.Margin = new Thickness(0, 0, 0, ControlBarView.BarHeight);
+			} else {
+				CaptionView.Margin = new Thickness(0, 0, 0, 0);
+			}
 		}
 
 		void JwSkinPackageSkinPackageReady(object sender, EventArgs e) {
@@ -80,6 +98,7 @@ namespace JwslPlayer {
 
 			ControlsAreFaded = true;
 			controlBarFader.Out(); dockFader.Out();
+			UpdateCaptionsMargin();
 		}
 
 		void UnfadeControls () {
@@ -87,6 +106,7 @@ namespace JwslPlayer {
 
 			ControlsAreFaded = false;
 			controlBarFader.In(); dockFader.In();
+			UpdateCaptionsMargin();
 		}
 
 		private void LayoutRoot_MouseEnter (object sender, System.Windows.Input.MouseEventArgs e) {

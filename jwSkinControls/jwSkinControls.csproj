@@ -81,10 +81,14 @@
     <Reference Include="System.Xml.Linq, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ControlFragments\ToggleVisibilityEventArgs.cs" />
     <Compile Include="ControlFragments\ProportionEventArgs.cs" />
     <Compile Include="ControlBarLayout.cs" />
     <Compile Include="ControlFragments\ImageHoverButton.xaml.cs">
       <DependentUpon>ImageHoverButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="JW5_CaptionText.xaml.cs">
+      <DependentUpon>JW5_CaptionText.xaml</DependentUpon>
     </Compile>
     <Compile Include="JW5_ControlBar.xaml.cs">
       <DependentUpon>JW5_ControlBar.xaml</DependentUpon>
@@ -121,6 +125,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="ControlFragments\ImageHoverButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="JW5_CaptionText.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

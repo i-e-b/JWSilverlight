@@ -6,7 +6,6 @@ using System.Xml;
 using System.Globalization;
 using System.Collections.Generic;
 using System.Xml.Linq;
-using System.Linq;
 using ComposerCore.InnerWorkings;
 
 namespace ComposerCore {
@@ -150,7 +149,7 @@ namespace ComposerCore {
 		}
 		/// <summary>
 		/// Gets the offline video bitrate used for adaptive streaming.
-		/// Note this item is not scriptable
+		/// This item is not scriptable
 		/// </summary>
 		internal long OfflineVideoBitrateInKbps {
 			get {
@@ -450,6 +449,7 @@ namespace ComposerCore {
 		public void LoadCaptionsFromSource (TimeSpan currentPosition) {
 			if (CaptionSource == null) return;
 
+			// todo: reinstate smooth captions, with some intellegence!
 			//var captionUri = new Uri(string.Format(CaptionSource.AbsoluteUri + "&currentPosition={0}", currentPosition));
 			var captionUri = CaptionSource;
 
@@ -461,13 +461,7 @@ namespace ComposerCore {
 					var res = (HttpWebResponse)req.EndGetResponse(callback);
 					XDocument captionXml = XDocument.Load(res.GetResponseStream());
 
-					CaptionItems = captionXml.Descendants()
-						.Where(caption => caption.Name.LocalName.ToLower() == "c")
-						.Select(caption => new CaptionItem {
-							Time = new TimeSpan(0, 0, int.Parse(caption.Descendants().First(time => time.Name.LocalName.ToLower() == "t").Value)),
-							Text = HttpUtility.HtmlDecode(caption.Descendants().First(time => time.Name.LocalName.ToLower() == "v").Value)
-						})
-						.ToList();
+					CaptionItems = CaptionReader.Read(captionXml);
 
 
 				}, webRequest);

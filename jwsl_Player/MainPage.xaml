@@ -20,5 +20,6 @@
 		<ExampleControls:JW5_ControlBar x:Name="ControlBarView" Margin="0"/>
 		<ExampleControls:JW5_Display x:Name="DisplayView" d:LayoutOverrides="Height" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 		<ExampleControls:JW5_Dock x:Name="DockView" d:LayoutOverrides="Width, Height" HorizontalAlignment="Right" Margin="0,16,16,0" VerticalAlignment="Top"/>
+		<ExampleControls:JW5_CaptionText x:Name="CaptionView" Margin="0" d:LayoutOverrides="Height" Visibility="Collapsed"/>
 	</Grid>
 </UserControl>

@@ -15,28 +15,45 @@ namespace ExampleControls {
 	/// </summary>
 	public partial class JW5_Dock : UserControl, IPlayerController, IXmlSkinReader {
 		Playlist lastPlaylist;
+		bool showCaptions;
+		readonly ComposerControlHelper players;
 
-		public void StatusUpdate (PlayerStatus NewStatus) { }
 		public void CaptionFired (TimelineMarker Caption) { }
 		public void ErrorOccured (Exception Error) { }
-		public void AddBinding (IPlayer PlayerToControl) { }
-		public void RemoveBinding (IPlayer PlayerToControl) { }
+
+		public event EventHandler<ToggleVisibilityEventArgs> CaptionVisibilityChanged;
 
 		public JW5_Dock () {
 			InitializeComponent();
 
-			// todo: add caption visibility event, fire with hover button
-			CaptionsButton.Visibility = Visibility.Visible;
-			CaptionsButton.Clicked += CaptionsButton_Clicked;
+			players = new ComposerControlHelper();
+			CaptionsButton.Clicked += CaptionsButtonClicked;
 		}
 
-		void CaptionsButton_Clicked (object sender, MouseButtonEventArgs e) {
-			CaptionsButton.CaptionText = "Subtitles\r\nOn";
+		public void AddBinding (IPlayer PlayerToControl) {
+			players.AddBinding(PlayerToControl, this);
+		}
+
+		public void RemoveBinding (IPlayer PlayerToControl) {
+			players.RemoveBinding(PlayerToControl, this);
+		}
+
+		void CaptionsButtonClicked (object sender, MouseButtonEventArgs e) {
+			showCaptions = !showCaptions;
+			CaptionsButton.CaptionText = "Subtitles\r\n" + (showCaptions ? "On" : "Off");
+			InvokeCaptionVisibilityChanged(showCaptions);
+		}
+		public void InvokeCaptionVisibilityChanged(bool visible) {
+			var handler = CaptionVisibilityChanged;
+			if (handler != null) handler(this, new ToggleVisibilityEventArgs {isVisible = visible});
 		}
 
 		public void PlaylistChanged (Playlist NewPlaylist) { lastPlaylist = NewPlaylist; }
-		public void StateChanged (PlayerStatus NewStatus) {
+		public void StatusUpdate (PlayerStatus NewStatus) {
 			CaptionsButton.Visibility = HasCaptions(NewStatus) ? Visibility.Visible : Visibility.Collapsed;
+		}
+		public void StateChanged (PlayerStatus NewStatus) {
+			StatusUpdate(NewStatus);
 		}
 
 		bool HasCaptions(PlayerStatus NewStatus) {

@@ -681,7 +681,7 @@ window.onbeforeunload = function() {
 
 
 			if (CaptionTimer == null) {
-				CaptionTimer = new DispatcherTimer{Interval = TimeSpan.FromMilliseconds(3000)};
+				CaptionTimer = new DispatcherTimer{Interval = TimeSpan.FromMilliseconds(250)};
 				CaptionTimer.Tick += CaptionTimer_Tick;
 			}
 
@@ -690,6 +690,7 @@ window.onbeforeunload = function() {
 
 		private void CaptionTimer_Tick (object sender, EventArgs e) {
 			if (CurrentItem == null) return;
+			CaptionTimer.Interval = TimeSpan.FromMilliseconds(3000);
 
 			// TODO: fix this for non-live/smooth transcripts!
 			CurrentItem.LoadCaptionsFromSource(CurrentSliderPosition);

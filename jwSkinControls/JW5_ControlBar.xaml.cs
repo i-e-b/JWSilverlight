@@ -33,6 +33,10 @@ namespace ExampleControls {
 			BindFullScreenEvents();
 		}
 
+		public double BarHeight {
+			get { return LayoutRoot.ActualHeight; }
+		}
+
 		void BindFullScreenEvents() { 
 			if (Application.Current == null) return;
 			Application.Current.Host.Content.FullScreenChanged+=UpdateFullScreenButtonState;
