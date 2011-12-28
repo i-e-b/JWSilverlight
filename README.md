@@ -1,6 +1,9 @@
 JW Silverlight
 ==============
 A jw-player compatible Silverlight application.
+Requires Silverlight 3 or above. Can play SmoothStreaming 1 and 1.5 presentations.
+
+Support for captions and playlists to be built-in.
 
 Current Status:
 ---------------
@@ -14,5 +17,9 @@ JW Plugins aren't supported yet.
 
 
 
-being built from http://www.longtailvideo.com/support/jw-player/jw-player-for-flash-v5/14/building-skins
+being built from
+
+* http://www.longtailvideo.com/support/jw-player/jw-player-for-flash-v5/14/building-skins
+* http://www.longtailvideo.com/support/jw-player/jw-player-for-flash-v5/12540/javascript-api-reference
+
 look here for side-by-side: http://developer.longtailvideo.com/trac/testing

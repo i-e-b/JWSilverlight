@@ -17,6 +17,7 @@ namespace JwslPlayer {
 		public double GetMilliseconds () {
 			return helper.PlayerList.First().Status.PlayTime.TotalMilliseconds;
 		}
+
 		[ScriptableMember]
 		public void GotoMilliseconds (double milliseconds) {
 			foreach (var player in helper.PlayerList) {

@@ -85,9 +85,12 @@ namespace jwSkinLoader {
 		}
 
 		public BitmapImage GetNamedElement(string componentName, string elementName) {
-			var element = GetComponent(componentName)
+			var component = GetComponent(componentName);
+			if (component == null) return null;
+
+			var element = component
 				.Elements("elements").Elements("element")
-				.Where(x=> HasAttributeWithValue(x, "name", elementName))
+				.Where(x => HasAttributeWithValue(x, "name", elementName))
 				.FirstOrDefault();
 
 			if (element == null) return null;
