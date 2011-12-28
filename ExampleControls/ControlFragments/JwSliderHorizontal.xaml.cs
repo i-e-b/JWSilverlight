@@ -100,10 +100,14 @@ namespace ExampleControls {
 		}
 
 		void ResizeBars () {
-			Buffer.Width = ActualWidth * BufferProgress;
-			Progress.Width = ActualWidth * SliderProgress;
-			if (ActualWidth > 0)
-				Thumb.Margin = new Thickness(ActualWidth * thumbProg, 0, 0, 0);
+			var realWidth = LayoutRoot.ActualWidth;
+			if (realWidth < 0) realWidth = 0.0;
+
+			Buffer.Width = realWidth * BufferProgress;
+			Progress.Width = realWidth * SliderProgress;
+
+			if (realWidth > 0)
+				Thumb.Margin = new Thickness(realWidth * thumbProg, 0, 0, 0);
 		}
 
 		public void InvokeTargetProportionChanged (double prop) {
