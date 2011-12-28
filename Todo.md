@@ -1,10 +1,7 @@
 Skins
 -----
-* Skins for player
-* badge for subtitles
-* subtitle playing and reading
 * playlist reading and rendering
-* logo plugin rendering
+* logo plugin rendering (link out)
 
 Javascript API
 --------------
