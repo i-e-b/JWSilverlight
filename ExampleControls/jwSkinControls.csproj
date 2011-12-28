@@ -107,9 +107,6 @@
     <Compile Include="ControlFragments\JwSliderHorizontal.xaml.cs">
       <DependentUpon>JwSliderHorizontal.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PrevNextButton.xaml.cs">
-      <DependentUpon>PrevNextButton.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -154,12 +151,6 @@
     <Page Include="ControlFragments\JwSliderHorizontal.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="PrevNextButton.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:MarkupCompilePass1</Generator>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
