@@ -28,9 +28,31 @@ namespace ExampleControls {
 			}
 		}
 
+		public BitmapImage BadgeImage {
+			get { return Badge.Source as BitmapImage; }
+			set {
+				Badge.Source = value;
+				Resize();
+			}
+		}
+
 		public new Brush Background {
 			set {
 				LayoutRoot.Background = value;
+			}
+		}
+
+		public string CaptionText {
+			get { return Caption.Text; }
+			set {
+				Caption.Text = value;
+				Caption.Visibility = string.IsNullOrEmpty(Caption.Text) ? Visibility.Collapsed : Visibility.Visible;
+			}
+		}
+
+		public Color CaptionColor {
+			set {
+				Caption.Foreground = new SolidColorBrush(value);
 			}
 		}
 

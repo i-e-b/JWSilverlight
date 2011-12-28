@@ -450,10 +450,12 @@ namespace ComposerCore {
 		public void LoadCaptionsFromSource (TimeSpan currentPosition) {
 			if (CaptionSource == null) return;
 
-			var captionUri = new Uri(string.Format(CaptionSource.AbsoluteUri + "&currentPosition={0}", currentPosition));
+			//var captionUri = new Uri(string.Format(CaptionSource.AbsoluteUri + "&currentPosition={0}", currentPosition));
+			var captionUri = CaptionSource;
 
 			try {
 				var webRequest = (HttpWebRequest)WebRequest.Create(captionUri);
+
 				webRequest.BeginGetResponse(callback => {
 					var req = (HttpWebRequest)callback.AsyncState;
 					var res = (HttpWebResponse)req.EndGetResponse(callback);

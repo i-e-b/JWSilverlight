@@ -10,7 +10,7 @@ namespace JwslPlayer {
 		string srcPlaylist = "";
 		const double ControlsFadeDelay = 3.0;
 		volatile bool ControlsAreFaded;
-		readonly OpacityFader controlBarFader;
+		readonly OpacityFader controlBarFader, dockFader;
 
 		public MainPage () {
 			InitializeComponent();
@@ -31,6 +31,7 @@ namespace JwslPlayer {
 			PlaylistView.AddBinding(Player);
 
 			controlBarFader = new OpacityFader(ControlBarView);
+			dockFader = new OpacityFader(DockView);
 			SetFadeTimer();
 		}
 
@@ -65,41 +66,41 @@ namespace JwslPlayer {
 
 		void FadeDispatcherTimerTick(object sender, EventArgs e) {
 			if (Dispatcher.CheckAccess()) {
-				FadeControlBar();
+				FadeControls();
 			} else {
-				Dispatcher.BeginInvoke(FadeControlBar);
+				Dispatcher.BeginInvoke(FadeControls);
 			}
 		}
 
-		void FadeControlBar() {
+		void FadeControls() {
 			if (ControlsAreFaded) return;
 
 			if (!Player.IsPlayerActive())
 				return;
 
 			ControlsAreFaded = true;
-			controlBarFader.Out();
+			controlBarFader.Out(); dockFader.Out();
 		}
 
-		void UnfadeControlBar () {
+		void UnfadeControls () {
 			if (!ControlsAreFaded) return;
 
 			ControlsAreFaded = false;
-			controlBarFader.In();
+			controlBarFader.In(); dockFader.In();
 		}
 
 		private void LayoutRoot_MouseEnter (object sender, System.Windows.Input.MouseEventArgs e) {
-			UnfadeControlBar();
+			UnfadeControls();
 			fadeTimer.Start();
 		}
 
 		private void LayoutRoot_MouseLeave (object sender, System.Windows.Input.MouseEventArgs e) {
-			FadeControlBar();
+			FadeControls();
 			fadeTimer.Stop();
 		}
 
 		private void LayoutRoot_MouseMove (object sender, System.Windows.Input.MouseEventArgs e) {
-			UnfadeControlBar();
+			UnfadeControls();
 			fadeTimer.Stop();
 			fadeTimer.Start();
 		}
