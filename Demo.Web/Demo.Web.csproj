@@ -47,6 +47,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="captions_tt.xml" />
+    <Content Include="Scripts\jwplayer.embed.silverlight.js" />
+    <Content Include="Scripts\jwplayer.api.js" />
+    <Content Include="Scripts\jwplayer.embed.flash.js" />
+    <Content Include="Scripts\jwplayer.embed.html5.js" />
+    <Content Include="Scripts\jwplayer.min.js" />
     <Content Include="thumbnail.jpg" />
     <Content Include="ClientBin\jwslPlayer.xap" />
     <Content Include="ExampleSkins\Read Me.txt" />

@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SkeletonPlayer.Web")]
+[assembly: AssemblyTitle("Demo.Web")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Iain Ballard")]
-[assembly: AssemblyProduct("SkeletonPlayer.Web")]
+[assembly: AssemblyProduct("Demo.Web")]
 [assembly: AssemblyCopyright("Copyright © Iain Ballard 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

@@ -28,6 +28,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{
 		Todo.md = Todo.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Javascript", "Javascript", "{4F8CE1D2-40EF-43D4-9022-EB7EA2F67153}"
+	ProjectSection(SolutionItems) = preProject
+		Demo.Web\Scripts\jwplayer.embed.silverlight.js = Demo.Web\Scripts\jwplayer.embed.silverlight.js
+		Demo.Web\Scripts\jwplayer.min.js = Demo.Web\Scripts\jwplayer.min.js
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
