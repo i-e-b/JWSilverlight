@@ -39,8 +39,8 @@
 
 		<div id="container">Loading the player...</div>
 
-		<a href="#" onclick="jwplayer().pause()">Pause</a>
-		<a href="#" onclick="jwplayer().play()">Play</a>
+		<a href="#" onclick="Pause()">Pause</a>
+		<a href="#" onclick="Play()">Play</a>
 
 		<script type="text/javascript" src="/Scripts/jwplayer.min.js"></script>
 		<script type="text/javascript" src="/Scripts/jwplayer.embed.silverlight.js"></script>
@@ -58,10 +58,16 @@
 			});
 			
 			function Play() {
-				document.getElementById("slPlugin").content.jwplayer.Play();
+				// should be:
+				// jwplayer().play()
+				// but is:
+				jwplayer().container.content.jwplayer.Play()
 			}
 			function Pause() {
-				document.getElementById("slPlugin").content.jwplayer.Pause();
+				// should be:
+				// jwplayer().pause()
+				// but is:
+				jwplayer().container.content.jwplayer.Pause()
 			}
 		</script>
 	</form>

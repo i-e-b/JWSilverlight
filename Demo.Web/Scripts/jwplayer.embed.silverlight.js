@@ -90,12 +90,12 @@
 		};
 
 		function jsonToFlashvars(json) {
-			var flashvars = json.netstreambasepath ? '' : 'netstreambasepath=' + encodeURIComponent(window.location.href.split("#")[0]) + '&';
+			var flashvars = json.netstreambasepath ? '' : 'netstreambasepath=' + encodeURIComponent(window.location.href.split("#")[0]) + ', ';
 			for (var key in json) {
 				if (typeof (json[key]) == "object") {
-					flashvars += key + '=' + encodeURIComponent("[[JSON]]" + jwplayer.utils.strings.jsonToString(json[key])) + '&';
+					flashvars += key + '=' + encodeURIComponent("[[JSON]]" + jwplayer.utils.strings.jsonToString(json[key])) + ', ';
 				} else {
-					flashvars += key + '=' + encodeURIComponent(json[key]) + '&';
+					flashvars += key + '=' + encodeURIComponent(json[key]) + ', ';
 				}
 			}
 			return flashvars.substring(0, flashvars.length - 1);
@@ -161,21 +161,7 @@
 			var bgcolor = "#000000";
 
 			var flashPlayer;
-			/*<!-- <div id="silverlightControlHost">
-			<object id="slPlugin" data="data:application/x-silverlight-2," type="application/x-silverlight-2" width="853" height="480">
-				<param name="source" value="ClientBin/jwslPlayer.xap" />
-				<param name="onError" value="onSilverlightError" />
-				<param name="background" value="white" />
-				<param name="minRuntimeVersion" value="3.0.40624.0" />
-				<param name="autoUpgrade" value="true" />
-				<param name="initParams" value="playlist=http://localhost:49832/Playlist.xml,skin=/ExampleSkins/glow.zip" />
-				<a href="http://go.microsoft.com/fwlink/?LinkID=149156&v=3.0.40624.0" style="text-decoration: none">
-					<img src="http://go.microsoft.com/fwlink/?LinkId=108181" alt="Get Microsoft Silverlight" style="border-style: none" />
-				</a>
-			</object>
-			<iframe id="_sl_historyFrame" style="visibility: hidden; height: 0px; width: 0px; border: 0px"></iframe>
-		</div> -->*/
-			if (jwplayer.utils.isIE()) {
+			//if (jwplayer.utils.isIE()) {
 				var html = '<object data="data:application/x-silverlight-2," type="application/x-silverlight-2" ' +
 				'bgcolor="' +
 				bgcolor +
@@ -199,7 +185,7 @@
 				jwplayer.utils.setOuterHTML(_container, html);
 
 				flashPlayer = document.getElementById(_container.id);
-			} else {
+			/*} else {
 				var obj = document.createElement('object');
 				obj.setAttribute('type', 'application/x-silverlight-2');
 				obj.setAttribute('data', 'data:application/x-silverlight-2,');
@@ -216,7 +202,7 @@
 				appendAttribute(obj, 'initParams', jsonToFlashvars(params));
 				_container.parentNode.replaceChild(obj, _container);
 				flashPlayer = obj;
-			}
+			}*/
 
 			_api.container = flashPlayer;
 			_api.setPlayer(flashPlayer, "silverlight");

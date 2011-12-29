@@ -18,13 +18,37 @@ namespace jwslPlayer {
             var root = new MainPage();
             RootVisual = root;
 
-			string playlist_value;
-			if (e.InitParams.TryGetValue("playlist", out playlist_value))
-				root.SourcePlaylist = playlist_value;
+			string playSource;
+			if (e.InitParams.TryGetValue("playlist", out playSource)) {
+				root.SourcePlaylist = playSource;
+			} else if (e.InitParams.TryGetValue("file", out playSource)) {
+				root.SourcePlaylist = @"<?xml version='1.0' encoding='utf-8' ?>
+<Playlist>
+	<AutoLoad>true</AutoLoad>
+	<AutoPlay>false</AutoPlay>
+	<DisplayTimeCode>false</DisplayTimeCode>
+	<EnableCachedComposition>true</EnableCachedComposition>
+	<EnableCaptions>true</EnableCaptions>
+	<EnablePopOut>true</EnablePopOut>
+	<EnableOffline>true</EnableOffline>
+	<StartMuted>false</StartMuted>
+	<StretchMode>Uniform</StretchMode>
+	<Items>
+		<PlaylistItem>
+			<IsAdaptiveStreaming>true</IsAdaptiveStreaming>
+			<MediaSource>"+playSource+@"</MediaSource>
+			<CaptionUrl>http://localhost:49832/captions_tt.xml</CaptionUrl>
+		</PlaylistItem>
+	</Items>
+</Playlist>";
+			}
 
 			string skinPackage;
-			if (e.InitParams.TryGetValue("skin", out skinPackage))
+			if (e.InitParams.TryGetValue("skin", out skinPackage)) {
 				root.SkinPackageUrl = skinPackage;
+			} else {
+				root.SkinPackageUrl = "/ExampleSkins/glow.zip";
+			}
 		}
 
 		private void Application_Exit (object sender, EventArgs e) {
