@@ -18,54 +18,10 @@
 	    text-align:center;
     }
     </style>
-    <script type="text/javascript" src="Silverlight.js"></script>
-    <script type="text/javascript">
-
-        function showTextCaption(captionString)
-        {
-            alert(captionString);
-        }
-
-
-        function onSilverlightError(sender, args) {
-            var appSource = "";
-            if (sender != null && sender != 0) {
-              appSource = sender.getHost().Source;
-            }
-            
-            var errorType = args.ErrorType;
-            var iErrorCode = args.ErrorCode;
-
-            if (errorType == "ImageError" || errorType == "MediaError") {
-              return;
-            }
-
-            var errMsg = "Unhandled Error in Silverlight Application " +  appSource + "\n" ;
-
-            errMsg += "Code: "+ iErrorCode + "    \n";
-            errMsg += "Category: " + errorType + "       \n";
-            errMsg += "Message: " + args.ErrorMessage + "     \n";
-
-            if (errorType == "ParserError") {
-                errMsg += "File: " + args.xamlFile + "     \n";
-                errMsg += "Line: " + args.lineNumber + "     \n";
-                errMsg += "Position: " + args.charPosition + "     \n";
-            }
-            else if (errorType == "RuntimeError") {           
-                if (args.lineNumber != 0) {
-                    errMsg += "Line: " + args.lineNumber + "     \n";
-                    errMsg += "Position: " +  args.charPosition + "     \n";
-                }
-                errMsg += "MethodName: " + args.methodName + "     \n";
-            }
-
-            throw new Error(errMsg);
-        }
-    </script>
 </head>
 <body>
 	<form id="form1" runat="server">
-		<div id="silverlightControlHost">
+		<!-- <div id="silverlightControlHost">
 			<object id="slPlugin" data="data:application/x-silverlight-2," type="application/x-silverlight-2" width="853" height="480">
 				<param name="source" value="ClientBin/jwslPlayer.xap" />
 				<param name="onError" value="onSilverlightError" />
@@ -78,9 +34,29 @@
 				</a>
 			</object>
 			<iframe id="_sl_historyFrame" style="visibility: hidden; height: 0px; width: 0px; border: 0px"></iframe>
-		</div>
+		</div> -->
 
+
+		<div id="container">Loading the player...</div>
+
+		<a href="#" onclick="jwplayer().pause()">Pause</a>
+		<a href="#" onclick="jwplayer().play()">Play</a>
+
+		<script type="text/javascript" src="/Scripts/jwplayer.min.js"></script>
+		<script type="text/javascript" src="/Scripts/jwplayer.embed.silverlight.js"></script>
 		<script type="text/javascript">
+			jwplayer('container').setup({
+				file: 'http://cdn1.cache.twofourdigital.net/Mediafreedom/Storage/origin/amyprosser/da1908af-3316-4884-b064-9faa00ccb193/video/en/smoothstream/0631e6c4-3b4f-401f-a561-36ed109974d5.ism/MANIFEST',
+				height: 480,
+				width: 853,
+				modes: [
+					{ type: 'silverlight', src: '/ClientBin/jwslPlayer.xap' },
+				  { type: 'flash', src: 'player.swf' },
+				  //{ type: 'html5' },
+				  //{ type: 'download' }
+				]
+			});
+			
 			function Play() {
 				document.getElementById("slPlugin").content.jwplayer.Play();
 			}
@@ -88,9 +64,6 @@
 				document.getElementById("slPlugin").content.jwplayer.Pause();
 			}
 		</script>
-
-		<a href="#" onclick="Pause()">Pause</a>
-		<a href="#" onclick="Play()">Play</a>
 	</form>
 </body>
 </html>
