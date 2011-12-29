@@ -79,6 +79,18 @@
 			</object>
 			<iframe id="_sl_historyFrame" style="visibility: hidden; height: 0px; width: 0px; border: 0px"></iframe>
 		</div>
+
+		<script type="text/javascript">
+			function Play() {
+				document.getElementById("slPlugin").content.jwplayer.Play();
+			}
+			function Pause() {
+				document.getElementById("slPlugin").content.jwplayer.Pause();
+			}
+		</script>
+
+		<a href="#" onclick="Pause()">Pause</a>
+		<a href="#" onclick="Play()">Play</a>
 	</form>
 </body>
 </html>
