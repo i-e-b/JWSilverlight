@@ -38,6 +38,8 @@ namespace JwslPlayer {
 		public HtmlInteraction () {
 			helper = new ComposerControlHelper();
 			HtmlPage.RegisterScriptableObject("jwplayer", this);
+			// trigger player ready event
+			HtmlPage.Window.Eval("jwplayer().playerReady(document.getElementById('" + HtmlPage.Plugin.Id + "'))");
 		}
 
 		[ScriptableMember]
