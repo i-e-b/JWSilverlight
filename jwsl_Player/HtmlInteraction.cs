@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
 using System.Windows.Browser;
 using System.Windows.Media;
 using ComposerCore;
@@ -34,12 +35,49 @@ namespace JwslPlayer {
 		 * 
 		 */
 
-
+		const string ScriptRegistration = "jwplayer";
 		public HtmlInteraction () {
 			helper = new ComposerControlHelper();
-			HtmlPage.RegisterScriptableObject("jwplayer", this);
+			HtmlPage.RegisterScriptableObject(ScriptRegistration, this);
+
+			// experimental: bind scriptable object events back to html element (like Flash does):
+			BackBind("jwAddEventListener", 2);
+			BackBind("jwPause", 0);
+			BackBind("jwPlay", 0);
+			BackBind("jwGetState", 0);
+
 			// trigger player ready event
 			HtmlPage.Window.Eval("jwplayer().playerReady(document.getElementById('" + HtmlPage.Plugin.Id + "'))");
+		}
+
+		void BackBind (string methodName, int argCount) {
+			var id = HtmlPage.Plugin.Id;
+			var sb = new StringBuilder();
+			sb.Append("var x = document.getElementById('");
+			sb.Append(id);
+			sb.Append("'); x.");
+			sb.Append(methodName);
+			sb.Append(" = function(");
+
+			for (int i = 0; i < argCount; i++) {
+				if (i > 0) sb.Append(',');
+				sb.Append((char)('A' + i)); // if you have more than 26 arguments, improve this!
+			}
+
+			sb.Append("){return x.content.");
+			sb.Append(ScriptRegistration);
+			sb.Append(".");
+			sb.Append(methodName);
+			sb.Append("(");
+
+			for (int i = 0; i < argCount; i++) {
+				if (i > 0) sb.Append(',');
+				sb.Append((char)('A' + i)); // if you have more than 26 arguments, improve this!
+			}
+
+			sb.Append(");};");
+			HtmlPage.Window.Eval(sb.ToString());
+			// var x = document.getElementById('container'); x.jwPlay = function(){return x.content.jwplayer.jwPlay();};
 		}
 
 		[ScriptableMember]

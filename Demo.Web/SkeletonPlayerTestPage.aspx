@@ -43,7 +43,7 @@
 		<a href="#" onclick="Play()">Play</a>
 
 		<script type="text/javascript" src="/Scripts/jwplayer.min.js"></script>
-		<script type="text/javascript" src="/Scripts/jwplayer.api.js"></script> <!-- for debug -- replace API with uncompressed version -->
+		 <!--<script type="text/javascript" src="/Scripts/jwplayer.api.js"></script> for debug -- replace API with uncompressed version -->
 		<script type="text/javascript" src="/Scripts/jwplayer.embed.silverlight.js"></script>
 		<script type="text/javascript">
 			jwplayer('container').setup({

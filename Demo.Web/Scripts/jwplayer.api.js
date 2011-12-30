@@ -1,19 +1,16 @@
-﻿/**
-* API for the JW Player
-* This version for the Silverlight Player
-* 
-* @author Pablo
-* @version 5.8
-*
-* Modified for Silverlight by Iain Ballard
-*/
-(function (jwplayer) {
+/**
+ * API for the JW Player
+ * 
+ * @author Pablo
+ * @version 5.8
+ */
+(function(jwplayer) {
 	var _players = [];
-
-	jwplayer.api = function (container) {
+	
+	jwplayer.api = function(container) {
 		this.container = container;
 		this.id = container.id;
-
+		
 		var _listeners = {};
 		var _stateListeners = {};
 		var _componentListeners = {};
@@ -21,22 +18,22 @@
 		var _player = undefined;
 		var _playerReady = false;
 		var _queuedCalls = [];
-
+		
 		var _originalHTML = jwplayer.utils.getOuterHTML(container);
-
+		
 		var _itemMeta = {};
 		var _callbacks = {};
-
+		
 		// Player Getters
-		this.getBuffer = function () {
+		this.getBuffer = function() {
 			return this.callInternal('jwGetBuffer');
 		};
-		this.getContainer = function () {
+		this.getContainer = function() {
 			return this.container;
 		};
-
+		
 		function _setButton(ref, plugin) {
-			return function (id, handler, outGraphic, overGraphic) {
+			return function(id, handler, outGraphic, overGraphic) {
 				if (ref.renderingMode == "flash" || ref.renderingMode == "html5") {
 					var handlerString;
 					if (handler) {
@@ -50,82 +47,82 @@
 				return plugin;
 			};
 		}
-
-		this.getPlugin = function (pluginName) {
+		
+		this.getPlugin = function(pluginName) {
 			var _this = this;
 			var _plugin = {};
 			if (pluginName == "dock") {
 				return jwplayer.utils.extend(_plugin, {
 					setButton: _setButton(_this, _plugin),
-					show: function () { _this.callInternal('jwDockShow'); return _plugin; },
-					hide: function () { _this.callInternal('jwDockHide'); return _plugin; },
-					onShow: function (callback) {
-						_this.componentListener("dock", jwplayer.api.events.JWPLAYER_COMPONENT_SHOW, callback);
-						return _plugin;
+					show: function() { _this.callInternal('jwDockShow'); return _plugin; },
+					hide: function() { _this.callInternal('jwDockHide'); return _plugin; },
+					onShow: function(callback) { 
+						_this.componentListener("dock", jwplayer.api.events.JWPLAYER_COMPONENT_SHOW, callback); 
+						return _plugin; 
 					},
-					onHide: function (callback) {
-						_this.componentListener("dock", jwplayer.api.events.JWPLAYER_COMPONENT_HIDE, callback);
-						return _plugin;
+					onHide: function(callback) { 
+						_this.componentListener("dock", jwplayer.api.events.JWPLAYER_COMPONENT_HIDE, callback); 
+						return _plugin; 
 					}
 				});
 			} else if (pluginName == "controlbar") {
 				return jwplayer.utils.extend(_plugin, {
-					show: function () { _this.callInternal('jwControlbarShow'); return _plugin; },
-					hide: function () { _this.callInternal('jwControlbarHide'); return _plugin; },
-					onShow: function (callback) {
-						_this.componentListener("controlbar", jwplayer.api.events.JWPLAYER_COMPONENT_SHOW, callback);
-						return _plugin;
+					show: function() { _this.callInternal('jwControlbarShow'); return _plugin; },
+					hide: function() { _this.callInternal('jwControlbarHide'); return _plugin; },
+					onShow: function(callback) { 
+						_this.componentListener("controlbar", jwplayer.api.events.JWPLAYER_COMPONENT_SHOW, callback); 
+						return _plugin; 
 					},
-					onHide: function (callback) {
-						_this.componentListener("controlbar", jwplayer.api.events.JWPLAYER_COMPONENT_HIDE, callback);
-						return _plugin;
+					onHide: function(callback) { 
+						_this.componentListener("controlbar", jwplayer.api.events.JWPLAYER_COMPONENT_HIDE, callback); 
+						return _plugin; 
 					}
 				});
 			} else if (pluginName == "display") {
 				return jwplayer.utils.extend(_plugin, {
-					show: function () { _this.callInternal('jwDisplayShow'); return _plugin; },
-					hide: function () { _this.callInternal('jwDisplayHide'); return _plugin; },
-					onShow: function (callback) {
-						_this.componentListener("display", jwplayer.api.events.JWPLAYER_COMPONENT_SHOW, callback);
-						return _plugin;
+					show: function() { _this.callInternal('jwDisplayShow'); return _plugin; },
+					hide: function() { _this.callInternal('jwDisplayHide'); return _plugin; },
+					onShow: function(callback) { 
+						_this.componentListener("display", jwplayer.api.events.JWPLAYER_COMPONENT_SHOW, callback); 
+						return _plugin; 
 					},
-					onHide: function (callback) {
-						_this.componentListener("display", jwplayer.api.events.JWPLAYER_COMPONENT_HIDE, callback);
-						return _plugin;
+					onHide: function(callback) { 
+						_this.componentListener("display", jwplayer.api.events.JWPLAYER_COMPONENT_HIDE, callback); 
+						return _plugin; 
 					}
 				});
 			} else {
 				return this.plugins[pluginName];
 			}
 		};
-
-		this.callback = function (id) {
+		
+		this.callback = function(id) {
 			if (_callbacks[id]) {
 				return _callbacks[id]();
 			}
 		};
-		this.getDuration = function () {
+		this.getDuration = function() {
 			return this.callInternal('jwGetDuration');
 		};
-		this.getFullscreen = function () {
+		this.getFullscreen = function() {
 			return this.callInternal('jwGetFullscreen');
 		};
-		this.getHeight = function () {
+		this.getHeight = function() {
 			return this.callInternal('jwGetHeight');
 		};
-		this.getLockState = function () {
+		this.getLockState = function() {
 			return this.callInternal('jwGetLockState');
 		};
-		this.getMeta = function () {
+		this.getMeta = function() {
 			return this.getItemMeta();
 		};
-		this.getMute = function () {
+		this.getMute = function() {
 			return this.callInternal('jwGetMute');
 		};
-		this.getPlaylist = function () {
+		this.getPlaylist = function() {
 			var playlist = this.callInternal('jwGetPlaylist');
 			if (this.renderingMode == "flash") {
-				jwplayer.utils.deepReplaceKeyName(playlist, "__dot__", ".");
+				jwplayer.utils.deepReplaceKeyName(playlist, "__dot__", ".");	
 			}
 			for (var i = 0; i < playlist.length; i++) {
 				if (!jwplayer.utils.exists(playlist[i].index)) {
@@ -134,29 +131,29 @@
 			}
 			return playlist;
 		};
-		this.getPlaylistItem = function (item) {
+		this.getPlaylistItem = function(item) {
 			if (!jwplayer.utils.exists(item)) {
 				item = this.getCurrentItem();
 			}
 			return this.getPlaylist()[item];
 		};
-		this.getPosition = function () {
+		this.getPosition = function() {
 			return this.callInternal('jwGetPosition');
 		};
-		this.getRenderingMode = function () {
+		this.getRenderingMode = function() {
 			return this.renderingMode;
 		};
-		this.getState = function () {
+		this.getState = function() {
 			return this.callInternal('jwGetState');
 		};
-		this.getVolume = function () {
+		this.getVolume = function() {
 			return this.callInternal('jwGetVolume');
 		};
-		this.getWidth = function () {
+		this.getWidth = function() {
 			return this.callInternal('jwGetWidth');
 		};
 		// Player Public Methods
-		this.setFullscreen = function (fullscreen) {
+		this.setFullscreen = function(fullscreen) {
 			if (!jwplayer.utils.exists(fullscreen)) {
 				this.callInternal("jwSetFullscreen", !this.callInternal('jwGetFullscreen'));
 			} else {
@@ -164,7 +161,7 @@
 			}
 			return this;
 		};
-		this.setMute = function (mute) {
+		this.setMute = function(mute) {
 			if (!jwplayer.utils.exists(mute)) {
 				this.callInternal("jwSetMute", !this.callInternal('jwGetMute'));
 			} else {
@@ -172,29 +169,29 @@
 			}
 			return this;
 		};
-		this.lock = function () {
+		this.lock = function() {
 			return this;
 		};
-		this.unlock = function () {
+		this.unlock = function() {
 			return this;
 		};
-		this.load = function (toLoad) {
+		this.load = function(toLoad) {
 			this.callInternal("jwLoad", toLoad);
 			return this;
 		};
-		this.playlistItem = function (item) {
+		this.playlistItem = function(item) {
 			this.callInternal("jwPlaylistItem", item);
 			return this;
 		};
-		this.playlistPrev = function () {
+		this.playlistPrev = function() {
 			this.callInternal("jwPlaylistPrev");
 			return this;
 		};
-		this.playlistNext = function () {
+		this.playlistNext = function() {
 			this.callInternal("jwPlaylistNext");
 			return this;
 		};
-		this.resize = function (width, height) {
+		this.resize = function(width, height) {
 			if (this.renderingMode == "html5") {
 				_player.jwResize(width, height);
 			} else {
@@ -208,7 +205,7 @@
 			}
 			return this;
 		};
-		this.play = function (state) {
+		this.play = function(state) {
 			if (typeof state == "undefined") {
 				state = this.getState();
 				if (state == jwplayer.api.events.state.PLAYING || state == jwplayer.api.events.state.BUFFERING) {
@@ -221,7 +218,7 @@
 			}
 			return this;
 		};
-		this.pause = function (state) {
+		this.pause = function(state) {
 			if (typeof state == "undefined") {
 				state = this.getState();
 				if (state == jwplayer.api.events.state.PLAYING || state == jwplayer.api.events.state.BUFFERING) {
@@ -234,86 +231,86 @@
 			}
 			return this;
 		};
-		this.stop = function () {
+		this.stop = function() {
 			this.callInternal("jwStop");
 			return this;
 		};
-		this.seek = function (position) {
+		this.seek = function(position) {
 			this.callInternal("jwSeek", position);
 			return this;
 		};
-		this.setVolume = function (volume) {
+		this.setVolume = function(volume) {
 			this.callInternal("jwSetVolume", volume);
 			return this;
 		};
 		// Player Events
-		this.onBufferChange = function (callback) {
+		this.onBufferChange = function(callback) {
 			return this.eventListener(jwplayer.api.events.JWPLAYER_MEDIA_BUFFER, callback);
 		};
-		this.onBufferFull = function (callback) {
+		this.onBufferFull = function(callback) {
 			return this.eventListener(jwplayer.api.events.JWPLAYER_MEDIA_BUFFER_FULL, callback);
 		};
-		this.onError = function (callback) {
+		this.onError = function(callback) {
 			return this.eventListener(jwplayer.api.events.JWPLAYER_ERROR, callback);
 		};
-		this.onFullscreen = function (callback) {
+		this.onFullscreen = function(callback) {
 			return this.eventListener(jwplayer.api.events.JWPLAYER_FULLSCREEN, callback);
 		};
-		this.onMeta = function (callback) {
+		this.onMeta = function(callback) {
 			return this.eventListener(jwplayer.api.events.JWPLAYER_MEDIA_META, callback);
 		};
-		this.onMute = function (callback) {
+		this.onMute = function(callback) {
 			return this.eventListener(jwplayer.api.events.JWPLAYER_MEDIA_MUTE, callback);
 		};
-		this.onPlaylist = function (callback) {
+		this.onPlaylist = function(callback) {
 			return this.eventListener(jwplayer.api.events.JWPLAYER_PLAYLIST_LOADED, callback);
 		};
-		this.onPlaylistItem = function (callback) {
+		this.onPlaylistItem = function(callback) {
 			return this.eventListener(jwplayer.api.events.JWPLAYER_PLAYLIST_ITEM, callback);
 		};
-		this.onReady = function (callback) {
+		this.onReady = function(callback) {
 			return this.eventListener(jwplayer.api.events.API_READY, callback);
 		};
-		this.onResize = function (callback) {
+		this.onResize = function(callback) {
 			return this.eventListener(jwplayer.api.events.JWPLAYER_RESIZE, callback);
 		};
-		this.onComplete = function (callback) {
+		this.onComplete = function(callback) {
 			return this.eventListener(jwplayer.api.events.JWPLAYER_MEDIA_COMPLETE, callback);
 		};
-		this.onSeek = function (callback) {
+		this.onSeek = function(callback) {
 			return this.eventListener(jwplayer.api.events.JWPLAYER_MEDIA_SEEK, callback);
 		};
-		this.onTime = function (callback) {
+		this.onTime = function(callback) {
 			return this.eventListener(jwplayer.api.events.JWPLAYER_MEDIA_TIME, callback);
 		};
-		this.onVolume = function (callback) {
+		this.onVolume = function(callback) {
 			return this.eventListener(jwplayer.api.events.JWPLAYER_MEDIA_VOLUME, callback);
 		};
-		this.onBeforePlay = function (callback) {
+		this.onBeforePlay = function(callback) {
 			return this.eventListener(jwplayer.api.events.JWPLAYER_MEDIA_BEFOREPLAY, callback);
 		};
 		// State events
-		this.onBuffer = function (callback) {
+		this.onBuffer = function(callback) {
 			return this.stateListener(jwplayer.api.events.state.BUFFERING, callback);
 		};
-		this.onPause = function (callback) {
+		this.onPause = function(callback) {
 			return this.stateListener(jwplayer.api.events.state.PAUSED, callback);
 		};
-		this.onPlay = function (callback) {
+		this.onPlay = function(callback) {
 			return this.stateListener(jwplayer.api.events.state.PLAYING, callback);
 		};
-		this.onIdle = function (callback) {
+		this.onIdle = function(callback) {
 			return this.stateListener(jwplayer.api.events.state.IDLE, callback);
 		};
-		this.remove = function () {
+		this.remove = function() {
 			_listeners = {};
 			_queuedCalls = [];
 			if (jwplayer.utils.getOuterHTML(this.container) != _originalHTML) {
 				jwplayer.api.destroyPlayer(this.id, _originalHTML);
 			}
 		};
-
-		this.setup = function (options) {
+		
+		this.setup = function(options) {
 			if (jwplayer.embed) {
 				// Destroy original API on setup() to remove existing listeners
 				var newId = this.id;
@@ -324,17 +321,17 @@
 			}
 			return this;
 		};
-		this.registerPlugin = function (id, arg1, arg2) {
+		this.registerPlugin = function(id, arg1, arg2) {
 			jwplayer.plugins.registerPlugin(id, arg1, arg2);
 		};
-
+		
 		/** Use this function to set the internal low-level player.  This is a javascript object which contains the low-level API calls. **/
-		this.setPlayer = function (player, renderingMode) {
+		this.setPlayer = function(player, renderingMode) {
 			_player = player;
 			this.renderingMode = renderingMode;
 		};
-
-		this.stateListener = function (state, callback) {
+		
+		this.stateListener = function(state, callback) {
 			if (!_stateListeners[state]) {
 				_stateListeners[state] = [];
 				this.eventListener(jwplayer.api.events.JWPLAYER_PLAYER_STATE, stateCallback(state));
@@ -342,21 +339,21 @@
 			_stateListeners[state].push(callback);
 			return this;
 		};
-
-		this.detachMedia = function () {
+		
+		this.detachMedia = function() {
 			if (this.renderingMode == "html5") {
 				return this.callInternal("jwDetachMedia");
 			}
 		}
 
-		this.attachMedia = function () {
+		this.attachMedia = function() {
 			if (this.renderingMode == "html5") {
 				return this.callInternal("jwAttachMedia");
 			}
 		}
 
 		function stateCallback(state) {
-			return function (args) {
+			return function(args) {
 				var newstate = args.newstate, oldstate = args.oldstate;
 				if (newstate == state) {
 					var callbacks = _stateListeners[newstate];
@@ -373,8 +370,8 @@
 				}
 			};
 		}
-
-		this.componentListener = function (component, type, callback) {
+		
+		this.componentListener = function(component, type, callback) {
 			if (!_componentListeners[component]) {
 				_componentListeners[component] = {};
 			}
@@ -385,9 +382,9 @@
 			_componentListeners[component][type].push(callback);
 			return this;
 		};
-
+		
 		function _componentCallback(component, type) {
-			return function (event) {
+			return function(event) {
 				if (component == event.component) {
 					var callbacks = _componentListeners[component][type];
 					if (callbacks) {
@@ -399,13 +396,13 @@
 					}
 				}
 			};
-		}
-
-		this.addInternalListener = function (player, type) {
+		}		
+		
+		this.addInternalListener = function(player, type) {
 			player.jwAddEventListener(type, 'function(dat) { jwplayer("' + this.id + '").dispatchEvent("' + type + '", dat); }');
 		};
-
-		this.eventListener = function (type, callback) {
+		
+		this.eventListener = function(type, callback) {
 			if (!_listeners[type]) {
 				_listeners[type] = [];
 				if (_player && _playerReady) {
@@ -415,8 +412,8 @@
 			_listeners[type].push(callback);
 			return this;
 		};
-
-		this.dispatchEvent = function (type) {
+		
+		this.dispatchEvent = function(type) {
 			if (_listeners[type]) {
 				var args = translateEventResponse(type, arguments[1]);
 				for (var l = 0; l < _listeners[type].length; l++) {
@@ -426,7 +423,7 @@
 				}
 			}
 		};
-
+		
 		function translateEventResponse(type, eventProperties) {
 			var translated = jwplayer.utils.extend({}, eventProperties);
 			if (type == jwplayer.api.events.JWPLAYER_FULLSCREEN && !translated.fullscreen) {
@@ -437,18 +434,24 @@
 				translated = jwplayer.utils.extend(translated, translated.data);
 				delete translated.data;
 			}
-
+			
 			var rounders = ["position", "duration", "offset"];
 			for (var rounder in rounders) {
 				if (translated[rounders[rounder]]) {
 					translated[rounders[rounder]] = Math.round(translated[rounders[rounder]] * 1000) / 1000;
 				}
 			}
-
+			
 			return translated;
 		}
-
-		this.callInternal = function (funcName, args) {
+		
+		this.callInternal = function(funcName, args) {
+			/*this.callInternal = function() {
+			 var	funcName = arguments[0],
+			 args = [];
+			 for (var argument = 1; argument < arguments.length; argument++){
+			 args[argument] = arguments[argument];
+			 }*/
 			if (_playerReady) {
 				if (typeof _player != "undefined" && typeof _player[funcName] == "function") {
 					if (jwplayer.utils.exists(args)) {
@@ -466,44 +469,42 @@
 				});
 			}
 		};
-
-		this.playerReady = function (obj) {
+		
+		this.playerReady = function(obj) {
 			_playerReady = true;
 			if (!_player) {
-				var element = document.getElementById(obj.id);
-				var playerBridge = element.content.jwplayer || element;
-				this.setPlayer(playerBridge);
+				this.setPlayer(document.getElementById(obj.id));
 			}
 			this.container = document.getElementById(this.id);
-
+			
 			for (var eventType in _listeners) {
 				this.addInternalListener(_player, eventType);
 			}
-
-			this.eventListener(jwplayer.api.events.JWPLAYER_PLAYLIST_ITEM, function (data) {
+			
+			this.eventListener(jwplayer.api.events.JWPLAYER_PLAYLIST_ITEM, function(data) {
 				_itemMeta = {};
 			});
-
-			this.eventListener(jwplayer.api.events.JWPLAYER_MEDIA_META, function (data) {
+			
+			this.eventListener(jwplayer.api.events.JWPLAYER_MEDIA_META, function(data) {
 				jwplayer.utils.extend(_itemMeta, data.metadata);
 			});
-
+			
 			this.dispatchEvent(jwplayer.api.events.API_READY);
-
+			
 			while (_queuedCalls.length > 0) {
 				var call = _queuedCalls.shift();
 				this.callInternal(call.method, call.parameters);
 			}
 		};
-
-		this.getItemMeta = function () {
+		
+		this.getItemMeta = function() {
 			return _itemMeta;
 		};
-
-		this.getCurrentItem = function () {
+		
+		this.getCurrentItem = function() {
 			return this.callInternal('jwGetPlaylistIndex');
 		};
-
+		
 		/** Using this function instead of array.slice since Arguments are not an array **/
 		function slice(list, from, to) {
 			var ret = [];
@@ -520,14 +521,14 @@
 		}
 		return this;
 	};
-
-	jwplayer.api.selectPlayer = function (identifier) {
+	
+	jwplayer.api.selectPlayer = function(identifier) {
 		var _container;
-
+		
 		if (!jwplayer.utils.exists(identifier)) {
 			identifier = 0;
 		}
-
+		
 		if (identifier.nodeType) {
 			// Handle DOM Element
 			_container = identifier;
@@ -535,7 +536,7 @@
 			// Find container by ID
 			_container = document.getElementById(identifier);
 		}
-
+		
 		if (_container) {
 			var foundPlayer = jwplayer.api.playerById(_container.id);
 			if (foundPlayer) {
@@ -547,10 +548,10 @@
 		} else if (typeof identifier == 'number') {
 			return jwplayer.getPlayers()[identifier];
 		}
-
+		
 		return null;
 	};
-
+	
 	jwplayer.api.events = {
 		API_READY: 'jwplayerAPIReady',
 		JWPLAYER_READY: 'jwplayerReady',
@@ -574,15 +575,15 @@
 		JWPLAYER_PLAYLIST_LOADED: 'jwplayerPlaylistLoaded',
 		JWPLAYER_PLAYLIST_ITEM: 'jwplayerPlaylistItem'
 	};
-
+	
 	jwplayer.api.events.state = {
 		BUFFERING: 'BUFFERING',
 		IDLE: 'IDLE',
 		PAUSED: 'PAUSED',
 		PLAYING: 'PLAYING'
 	};
-
-	jwplayer.api.playerById = function (id) {
+	
+	jwplayer.api.playerById = function(id) {
 		for (var p = 0; p < _players.length; p++) {
 			if (_players[p].id == id) {
 				return _players[p];
@@ -590,19 +591,19 @@
 		}
 		return null;
 	};
-
-	jwplayer.api.addPlayer = function (player) {
+	
+	jwplayer.api.addPlayer = function(player) {
 		for (var p = 0; p < _players.length; p++) {
 			if (_players[p] == player) {
 				return player; // Player is already in the list;
 			}
 		}
-
+		
 		_players.push(player);
 		return player;
 	};
-
-	jwplayer.api.destroyPlayer = function (playerId, replacementHTML) {
+	
+	jwplayer.api.destroyPlayer = function(playerId, replacementHTML) {
 		var index = -1;
 		for (var p = 0; p < _players.length; p++) {
 			if (_players[p].id == playerId) {
@@ -630,27 +631,27 @@
 			}
 			_players.splice(index, 1);
 		}
-
+		
 		return null;
 	};
-
+	
 	// Can't make this a read-only getter, thanks to IE incompatibility.
-	jwplayer.getPlayers = function () {
+	jwplayer.getPlayers = function() {
 		return _players.slice(0);
 	};
-
+	
 })(jwplayer);
 
 var _userPlayerReady = (typeof playerReady == 'function') ? playerReady : undefined;
 
-playerReady = function (obj) {
+playerReady = function(obj) {
 	var api = jwplayer.api.playerById(obj.id);
 	if (api) {
 		api.playerReady(obj);
 	} else {
 		jwplayer.api.selectPlayer(obj.id).playerReady(obj);
 	}
-
+	
 	if (_userPlayerReady) {
 		_userPlayerReady.call(this, obj);
 	}
