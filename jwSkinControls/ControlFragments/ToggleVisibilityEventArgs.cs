@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Windows;
 
-namespace ExampleControls {
+namespace jwSkinControls.ControlFragments {
 	public class ToggleVisibilityEventArgs : EventArgs {
-		public bool isVisible { get; set; }
+		public bool IsVisible { get; set; }
 		public Visibility Visibility {
 			get {
-				return (isVisible) ? (Visibility.Visible) : (Visibility.Collapsed);
+				return (IsVisible) ? (Visibility.Visible) : (Visibility.Collapsed);
 			}
 		}
 	}

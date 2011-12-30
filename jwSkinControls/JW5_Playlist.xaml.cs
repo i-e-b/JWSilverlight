@@ -4,7 +4,7 @@ using System.Windows.Media;
 using ComposerCore;
 using jwSkinLoader;
 
-namespace ExampleControls {
+namespace jwSkinControls {
 	public partial class JW5_Playlist : UserControl, IPlayerController, IXmlSkinReader {
 		public void PlaylistChanged (Playlist NewPlaylist) { }
 		public void StateChanged (PlayerStatus NewStatus) { }

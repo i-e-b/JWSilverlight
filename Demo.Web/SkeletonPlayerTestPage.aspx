@@ -43,6 +43,7 @@
 		<a href="#" onclick="Play()">Play</a>
 
 		<script type="text/javascript" src="/Scripts/jwplayer.min.js"></script>
+		<script type="text/javascript" src="/Scripts/jwplayer.api.js"></script> <!-- for debug -- replace API with uncompressed version -->
 		<script type="text/javascript" src="/Scripts/jwplayer.embed.silverlight.js"></script>
 		<script type="text/javascript">
 			jwplayer('container').setup({
@@ -51,23 +52,23 @@
 				width: 853,
 				modes: [
 					{ type: 'silverlight', src: '/ClientBin/jwslPlayer.xap' },
-				  { type: 'flash', src: 'player.swf' },
-				  //{ type: 'html5' },
-				  //{ type: 'download' }
+					{ type: 'flash', src: 'player.swf' },
+					{ type: 'html5' },
+					{ type: 'download' }
 				]
 			});
 			
 			function Play() {
 				// should be:
-				// jwplayer().play()
+				jwplayer().play()
 				// but is:
-				jwplayer().container.content.jwplayer.Play()
+				//jwplayer().container.content.jwplayer.Play()
 			}
 			function Pause() {
 				// should be:
-				// jwplayer().pause()
+				jwplayer().pause()
 				// but is:
-				jwplayer().container.content.jwplayer.Pause()
+				//jwplayer().container.content.jwplayer.Pause()
 			}
 		</script>
 	</form>

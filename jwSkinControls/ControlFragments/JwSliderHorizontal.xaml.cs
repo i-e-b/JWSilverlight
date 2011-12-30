@@ -6,7 +6,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace ExampleControls {
+namespace jwSkinControls.ControlFragments {
 	public partial class JwSliderHorizontal : UserControl {
 		double bufferProg;
 		double sliderProg;

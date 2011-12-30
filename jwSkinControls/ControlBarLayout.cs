@@ -3,7 +3,7 @@ using System.Linq;
 using System.Xml.Linq;
 using jwSkinLoader;
 
-namespace ExampleControls {
+namespace jwSkinControls {
 	public class ControlBarElement {
 		public static ControlBarElement Divider (string name) { return new ControlBarElement { Name = name, Type = ElementType.Divider }; }
 		public static ControlBarElement Button (string name) { return new ControlBarElement { Name = name, Type = ElementType.Button }; }

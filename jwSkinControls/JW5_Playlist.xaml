@@ -4,7 +4,7 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d"
-	x:Class="ExampleControls.JW5_Playlist"
+	x:Class="jwSkinControls.JW5_Playlist"
 	d:DesignWidth="640" d:DesignHeight="480" Width="200">
 
 	<Grid x:Name="LayoutRoot" Background="#FF3CF561"/>

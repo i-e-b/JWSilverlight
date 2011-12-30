@@ -3,7 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using ComposerCore;
 
-namespace ExampleControls {
+namespace jwSkinControls {
 	public partial class JW5_CaptionText : UserControl, IPlayerController {
 		readonly ComposerControlHelper players;
 

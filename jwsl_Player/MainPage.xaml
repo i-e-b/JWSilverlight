@@ -3,9 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:cp="clr-namespace:ComposerCore;assembly=ComposerCore"
-    xmlns:ExampleControls="clr-namespace:ExampleControls;assembly=ExampleControls"
-    mc:Ignorable="d" x:Class="JwslPlayer.MainPage"
+    xmlns:cp="clr-namespace:ComposerCore;assembly=ComposerCore" xmlns:jwSkinControls="clr-namespace:jwSkinControls;assembly=jwSkinControls" mc:Ignorable="d" x:Class="JwslPlayer.MainPage"
 	d:DesignHeight="480" d:DesignWidth="640">
 	<Grid x:Name="LayoutRoot" Background="Black" MouseEnter="LayoutRoot_MouseEnter" MouseLeave="LayoutRoot_MouseLeave" MouseMove="LayoutRoot_MouseMove">
 		<Grid.ColumnDefinitions>
@@ -16,10 +14,10 @@
 			<RowDefinition/>
 		</Grid.RowDefinitions>
 		<cp:Player x:Name="Player" Grid.Row="0" Margin="0,0,0,0" Background="Black"/>
-		<ExampleControls:JW5_Playlist x:Name="PlaylistView" Grid.Column="1" Margin="0" Width="Auto" Visibility="Collapsed"/>
-		<ExampleControls:JW5_ControlBar x:Name="ControlBarView" Margin="0"/>
-		<ExampleControls:JW5_Display x:Name="DisplayView" d:LayoutOverrides="Height" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-		<ExampleControls:JW5_Dock x:Name="DockView" d:LayoutOverrides="Width, Height" HorizontalAlignment="Right" Margin="0,16,16,0" VerticalAlignment="Top"/>
-		<ExampleControls:JW5_CaptionText x:Name="CaptionView" Margin="0" d:LayoutOverrides="Height" Visibility="Collapsed"/>
+		<jwSkinControls:JW5_Playlist x:Name="PlaylistView" Grid.Column="1" Margin="0" Width="Auto" Visibility="Collapsed"/>
+		<jwSkinControls:JW5_ControlBar x:Name="ControlBarView" Margin="0"/>
+		<jwSkinControls:JW5_Display x:Name="DisplayView" d:LayoutOverrides="Height" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+		<jwSkinControls:JW5_Dock x:Name="DockView" d:LayoutOverrides="Width, Height" HorizontalAlignment="Right" Margin="0,16,16,0" VerticalAlignment="Top"/>
+		<jwSkinControls:JW5_CaptionText x:Name="CaptionView" Margin="0" d:LayoutOverrides="Height" Visibility="Collapsed"/>
 	</Grid>
 </UserControl>

@@ -2,13 +2,11 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:local="clr-namespace:ExampleControls"
-	mc:Ignorable="d"
-	x:Class="ExampleControls.JW5_Dock"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:ControlFragments="clr-namespace:jwSkinControls.ControlFragments" mc:Ignorable="d"
+	x:Class="jwSkinControls.JW5_Dock"
 	d:DesignWidth="80" d:DesignHeight="80">
 
 	<StackPanel x:Name="LayoutRoot" VerticalAlignment="Top">
-		<local:ImageHoverButton x:Name="CaptionsButton" Visibility="Collapsed"/>
+		<ControlFragments:ImageHoverButton x:Name="CaptionsButton" Visibility="Collapsed"/>
 	</StackPanel>
 </UserControl>

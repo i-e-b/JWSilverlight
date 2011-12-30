@@ -4,10 +4,11 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using ComposerCore;
+using jwSkinControls.ControlFragments;
 using jwSkinLoader;
 using Microsoft.Web.Media.SmoothStreaming;
 
-namespace ExampleControls {
+namespace jwSkinControls {
 	public partial class JW5_ControlBar : UserControl, IPlayerController, IXmlSkinReader {
 		const string ControlBarComponent = "controlbar";
 		readonly ComposerControlHelper players;

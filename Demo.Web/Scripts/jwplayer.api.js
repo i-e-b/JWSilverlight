@@ -449,12 +449,6 @@
 		}
 
 		this.callInternal = function (funcName, args) {
-			/*this.callInternal = function() {
-			var	funcName = arguments[0],
-			args = [];
-			for (var argument = 1; argument < arguments.length; argument++){
-			args[argument] = arguments[argument];
-			}*/
 			if (_playerReady) {
 				if (typeof _player != "undefined" && typeof _player[funcName] == "function") {
 					if (jwplayer.utils.exists(args)) {
@@ -476,7 +470,9 @@
 		this.playerReady = function (obj) {
 			_playerReady = true;
 			if (!_player) {
-				this.setPlayer(document.getElementById(obj.id));
+				var element = document.getElementById(obj.id);
+				var playerBridge = element.content.jwplayer || element;
+				this.setPlayer(playerBridge);
 			}
 			this.container = document.getElementById(this.id);
 

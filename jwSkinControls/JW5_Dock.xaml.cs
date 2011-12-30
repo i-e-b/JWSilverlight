@@ -4,9 +4,10 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using ComposerCore;
+using jwSkinControls.ControlFragments;
 using jwSkinLoader;
 
-namespace ExampleControls {
+namespace jwSkinControls {
 	/// <summary>
 	/// The Silverlight player doesn't support Flash plugins, and provides no
 	/// equivalent plugin system at the moment.
@@ -45,7 +46,7 @@ namespace ExampleControls {
 		}
 		public void InvokeCaptionVisibilityChanged(bool visible) {
 			var handler = CaptionVisibilityChanged;
-			if (handler != null) handler(this, new ToggleVisibilityEventArgs {isVisible = visible});
+			if (handler != null) handler(this, new ToggleVisibilityEventArgs {IsVisible = visible});
 		}
 
 		public void PlaylistChanged (Playlist NewPlaylist) { lastPlaylist = NewPlaylist; }

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows.Browser;
 using System.Windows.Media;
 using ComposerCore;
+using Microsoft.Web.Media.SmoothStreaming;
 
 namespace JwslPlayer {
 	public class HtmlInteraction : IPlayerController {
@@ -52,40 +53,51 @@ namespace JwslPlayer {
 		}
 
 		[ScriptableMember]
-		public void Pause () {
+		public void jwPause () {
 			foreach (var player in helper.PlayerList) {
 				player.Pause();
 			}
 		}
 
 		[ScriptableMember]
-		public void Play () {
+		public void jwPlay () {
 			foreach (var player in helper.PlayerList) {
 				player.Play();
 			}
 		}
 
-		public void PlaylistChanged (Playlist NewPlaylist) {
+		[ScriptableMember]
+		public string jwGetState () {
+			switch (lastState.CurrentPlayState) {
+				case SmoothStreamingMediaElementState.ClipPlaying:
+				case SmoothStreamingMediaElementState.Playing:
+					return "PLAYING";
+
+				case SmoothStreamingMediaElementState.Paused:
+					return "PAUSED";
+
+				case SmoothStreamingMediaElementState.Closed:
+				case SmoothStreamingMediaElementState.Stopped:
+					return "IDLE";
+
+				default:
+					return "BUFFERING";
+			}
+		}
+		[ScriptableMember]
+		public void jwAddEventListener (string eventType, string callback) {
+
 		}
 
-		public void StateChanged (PlayerStatus NewStatus) {
-		}
+		PlayerStatus lastState;
 
-		public void StatusUpdate (PlayerStatus NewStatus) {
-		}
-
-		public void CaptionFired (TimelineMarker Caption) {
-		}
-
-		public void ErrorOccured (Exception Error) {
-		}
-
-		public void AddBinding (IPlayer PlayerToControl) {
-			helper.AddBinding(PlayerToControl, this);
-		}
-
-		public void RemoveBinding (IPlayer PlayerToControl) {
-		}
+		public void PlaylistChanged (Playlist NewPlaylist) { }
+		public void StateChanged (PlayerStatus NewStatus) { lastState = NewStatus; }
+		public void StatusUpdate (PlayerStatus NewStatus) { lastState = NewStatus; } 
+		public void CaptionFired (TimelineMarker Caption) { } 
+		public void ErrorOccured (Exception Error) { } 
+		public void AddBinding (IPlayer PlayerToControl) { helper.AddBinding(PlayerToControl, this); }
+		public void RemoveBinding (IPlayer PlayerToControl) { helper.RemoveBinding(PlayerToControl, this); }
 
 	}
 }

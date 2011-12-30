@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
-using ExampleControls;
+using jwSkinControls.ControlFragments;
 using jwSkinLoader;
 
 namespace JwslPlayer {

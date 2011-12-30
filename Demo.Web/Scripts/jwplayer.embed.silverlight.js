@@ -144,7 +144,7 @@
 
 			var wmode = "false";
 			if (params.wmode) {
-				wmode = params.wmode;// todo: translate modes to either true or false?
+				wmode = params.wmode; // todo: translate modes to either true or false?
 			}
 
 			parseConfigBlock(params, 'components');
@@ -161,8 +161,7 @@
 			var bgcolor = "#000000";
 
 			var flashPlayer;
-			//if (jwplayer.utils.isIE()) {
-				var html = '<object data="data:application/x-silverlight-2," type="application/x-silverlight-2" ' +
+			var html = '<object data="data:application/x-silverlight-2," type="application/x-silverlight-2" ' +
 				'bgcolor="' +
 				bgcolor +
 				'" width="100%" height="100%" ' +
@@ -172,66 +171,27 @@
 				_container.id +
 				'" tabindex=0"' +
 				'">';
-				html += '<param name="source" value="' + _player.src + '">';
-				html += '<param name="background" value="' + bgcolor + '">';
-				html += '<param name="minRuntimeVersion" value="3.0.40624.0" />';
-				html += '<param name="autoUpgrade" value="true" />';
-				html += '<param name="windowless" value="' + wmode + '">';
-				html += '<param name="initParams" value="' +
+			html += '<param name="source" value="' + _player.src + '">';
+			html += '<param name="background" value="' + bgcolor + '">';
+			html += '<param name="minRuntimeVersion" value="3.0.40624.0" />';
+			html += '<param name="autoUpgrade" value="true" />';
+			html += '<param name="windowless" value="' + wmode + '">';
+			html += '<param name="initParams" value="' +
 				jsonToFlashvars(params) +
 				'">';
-				html += '</object>';
+			html += '</object>';
 
-				jwplayer.utils.setOuterHTML(_container, html);
+			jwplayer.utils.setOuterHTML(_container, html);
 
-				flashPlayer = document.getElementById(_container.id);
-			/*} else {
-				var obj = document.createElement('object');
-				obj.setAttribute('type', 'application/x-silverlight-2');
-				obj.setAttribute('data', 'data:application/x-silverlight-2,');
-				obj.setAttribute('width', "100%");
-				obj.setAttribute('height', "100%");
-				obj.setAttribute('bgcolor', bgcolor);
-				obj.setAttribute('id', _container.id);
-				obj.setAttribute('name', _container.id);
-				obj.setAttribute('tabindex', 0);
-				appendAttribute(obj, 'minRuntimeVersion', '3.0.40624.0');
-				appendAttribute(obj, 'source', '_player.src');
-				appendAttribute(obj, 'windowless', wmode);
-				appendAttribute(obj, 'autoUpgrade', 'true');
-				appendAttribute(obj, 'initParams', jsonToFlashvars(params));
-				_container.parentNode.replaceChild(obj, _container);
-				flashPlayer = obj;
-			}*/
-
+			flashPlayer = document.getElementById(_container.id);
 			_api.container = flashPlayer;
-			_api.setPlayer(flashPlayer, "silverlight");
+			_api.setPlayer(flashPlayer.content.jwplayer, "flash");
 		}
-		/**
-		* Detects whether Flash supports this configuration
-		*/
+
 		this.supportsConfig = function () {
-			/*if (jwplayer.utils.hasFlash()) {
-			if (_options) {
-			var item = jwplayer.utils.getFirstPlaylistItemFromConfig(_options);
-			if (typeof item.file == "undefined" && typeof item.levels == "undefined") {
-			return true;
-			} else if (item.file) {
-			return flashCanPlay(item.file, item.provider);
-			} else if (item.levels && item.levels.length) {
-			for (var i = 0; i < item.levels.length; i++) {
-			if (item.levels[i].file && flashCanPlay(item.levels[i].file, item.provider)) {
-			return true;
-			}
-			}
-			}
-			} else {
-			return true;
-			}
-			}
-			return false;*/
 			return true; // todo: Silverlight detection & file can play.
 		}
 	};
 
+	
 })(jwplayer);

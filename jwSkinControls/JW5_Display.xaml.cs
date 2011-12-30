@@ -7,9 +7,7 @@ using ComposerCore;
 using jwSkinLoader;
 using Microsoft.Web.Media.SmoothStreaming;
 
-// Still to be done: Mute icon, hover states.
-
-namespace ExampleControls {
+namespace jwSkinControls {
 	public partial class JW5_Display : UserControl, IPlayerController, IXmlSkinReader {
 		private readonly RotateTransform rot;
 		private double degreesPerMillisecond;

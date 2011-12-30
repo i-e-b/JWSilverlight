@@ -3,7 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using ComposerCore;
 
-namespace ExampleControls {
+namespace jwSkinControls.ControlFragments {
 	public partial class JwElapsedText : UserControl, IPlayerController {
 		private readonly ComposerControlHelper players;
 

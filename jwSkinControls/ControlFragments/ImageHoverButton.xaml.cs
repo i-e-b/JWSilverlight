@@ -6,7 +6,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using jwSkinLoader;
 
-namespace ExampleControls {
+namespace jwSkinControls.ControlFragments {
 	public partial class ImageHoverButton : UserControl, IImageHoverControl {
 		public ImageHoverButton () {
 			InitializeComponent();
