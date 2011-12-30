@@ -351,7 +351,7 @@ namespace ComposerCore {
 		/// Returns true if the Media Player is active, false otherwise.
 		/// Buffering is considered active.
 		/// </summary>
-		public bool IsPlayerActive () {
+		public bool IsActive () {
 			switch (MediaPlayer.CurrentState) {
 				case SmoothStreamingMediaElementState.AcquiringLicense:
 				case SmoothStreamingMediaElementState.Buffering:

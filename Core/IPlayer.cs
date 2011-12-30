@@ -41,7 +41,7 @@ namespace ComposerCore {
 		/// Returns true if the Media Player is active, false otherwise.
 		/// Buffering is considered active.
 		/// </summary>
-		bool IsPlayerActive ();
+		bool IsActive ();
 
 		/// <summary>
 		/// Gets; Returns true if media is seekable, false for non-seekable (WME live, un-indexed VOD etc)

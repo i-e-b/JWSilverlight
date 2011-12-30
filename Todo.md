@@ -5,16 +5,14 @@ Skins
 
 Javascript API
 --------------
-* Expose javascript interface to player (replicate required calls in HTMLBridge, and modify jwplayer.api.js to match?
-                                         if possible, try to bridge with embed plugin so modified api isn't needed.)
-* compatible player loader
+* Complete JW/JS bridge.
 
 Misc
 ----
 * Cleanup or re-write ComposerCore for Smooth 1.5 player
 * Background colour on poster view
-* Keyboard commands
-* Trace usage in ZIP library, exclude unused parts (for size)
+* Keyboard commands?
+* Trace usage in ZIP library, exclude unused parts (for size)?
 
 
 For Ongoing

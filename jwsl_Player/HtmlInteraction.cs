@@ -8,17 +8,10 @@ using Microsoft.Web.Media.SmoothStreaming;
 
 namespace JwslPlayer {
 	public class HtmlInteraction : IPlayerController {
-		private readonly ComposerControlHelper helper;
+		private readonly ComposerControlHelper players;
 
 		/*
-		 * The following internal calls will need to be replicated:
-		 * 
-		 * jwGetBuffer, jwDockShow, jwDockHide, jwControlbarShow, jwControlbarHide,
-		 * jwDisplayShow, jwDisplayHide, jwGetDuration, jwGetFullscreen, jwGetHeight,
-		 * jwGetLockState, jwGetMute, jwGetPlaylist, jwGetPosition, jwGetState,
-		 * jwGetVolume, jwGetWidth, jwSetFullscreen, jwSetMute, jwLoad, jwPlaylistItem,
-		 * jwPlaylistPrev, jwPlaylistNext, jwPause, jwPlay, jwStop, jwSeek (seconds),
-		 * jwSetVolume, jwGetPlaylistIndex
+		 * Notes -- jwGetBuffer is 0..100 of buffered %, jwGetMeta is JSON string of playlist clip info,
 		 * 
 		 * The following events will need to be triggered:
 		 * 
@@ -29,22 +22,51 @@ namespace JwslPlayer {
 		 * jwplayerMediaSeek, jwplayerMediaTime, jwplayerMediaVolume, jwplayerMediaMeta,
 		 * jwplayerMediaMute, jwplayerPlayerState, jwplayerPlaylistLoaded, jwplayerPlaylistItem
 		 * 
-		 * The following states will need to be presented:
-		 * 
-		 * BUFFERING, IDLE, PAUSED, PLAYING
-		 * 
 		 */
 
 		const string ScriptRegistration = "jwplayer";
 		public HtmlInteraction () {
-			helper = new ComposerControlHelper();
+			players = new ComposerControlHelper();
+
+			// Register normal Silverlight bridge object
 			HtmlPage.RegisterScriptableObject(ScriptRegistration, this);
 
-			// experimental: bind scriptable object events back to html element (like Flash does):
+			// bind scriptable object events back to html element (like Flash does):
 			BackBind("jwAddEventListener", 2);
-			BackBind("jwPause", 0);
-			BackBind("jwPlay", 0);
-			BackBind("jwGetState", 0);
+			BackBind("jwRemoveEventListener", 2);
+
+			BackBind("jwGetBuffer", 0);//
+			BackBind("jwGetDuration", 0);
+			BackBind("jwGetFullscreen", 0);
+			BackBind("jwGetHeight", 0);
+			BackBind("jwGetMute", 0);
+			BackBind("jwGetPlaylist", 0);
+			BackBind("jwGetPlaylistIndex", 0);
+			BackBind("jwGetPosition", 0);//
+			BackBind("jwGetState", 0);//
+			BackBind("jwGetWidth", 0);
+			BackBind("jwGetVersion", 0);
+			BackBind("jwGetVolume", 0);
+
+			BackBind("jwPlay", 1);//
+			BackBind("jwPause", 1);//
+			BackBind("jwStop", 0);//
+			BackBind("jwSeek", 1);//
+			BackBind("jwLoad", 1);
+			BackBind("jwPlaylistItem", 1);
+			BackBind("jwPlaylistNext", 0);
+			BackBind("jwPlaylistPrev", 0);
+			BackBind("jwSetMute", 1);
+			BackBind("jwSetVolume", 1);
+			BackBind("jwSetFullscreen", 1);
+
+			BackBind("jwControlbarShow", 0);
+			BackBind("jwControlbarHide", 0);
+			BackBind("jwDisplayShow", 0);
+			BackBind("jwDisplayHide", 0);
+			BackBind("jwDockHide", 0);
+			BackBind("jwDockSetButton", 4);
+			BackBind("jwDockShow", 0);
 
 			// trigger player ready event
 			HtmlPage.Window.Eval("jwplayer().playerReady(document.getElementById('" + HtmlPage.Plugin.Id + "'))");
@@ -81,29 +103,52 @@ namespace JwslPlayer {
 		}
 
 		[ScriptableMember]
-		public double GetMilliseconds () {
-			return helper.PlayerList.First().Status.PlayTime.TotalMilliseconds;
+		public double jwGetBuffer () {
+			return players.PlayerList.First().Status.BufferingProgress;
 		}
 
 		[ScriptableMember]
-		public void GotoMilliseconds (double milliseconds) {
-			foreach (var player in helper.PlayerList) {
-				player.SeekTo(TimeSpan.FromMilliseconds(milliseconds));
+		public double jwGetDuration () {
+			return players.PlayerList.First().Status.NaturalDuration.TimeSpan.TotalSeconds;
+		}
+
+		[ScriptableMember]
+		public double jwGetPosition () {
+			return players.PlayerList.First().Status.PlayTime.TotalSeconds;
+		}
+
+		[ScriptableMember]
+		public void jwSeek (double seconds) {
+			players.EachPlayer(p => p.SeekTo(TimeSpan.FromSeconds(seconds)));
+		}
+
+		[ScriptableMember]
+		public void jwPause (string state) {
+			foreach (var player in players.PlayerList) {
+				if (state == null) togglePlay(player);
+				else if (state.ToLower() == "false") player.Pause();
+				else player.Play();
 			}
 		}
 
 		[ScriptableMember]
-		public void jwPause () {
-			foreach (var player in helper.PlayerList) {
-				player.Pause();
+		public void jwPlay (string state) {
+			foreach (var player in players.PlayerList) {
+				if (state == null) togglePlay(player);
+				else if (state.ToLower() == "false") player.Play();
+				else player.Pause();
 			}
 		}
 
+		void togglePlay(IPlayer player) {
+			if (player.IsActive()) player.Pause();
+			else player.Play();
+		}
+
 		[ScriptableMember]
-		public void jwPlay () {
-			foreach (var player in helper.PlayerList) {
-				player.Play();
-			}
+		public void jwStop () {
+			players.EachPlayer(p => p.Pause());
+			players.EachPlayer(p => p.SeekTo(0));
 		}
 
 		[ScriptableMember]
@@ -124,9 +169,14 @@ namespace JwslPlayer {
 					return "BUFFERING";
 			}
 		}
+
 		[ScriptableMember]
 		public void jwAddEventListener (string eventType, string callback) {
-
+			// todo: event callbacks!
+		}
+		[ScriptableMember]
+		public void jwRemoveEventListener (string eventType, string callback) {
+			// todo: event callbacks!
 		}
 
 		PlayerStatus lastState;
@@ -136,8 +186,8 @@ namespace JwslPlayer {
 		public void StatusUpdate (PlayerStatus NewStatus) { lastState = NewStatus; } 
 		public void CaptionFired (TimelineMarker Caption) { } 
 		public void ErrorOccured (Exception Error) { } 
-		public void AddBinding (IPlayer PlayerToControl) { helper.AddBinding(PlayerToControl, this); }
-		public void RemoveBinding (IPlayer PlayerToControl) { helper.RemoveBinding(PlayerToControl, this); }
+		public void AddBinding (IPlayer PlayerToControl) { players.AddBinding(PlayerToControl, this); }
+		public void RemoveBinding (IPlayer PlayerToControl) { players.RemoveBinding(PlayerToControl, this); }
 
 	}
 }

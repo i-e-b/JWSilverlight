@@ -93,7 +93,7 @@ namespace JwslPlayer {
 		void FadeControls() {
 			if (ControlsAreFaded) return;
 
-			if (!Player.IsPlayerActive())
+			if (!Player.IsActive())
 				return;
 
 			ControlsAreFaded = true;

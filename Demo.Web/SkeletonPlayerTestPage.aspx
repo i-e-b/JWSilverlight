@@ -4,46 +4,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head runat="server">
     <title>SkeletonPlayer</title>
-    <style type="text/css">
-    html, body {
-	    height: 100%;
-	    overflow: auto;
-    }
-    body {
-	    padding: 0;
-	    margin: 0;
-    }
-    #silverlightControlHost {
-	    height: 100%;
-	    text-align:center;
-    }
-    </style>
+    <style type="text/css"> html, body { height: 100%; overflow: auto; } body { padding: 0; margin: 0; } </style>
 </head>
 <body>
 	<form id="form1" runat="server">
-		<!-- <div id="silverlightControlHost">
-			<object id="slPlugin" data="data:application/x-silverlight-2," type="application/x-silverlight-2" width="853" height="480">
-				<param name="source" value="ClientBin/jwslPlayer.xap" />
-				<param name="onError" value="onSilverlightError" />
-				<param name="background" value="white" />
-				<param name="minRuntimeVersion" value="3.0.40624.0" />
-				<param name="autoUpgrade" value="true" />
-				<param name="initParams" value="playlist=http://localhost:49832/Playlist.xml,skin=/ExampleSkins/glow.zip" />
-				<a href="http://go.microsoft.com/fwlink/?LinkID=149156&v=3.0.40624.0" style="text-decoration: none">
-					<img src="http://go.microsoft.com/fwlink/?LinkId=108181" alt="Get Microsoft Silverlight" style="border-style: none" />
-				</a>
-			</object>
-			<iframe id="_sl_historyFrame" style="visibility: hidden; height: 0px; width: 0px; border: 0px"></iframe>
-		</div> -->
-
-
 		<div id="container">Loading the player...</div>
 
-		<a href="#" onclick="Pause()">Pause</a>
-		<a href="#" onclick="Play()">Play</a>
+		<a href="#" onclick="jwplayer().stop()">Stop</a>
+		<a href="#" onclick="jwplayer().pause(false)">Pause</a>
+		<a href="#" onclick="jwplayer().play()">Toggle Play</a>
+		<a href="#" onclick="jwplayer().seek(30)">Go to 30 Seconds</a>
+		<br />
+		<a href="#" onclick="alert(jwplayer().getPosition())">Get Position</a>
+		<a href="#" onclick="alert(jwplayer().getDuration())">Get Duration</a>
+		<a href="#" onclick="alert(jwplayer().getBuffer()+'%')">Get Buffer Progress</a> (always shows 0% for smooth streams)
+
 
 		<script type="text/javascript" src="/Scripts/jwplayer.min.js"></script>
-		 <!--<script type="text/javascript" src="/Scripts/jwplayer.api.js"></script> for debug -- replace API with uncompressed version -->
 		<script type="text/javascript" src="/Scripts/jwplayer.embed.silverlight.js"></script>
 		<script type="text/javascript">
 			jwplayer('container').setup({
@@ -57,19 +34,6 @@
 					{ type: 'download' }
 				]
 			});
-			
-			function Play() {
-				// should be:
-				jwplayer().play()
-				// but is:
-				//jwplayer().container.content.jwplayer.Play()
-			}
-			function Pause() {
-				// should be:
-				jwplayer().pause()
-				// but is:
-				//jwplayer().container.content.jwplayer.Pause()
-			}
 		</script>
 	</form>
 </body>
