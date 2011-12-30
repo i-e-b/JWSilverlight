@@ -18,6 +18,12 @@
 		<a href="#" onclick="alert(jwplayer().getPosition())">Get Position</a>
 		<a href="#" onclick="alert(jwplayer().getDuration())">Get Duration</a>
 		<a href="#" onclick="alert(jwplayer().getBuffer()+'%')">Get Buffer Progress</a> (always shows 0% for smooth streams)
+		<br />
+		<a href="#" onclick="alert(jwplayer().getFullscreen())">Is Fullscreen?</a>
+		<a href="#" onclick="jwplayer().setFullscreen()">Toggle Fullscreen (HTML5 Only)</a>
+		<a href="#" onclick="alert(jwplayer().getVolume())">Get Volume</a>
+		<a href="#" onclick="jwplayer().setVolume(50)">Set Half Volume</a>
+		<a href="#" onclick="jwplayer().setVolume(100)">Set Full Volume</a>
 
 
 		<script type="text/javascript" src="/Scripts/jwplayer.min.js"></script>

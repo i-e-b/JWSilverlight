@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Windows.Browser;
 using System.Windows.Media;
 using ComposerCore;
@@ -36,8 +37,8 @@ namespace JwslPlayer {
 			BackBind("jwRemoveEventListener", 2);
 
 			BackBind("jwGetBuffer", 0);//
-			BackBind("jwGetDuration", 0);
-			BackBind("jwGetFullscreen", 0);
+			BackBind("jwGetDuration", 0);//
+			BackBind("jwGetFullscreen", 0);//
 			BackBind("jwGetHeight", 0);
 			BackBind("jwGetMute", 0);
 			BackBind("jwGetPlaylist", 0);
@@ -46,7 +47,7 @@ namespace JwslPlayer {
 			BackBind("jwGetState", 0);//
 			BackBind("jwGetWidth", 0);
 			BackBind("jwGetVersion", 0);
-			BackBind("jwGetVolume", 0);
+			BackBind("jwGetVolume", 0);//
 
 			BackBind("jwPlay", 1);//
 			BackBind("jwPause", 1);//
@@ -57,8 +58,8 @@ namespace JwslPlayer {
 			BackBind("jwPlaylistNext", 0);
 			BackBind("jwPlaylistPrev", 0);
 			BackBind("jwSetMute", 1);
-			BackBind("jwSetVolume", 1);
-			BackBind("jwSetFullscreen", 1);
+			BackBind("jwSetVolume", 1);//
+			BackBind("jwSetFullscreen", 1);//
 
 			BackBind("jwControlbarShow", 0);
 			BackBind("jwControlbarHide", 0);
@@ -110,6 +111,26 @@ namespace JwslPlayer {
 		[ScriptableMember]
 		public double jwGetDuration () {
 			return players.PlayerList.First().Status.NaturalDuration.TimeSpan.TotalSeconds;
+		}
+
+		[ScriptableMember]
+		public bool jwGetFullscreen () {
+			return Application.Current.Host.Content.IsFullScreen;
+		}
+
+		[ScriptableMember]
+		public void jwSetFullscreen (object ignored) {
+			// not supported, due to Silverlight restrictions.
+		}
+
+		[ScriptableMember]
+		public double jwGetVolume () {
+			return players.PlayerList.First().AudioVolume * 100.0;
+		}
+
+		[ScriptableMember]
+		public void jwSetVolume (double vol) {
+			players.EachPlayer(p=>p.AudioVolume = vol / 100.0);
 		}
 
 		[ScriptableMember]
