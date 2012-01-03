@@ -20,7 +20,8 @@ namespace jwSkinLoader {
 		}
 
 		void ReadPackage(object sender, OpenReadCompletedEventArgs e) {
-			if (e.Cancelled || e.Error != null) throw e.Error ?? new Exception("Skin download cancelled");
+			if (e.Error != null) throw e.Error;
+			if (e.Cancelled) throw new Exception("Skin download cancelled");
 
 			var zipStream = new ZipInputStream(e.Result);
 

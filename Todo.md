@@ -7,6 +7,11 @@ Javascript API
 --------------
 * Complete JW/JS bridge.
 
+Playlists
+---------
+* Modify ComposerCore playlist to be compatible with JW XML Playlists (ASX, ATOM, RSS, XSPF)
+* Handle JSON playlists through API
+
 Misc
 ----
 * Cleanup or re-write ComposerCore for Smooth 1.5 player

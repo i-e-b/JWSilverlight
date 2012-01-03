@@ -8,14 +8,13 @@ namespace ComposerCore {
 	/// This class represents a collection of media items to play.
 	/// </summary>    
 	[ScriptableType]
-	public class PlaylistCollection : ScriptableObservableCollection<PlaylistItem> {
+	public class PlaylistCollection : ScriptableObservableCollection<IPlaylistItem> {
 		/// <summary>
 		/// Inserts an item into the collection.
 		/// </summary>
 		/// <param name="index">Index to insert the item at.</param>
 		/// <param name="item">Item to insert.</param>
-		protected override void InsertItem (int index, PlaylistItem item) {
-			item.OwnerCollection = this;
+		protected void InsertItem (int index, PlaylistItem item) {
 			item.PropertyChanged += item_PropertyChanged;
 			base.InsertItem(index, item);
 		}
@@ -28,14 +27,7 @@ namespace ComposerCore {
 		void item_PropertyChanged (object sender, System.ComponentModel.PropertyChangedEventArgs e) {
 			OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
 		}
-		/// <summary>
-		/// Removes an item at the given index.
-		/// </summary>
-		/// <param name="index">Index of the item to remove.</param>
-		protected override void RemoveItem (int index) {
-			Items[index].OwnerCollection = null;
-			base.RemoveItem(index);
-		}
+
 		#region Serialization
 		/// <summary>
 		/// top level XML node for this class

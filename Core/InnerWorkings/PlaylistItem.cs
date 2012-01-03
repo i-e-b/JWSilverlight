@@ -13,7 +13,7 @@ namespace ComposerCore {
 	/// This class represents a media item in a playlist.
 	/// </summary>
 	[ScriptableType]
-	public class PlaylistItem : INotifyPropertyChanged {
+	public class PlaylistItem : INotifyPropertyChanged, IPlaylistItem {
 		/// <summary>
 		/// parameterless constructor required for Edit in Blend.
 		/// </summary>
@@ -28,15 +28,6 @@ namespace ComposerCore {
 		public PlaylistItem (PlaylistCollection collectionParent) {
 			Init();
 			m_collectionParent = collectionParent;
-		}
-		/// <summary>
-		/// Sets the owner collection. Required to enable declaritve collections 
-		/// where playlistitems are instantiated in XAML with default constructor.
-		/// </summary>
-		internal PlaylistCollection OwnerCollection {
-			set {
-				m_collectionParent = value;
-			}
 		}
 
 		/// <summary>
@@ -253,7 +244,7 @@ namespace ComposerCore {
 
 		#region Inner workings
 		/// <summary>The parent collection of this item.</summary>
-		private PlaylistCollection m_collectionParent;
+		private readonly PlaylistCollection m_collectionParent;
 		/// <summary>The title of this item.</summary>
 		private String m_title;
 		/// <summary>The description of this item.</summary>
@@ -422,7 +413,7 @@ namespace ComposerCore {
 		/// serialize this object
 		/// </summary>
 		/// <param name="writer">XmlWriter to serialze to</param>
-		internal void Serialize (XmlWriter writer) {
+		public void Serialize (XmlWriter writer) {
 			writer.WriteStartElement(xmlNode);
 			writer.WriteElementString("Description", Description);
 			writer.WriteElementString("FileSize", FileSize.ToString(CultureInfo.InvariantCulture));
@@ -443,7 +434,12 @@ namespace ComposerCore {
 			}
 			writer.WriteEndElement();
 		}
+
+		public string JSON() { throw new NotImplementedException(); }
 		#endregion
+		public void UpdateCaptions(TimeSpan currentPlaybackTime) {
+			LoadCaptionsFromSource(currentPlaybackTime);
+		}
 
 
 		public void LoadCaptionsFromSource (TimeSpan currentPosition) {

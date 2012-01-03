@@ -84,6 +84,7 @@
     <Compile Include="InnerWorkings\CaptionReader.cs" />
     <Compile Include="InnerWorkings\ChapterItem.cs" />
     <Compile Include="ComposerControlHelper.cs" />
+    <Compile Include="IPlaylistItem.cs" />
     <Compile Include="IPlayer.cs" />
     <Compile Include="IPlayerController.cs" />
     <Compile Include="InnerWorkings\Player.cs" />

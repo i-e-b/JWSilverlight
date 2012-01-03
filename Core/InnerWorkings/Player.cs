@@ -27,7 +27,7 @@ namespace ComposerCore {
 		/// <summary>
 		/// Get the playlist item currently being played, if any.
 		/// </summary>
-		public PlaylistItem CurrentItem { get; private set; }
+		public IPlaylistItem CurrentItem { get; private set; }
 
 		public Color BackgroundColor {
 			set {
@@ -699,7 +699,7 @@ window.onbeforeunload = function() {
 			CaptionTimer.Interval = TimeSpan.FromMilliseconds(3000);
 
 			// TODO: fix this for non-live/smooth transcripts!
-			CurrentItem.LoadCaptionsFromSource(CurrentSliderPosition);
+			CurrentItem.UpdateCaptions(CurrentSliderPosition);
 
 			if (MediaPlayer.Markers != null && CurrentItem.IsAdaptiveStreaming && CurrentItem.CaptionItems != null) {
 				AddCaptions(CurrentItem.CaptionItems);

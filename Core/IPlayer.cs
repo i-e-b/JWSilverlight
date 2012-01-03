@@ -18,7 +18,7 @@ namespace ComposerCore {
 		/// <summary>
 		/// Get the playlist item currently being played, if any.
 		/// </summary>
-		PlaylistItem CurrentItem { get; }
+		IPlaylistItem CurrentItem { get; }
 
 		/// <summary>
 		/// Set the background color for the player (shown around aspect ratio gaps)

@@ -45,7 +45,7 @@ namespace jwslPlayer {
 
 			string skinPackage;
 			if (e.InitParams.TryGetValue("skin", out skinPackage)) {
-				root.SkinPackageUrl = skinPackage;
+				root.SkinPackageUrl = Uri.UnescapeDataString(skinPackage);
 			} else {
 				root.SkinPackageUrl = "/ExampleSkins/beelden.zip";
 			}
