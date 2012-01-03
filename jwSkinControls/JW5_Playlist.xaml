@@ -3,6 +3,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:jwSkinControls_ControlFragments="clr-namespace:jwSkinControls.ControlFragments"
 	mc:Ignorable="d"
 	x:Class="jwSkinControls.JW5_Playlist"
 	d:DesignWidth="640" d:DesignHeight="480" Width="200">
@@ -13,5 +14,6 @@
 			<ColumnDefinition Width="Auto"/>
 		</Grid.ColumnDefinitions>
 		<StackPanel x:Name="PlaylistItemStack" Margin="0"/>
+		<jwSkinControls_ControlFragments:JwSliderVertical x:Name="ScrollSlider" Grid.Column="1" Margin="0" Width="10" HorizontalAlignment="Left"/>
 	</Grid>
 </UserControl>

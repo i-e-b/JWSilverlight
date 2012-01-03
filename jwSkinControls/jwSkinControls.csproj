@@ -85,6 +85,9 @@
     <Compile Include="ControlFragments\JwPlaylistItem.xaml.cs">
       <DependentUpon>JwPlaylistItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ControlFragments\JwSliderVertical.xaml.cs">
+      <DependentUpon>JwSliderVertical.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ControlFragments\ToggleVisibilityEventArgs.cs" />
     <Compile Include="ControlFragments\ProportionEventArgs.cs" />
     <Compile Include="ControlBarLayout.cs" />
@@ -133,6 +136,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ControlFragments\JwPlaylistItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ControlFragments\JwSliderVertical.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
