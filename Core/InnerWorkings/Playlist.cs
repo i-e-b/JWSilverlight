@@ -328,7 +328,7 @@ namespace ComposerCore {
 			Items.Clear();
 			foreach (JsonObject item in value) {
 				if (!item.ContainsKey("file")) continue;
-				var playItem = new PlaylistItem();
+				var playItem = new PlaylistItem(items);
 
 				foreach (var key in item.Keys) {
 					switch (key) {
@@ -344,7 +344,7 @@ namespace ComposerCore {
 							playItem.StopPosition = double.Parse(item[key].ToString());
 							break;
 						case "start":
-							playItem.ResumePosition = double.Parse(item[key]);
+							playItem.ResumePosition = double.Parse(item[key].ToString());
 							break;
 						case "title":
 							playItem.Title = item[key];

@@ -45,7 +45,7 @@ namespace ComposerCore {
 			reader.Read();
 			while (!(reader.Name == xmlNode && reader.NodeType == XmlNodeType.EndElement)) {
 				if (reader.IsStartElement("PlaylistItem"))
-					Add(new PlaylistItem().Deserialize(reader));
+					Add(new PlaylistItem(this).Deserialize(reader));
 				else if (reader.IsStartElement())
 					throw new InvalidPlaylistException(xmlNode);
 				else if (!reader.Read())

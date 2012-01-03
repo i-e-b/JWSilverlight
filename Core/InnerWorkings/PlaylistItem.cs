@@ -44,7 +44,7 @@ namespace ComposerCore {
 		public int PlaylistIndex {
 			get {
 				if (m_collectionParent != null) {
-					return m_collectionParent.IndexOf(this) + 1;
+					return m_collectionParent.IndexOf(this);
 				}
 				return -1;
 			}

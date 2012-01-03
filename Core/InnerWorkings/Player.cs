@@ -243,9 +243,11 @@ namespace ComposerCore {
 			MediaPlayer.Visibility = Visibility.Visible; // ensure we're visible.
 			MediaPlayer.Opacity = 0.0; // but don't show until frames start
 			// ReSharper disable RedundantCheckBeforeAssignment
-			if (MediaPlayer.Position != ResumeTime) {
-				MediaPlayer.Position = ResumeTime;
-			}
+			try {
+				if (MediaPlayer.Position != ResumeTime) {
+					MediaPlayer.Position = ResumeTime;
+				}
+			} catch (Exception ex) { drop(ex); }
 			// ReSharper restore RedundantCheckBeforeAssignment
 			WantToPlay = true;
 			TryPlay();

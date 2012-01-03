@@ -7,5 +7,11 @@
 	x:Class="jwSkinControls.JW5_Playlist"
 	d:DesignWidth="640" d:DesignHeight="480" Width="200">
 
-	<Grid x:Name="LayoutRoot" Background="#FF3CF561"/>
+	<Grid x:Name="LayoutRoot">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition/>
+			<ColumnDefinition Width="Auto"/>
+		</Grid.ColumnDefinitions>
+		<StackPanel x:Name="PlaylistItemStack" Margin="0"/>
+	</Grid>
 </UserControl>

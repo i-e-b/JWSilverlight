@@ -2,6 +2,8 @@ Skins
 -----
 * playlist reading and rendering
 * logo plugin rendering (link out)
+* "over" rendering of control bar
+* control bar and playlist positioning
 
 Javascript API
 --------------
