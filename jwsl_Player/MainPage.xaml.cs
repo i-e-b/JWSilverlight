@@ -73,6 +73,20 @@ namespace JwslPlayer {
 
 		public string SkinPackageUrl { set { jwSkinPackage.Load(value); } }
 
+		public double PlaylistSize {
+			get {
+				return PlaylistView.ActualWidth;
+			}
+			set {
+				PlaylistView.Width = value;
+				if (value > 0) {
+					PlaylistView.Visibility = Visibility.Visible;
+				} else {
+					PlaylistView.Visibility = Visibility.Collapsed;
+				}
+			}
+		}
+
 		private DispatcherTimer fadeTimer;
 		private void SetFadeTimer() {
 			if (fadeTimer != null) return;

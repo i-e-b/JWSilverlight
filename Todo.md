@@ -10,9 +10,6 @@ Javascript API
 Playlists
 ---------
 * Modify ComposerCore playlist to be compatible with JW XML Playlists (ASX, ATOM, RSS, XSPF)
-* Handle JSON playlists through API
-
-	[[JSON]][{"duration":32,"title":"Road Warriors","file":"http://cdn1.cache.twofourdigital.net/Mediafreedom/Storage/origin/amyprosser/da1908af-3316-4884-b064-9faa00ccb193/video/en/smoothstream/0631e6c4-3b4f-401f-a561-36ed109974d5.ism/MANIFEST","image":"/thumbnail.jpg"},{"duration":124,"file":"/uploads/bbb.mp4","image":"/uploads/bbb.jpg"},{"duration":542,"file":"/uploads/ed.mp4","image":"/uploads/ed.jpg"}]	
 
 Misc
 ----

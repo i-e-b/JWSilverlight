@@ -100,14 +100,14 @@ namespace jwSkinControls.ControlFragments {
 		}
 
 		void ResizeBars () {
-			var realWidth = LayoutRoot.ActualWidth;
+			var realWidth = Rail.ActualWidth;
 			if (realWidth < 0) realWidth = 0.0;
 
 			Buffer.Width = realWidth * BufferProgress;
 			Progress.Width = realWidth * SliderProgress;
 
 			if (realWidth > 0)
-				Thumb.Margin = new Thickness(realWidth * thumbProg, 0, 0, 0);
+				Thumb.Margin = new Thickness((realWidth - Thumb.ActualWidth) * thumbProg, 0, 0, 0);
 		}
 
 		public void InvokeTargetProportionChanged (double prop) {

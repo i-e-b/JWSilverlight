@@ -62,6 +62,7 @@ namespace jwSkinControls {
 
 		bool HasCaptions(PlayerStatus NewStatus) {
 			if (lastPlaylist == null) return false;
+			if (lastPlaylist.Items[NewStatus.PlaylistItemIndex].CaptionItems == null) return false;
 			return lastPlaylist.Items[NewStatus.PlaylistItemIndex].CaptionItems.Count > 0;
 		}
 

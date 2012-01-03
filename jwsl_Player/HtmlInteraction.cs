@@ -105,7 +105,7 @@ namespace JwslPlayer {
 
 		[ScriptableMember]
 		public double jwGetBuffer () {
-			return players.PlayerList.First().Status.BufferingProgress;
+			return players.PlayerList.First().Status.BufferingProgress * 100;
 		}
 
 		[ScriptableMember]
