@@ -54,7 +54,10 @@ namespace ComposerCore {
 
 		public bool Mute {
 			get { return MediaPlayer.IsMuted; }
-			set { MediaPlayer.IsMuted = value; }
+			set {
+				MediaPlayer.IsMuted = value;
+				UpdateSubscribers_MajorStatus();
+			}
 		}
 
 		/// <summary>
@@ -62,7 +65,10 @@ namespace ComposerCore {
 		/// </summary>
 		public double AudioVolume {
 			get { return MediaPlayer.Volume; }
-			set { MediaPlayer.Volume = Math.Min(1.0, Math.Max(0.0, value)); }
+			set {
+				MediaPlayer.Volume = Math.Min(1.0, Math.Max(0.0, value));
+				UpdateSubscribers_MajorStatus();
+			}
 		}
 
 		private bool SmoothstreamBeginVariablesSet { get; set; }
@@ -946,10 +952,10 @@ window.onbeforeunload = function() {
 		}
 		#endregion
 
-		private void UpdateSubscribers_Status (PlayerStatus Status) {
+		private void UpdateSubscribers_Status (PlayerStatus status) {
 			foreach (var ctrl in ControlSets) {
 				try {
-					ctrl.StatusUpdate(Status);
+					ctrl.StatusUpdate(status);
 				} catch (Exception ex) {
 					try {
 						ctrl.ErrorOccured(ex);

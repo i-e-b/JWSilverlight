@@ -8,24 +8,10 @@
 </head>
 <body>
 	<form id="form1" runat="server">
+		<!-- Target div for player: -->
 		<div id="container">Loading the player...</div>
 
-		<a href="#" onclick="jwplayer().stop()">Stop</a>
-		<a href="#" onclick="jwplayer().pause(false)">Pause</a>
-		<a href="#" onclick="jwplayer().play()">Toggle Play</a>
-		<a href="#" onclick="jwplayer().seek(30)">Go to 30 Seconds</a>
-		<br />
-		<a href="#" onclick="alert(jwplayer().getPosition())">Get Position</a>
-		<a href="#" onclick="alert(jwplayer().getDuration())">Get Duration</a>
-		<a href="#" onclick="alert(jwplayer().getBuffer()+'%')">Get Buffer Progress</a> (always shows 0% for smooth streams)
-		<br />
-		<a href="#" onclick="alert(jwplayer().getFullscreen())">Is Fullscreen?</a>
-		<a href="#" onclick="jwplayer().setFullscreen()">Toggle Fullscreen (HTML5 Only)</a>
-		<a href="#" onclick="alert(jwplayer().getVolume())">Get Volume</a>
-		<a href="#" onclick="jwplayer().setVolume(50)">Set Half Volume</a>
-		<a href="#" onclick="jwplayer().setVolume(100)">Set Full Volume</a>
-
-
+		<!-- embed includes and call -->
 		<script type="text/javascript" src="/Scripts/jwplayer.min.js"></script>
 		<script type="text/javascript" src="/Scripts/jwplayer.embed.silverlight.js"></script>
 		<script type="text/javascript">
@@ -41,6 +27,29 @@
 				]
 			});
 		</script>
+
+
+		<!-- Test functions: -->
+		<a href="#" onclick="jwplayer().stop()">Stop</a>
+		<a href="#" onclick="jwplayer().pause(false)">Pause</a>
+		<a href="#" onclick="jwplayer().play()">Toggle Play</a>
+		<a href="#" onclick="alert(jwplayer().getState())">Get Player State</a>
+		<a href="#" onclick="jwplayer().seek(30)">Go to 30 Seconds</a>
+		<br />
+		<a href="#" onclick="alert(jwplayer().getPosition())">Get Position</a>
+		<a href="#" onclick="alert(jwplayer().getDuration())">Get Duration</a>
+		<a href="#" onclick="alert(jwplayer().getBuffer()+'%')">Get Buffer Progress</a> (always shows 0% for smooth streams)
+		<br />
+		<a href="#" onclick="alert(jwplayer().getFullscreen())">Is Fullscreen?</a>
+		<a href="#" onclick="jwplayer().setFullscreen()">Toggle Fullscreen (HTML5 Only)</a>
+		<a href="#" onclick="alert(jwplayer().getVolume())">Get Volume</a>
+		<a href="#" onclick="jwplayer().setVolume(50)">Set Half Volume</a>
+		<a href="#" onclick="jwplayer().setVolume(100)">Set Full Volume</a>
+		<a href="#" onclick="jwplayer().setMute()">Toggle Mute</a>
+		<br />
+		<a href="#" onclick="alert(jwplayer().getWidth())">Get Width</a>
+		<a href="#" onclick="alert(jwplayer().getHeight())">Get Height</a>
+
 	</form>
 </body>
 </html>

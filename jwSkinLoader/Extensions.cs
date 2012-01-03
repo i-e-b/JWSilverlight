@@ -13,6 +13,8 @@ namespace jwSkinLoader {
 			return attr.Value;
 		}
 		public static Color HexToColor (this string hex) {
+			if (hex == null) return Colors.Transparent;
+
 			if (hex.Length != 8) return Colors.Black;
 			var r = byte.Parse(hex.Substring(2, 2), NumberStyles.HexNumber);
 			var g = byte.Parse(hex.Substring(4, 2), NumberStyles.HexNumber);

@@ -39,13 +39,13 @@ namespace JwslPlayer {
 			BackBind("jwGetBuffer", 0);//
 			BackBind("jwGetDuration", 0);//
 			BackBind("jwGetFullscreen", 0);//
-			BackBind("jwGetHeight", 0);
+			BackBind("jwGetHeight", 0);//
 			BackBind("jwGetMute", 0);
 			BackBind("jwGetPlaylist", 0);
 			BackBind("jwGetPlaylistIndex", 0);
 			BackBind("jwGetPosition", 0);//
 			BackBind("jwGetState", 0);//
-			BackBind("jwGetWidth", 0);
+			BackBind("jwGetWidth", 0);//
 			BackBind("jwGetVersion", 0);
 			BackBind("jwGetVolume", 0);//
 
@@ -134,6 +134,21 @@ namespace JwslPlayer {
 		}
 
 		[ScriptableMember]
+		public bool jwGetMute () {
+			return players.Any(p => p.Mute);
+		}
+
+		[ScriptableMember]
+		public void jwSetMute (string value) {
+			if (value == null) {
+				players.EachPlayer(p => p.Mute = !p.Mute);
+				return;
+			}
+
+			players.EachPlayer(p => p.Mute = value.ToLower() == "true");
+		}
+
+		[ScriptableMember]
 		public double jwGetPosition () {
 			return players.PlayerList.First().Status.PlayTime.TotalSeconds;
 		}
@@ -189,6 +204,15 @@ namespace JwslPlayer {
 				default:
 					return "BUFFERING";
 			}
+		}
+
+		[ScriptableMember]
+		public int jwGetHeight () {
+			return (int)Application.Current.RootVisual.RenderSize.Height;
+		}
+		[ScriptableMember]
+		public int jwGetWidth () {
+			return (int)Application.Current.RootVisual.RenderSize.Width;
 		}
 
 		[ScriptableMember]

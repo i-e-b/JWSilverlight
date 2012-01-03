@@ -66,7 +66,7 @@ namespace jwSkinControls {
 			pkg.BindHoverButton(CaptionsButton, "dock", "button", "buttonOver");
 			CaptionsButton.BadgeImage = pkg.GetNamedElement("captions", "dockIcon");
 			CaptionsButton.CaptionText = "Subtitles\r\nOff";
-			CaptionsButton.CaptionColor = pkg.GetSettingValue("dock", "fontcolor").HexToColor();
+			CaptionsButton.CaptionColor = (pkg.GetSettingValue("dock", "fontcolor") ?? "0xffffff").HexToColor();
 		}
 	}
 }

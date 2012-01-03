@@ -271,6 +271,8 @@ namespace jwSkinControls {
 		}
 
 		public void StateChanged (PlayerStatus NewStatus) {
+			UpdateSoundButtonState();
+
 			StatusUpdate(NewStatus);
 		}
 		public void StatusUpdate (PlayerStatus NewStatus) {
