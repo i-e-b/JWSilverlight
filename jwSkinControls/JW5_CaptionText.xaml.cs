@@ -24,7 +24,7 @@ namespace jwSkinControls {
 			players.RemoveBinding(PlayerToControl, this);
 		}
 
-		public void PlaylistChanged(Playlist NewPlaylist) {}
+		public void PlaylistChanged(IPlaylist NewPlaylist) {}
 		public void StateChanged(PlayerStatus NewStatus) {}
 		public void StatusUpdate(PlayerStatus NewStatus) {}
 		public void ErrorOccured (Exception Error) {}

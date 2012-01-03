@@ -16,7 +16,7 @@ namespace ComposerCore {
 		/// Gets or sets the description of this playlist item.
 		/// </summary>
 		[Description("Description of media item")]
-		String Description { get; set; }
+		string Description { get; set; }
 
 		/// <summary>
 		/// Gets the total file size of the encoded video for this item.
@@ -34,7 +34,7 @@ namespace ComposerCore {
 		/// Gets the width of the encoded video for this item.
 		/// </summary>
 		[Description("height in pixels"), DefaultValue(480)]
-		Double VideoHeight { get; set; }
+		double VideoHeight { get; set; }
 
 		/// <summary>
 		/// Time to start play in seconds offset.
@@ -68,7 +68,7 @@ namespace ComposerCore {
 		/// Gets or sets a value indicating whether this item uses adaptive streaming.
 		/// </summary>
 		[Description("is adaptive streaming item")]
-		bool IsAdaptiveStreaming { get; set; }
+		bool IsAdaptiveStreaming { get; }
 
 		/// <summary>
 		/// Gets or sets the source of the thumbnail for this item. 
@@ -82,13 +82,13 @@ namespace ComposerCore {
 		/// Gets or sets the title of the playlist item.
 		/// </summary>
 		[Description("title of item")]
-		String Title { get; set; }
+		string Title { get; set; }
 
 		/// <summary>
 		/// Gets the width of the encoded video for this item.
 		/// </summary>
 		[Description("width in pixels"), DefaultValue(640)]
-		Double VideoWidth { get; set; }
+		double VideoWidth { get; set; }
 
 		/// <summary>
 		/// Gets the chapters in this item.

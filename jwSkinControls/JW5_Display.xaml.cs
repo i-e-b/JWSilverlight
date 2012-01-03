@@ -14,7 +14,7 @@ namespace jwSkinControls {
 		private readonly ComposerControlHelper players;
 		const string componentName = "display";
 
-		public void PlaylistChanged (Playlist NewPlaylist) { }
+		public void PlaylistChanged (IPlaylist NewPlaylist) { }
 		public void CaptionFired (TimelineMarker Caption) { }
 		public void ErrorOccured (Exception Error) { }
 

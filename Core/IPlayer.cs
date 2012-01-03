@@ -13,7 +13,7 @@ namespace ComposerCore {
 		/// <summary>
 		/// Get the current playlist. Returns a blank playlist if none loaded.
 		/// </summary>
-		Playlist CurrentPlaylist { get; }
+		IPlaylist CurrentPlaylist { get; }
 
 		/// <summary>
 		/// Get the playlist item currently being played, if any.
@@ -154,7 +154,7 @@ namespace ComposerCore {
 		/// <summary>
 		/// Load a playlist, and replace current playlist (if any)
 		/// </summary>
-		void LoadPlaylist (Playlist p);
+		void LoadPlaylist (IPlaylist p);
 		#endregion
 	}
 }

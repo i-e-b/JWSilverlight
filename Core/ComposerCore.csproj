@@ -69,6 +69,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Microsoft.Web.Media.SmoothStreaming.dll</HintPath>
     </Reference>
+    <Reference Include="System.Json, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="mscorlib" />
     <Reference Include="system" />
@@ -84,6 +85,7 @@
     <Compile Include="InnerWorkings\CaptionReader.cs" />
     <Compile Include="InnerWorkings\ChapterItem.cs" />
     <Compile Include="ComposerControlHelper.cs" />
+    <Compile Include="IPlaylist.cs" />
     <Compile Include="IPlaylistItem.cs" />
     <Compile Include="IPlayer.cs" />
     <Compile Include="IPlayerController.cs" />

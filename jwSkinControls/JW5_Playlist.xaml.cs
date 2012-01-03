@@ -6,7 +6,7 @@ using jwSkinLoader;
 
 namespace jwSkinControls {
 	public partial class JW5_Playlist : UserControl, IPlayerController, IXmlSkinReader {
-		public void PlaylistChanged (Playlist NewPlaylist) { }
+		public void PlaylistChanged (IPlaylist NewPlaylist) { }
 		public void StateChanged (PlayerStatus NewStatus) { }
 		public void StatusUpdate (PlayerStatus NewStatus) { }
 		public void CaptionFired (TimelineMarker Caption) { }

@@ -130,12 +130,9 @@ namespace ComposerCore {
 		[Description("is adaptive streaming item")]
 		public bool IsAdaptiveStreaming {
 			get {
-				return m_isAdaptiveStreaming;
-			}
-
-			set {
-				m_isAdaptiveStreaming = value;
-				OnPropertyChanged("IsAdaptiveStreaming");
+				if (!MediaSource.IsAbsoluteUri) return false;
+				var lpath = MediaSource.AbsolutePath.ToLower();
+				return lpath.EndsWith(".ism") || lpath.EndsWith(".isml") || lpath.EndsWith("/manifest");
 			}
 		}
 		/// <summary>
@@ -239,7 +236,7 @@ namespace ComposerCore {
 
 		public IList<CaptionItem> CaptionItems { get; set; }
 
-		public Uri CaptionSource { get; private set; }
+		public Uri CaptionSource { get; set; }
 
 
 		#region Inner workings
@@ -259,8 +256,6 @@ namespace ComposerCore {
 		private long m_fileSize;
 		/// <summary>The Url for the media of this item.</summary>
 		private Uri m_mediaUri;
-		/// <summary>A value indicating whether this item is adaptive streaming or not.</summary>
-		private bool m_isAdaptiveStreaming;
 		/// <summary>
 		/// The video bitrate of the adaptive stream that was downloaded and stored in isolated storage for offline playback. 
 		/// </summary>
@@ -364,8 +359,6 @@ namespace ComposerCore {
 					FrameRate = reader.ReadElementContentAsDouble();
 				else if (reader.IsStartElement("Height"))
 					VideoHeight = reader.ReadElementContentAsDouble();
-				else if (reader.IsStartElement("IsAdaptiveStreaming"))
-					IsAdaptiveStreaming = reader.ReadElementContentAsBoolean();
 				else if (reader.IsStartElement("OfflineVideoBitrateInKbps"))
 					OfflineVideoBitrateInKbps = reader.ReadElementContentAsLong();
 				else if (reader.IsStartElement("MediaSource")) {

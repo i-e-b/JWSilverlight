@@ -22,7 +22,7 @@ namespace ComposerCore {
 		/// <summary>
 		/// Get the current playlist. Returns a blank playlist if none loaded.
 		/// </summary>
-		public Playlist CurrentPlaylist { get; private set; }
+		public IPlaylist CurrentPlaylist { get; private set; }
 
 		/// <summary>
 		/// Get the playlist item currently being played, if any.
@@ -432,7 +432,7 @@ namespace ComposerCore {
 		/// <summary>
 		/// Load a playlist, and replace current playlist (if any)
 		/// </summary>
-		public void LoadPlaylist (Playlist p) {
+		public void LoadPlaylist (IPlaylist p) {
 			CurrentPlaylist = p;
 			PreparePlaylist();
 		}

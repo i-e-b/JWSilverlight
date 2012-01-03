@@ -360,7 +360,7 @@ namespace jwSkinControls {
 			players.RemoveBinding(PlayerToControl, this);
 			if (elapsedText != null) players.RemoveBinding(PlayerToControl, elapsedText); 
 		}
-		public void PlaylistChanged (Playlist NewPlaylist) { }
+		public void PlaylistChanged (IPlaylist NewPlaylist) { }
 		public void CaptionFired (TimelineMarker Caption) { }
 		public void ErrorOccured (Exception Error) { }
 		#endregion

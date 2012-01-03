@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Collections.Generic;
+using System.Json;
 using System.Windows;
 using System.Windows.Browser;
 using System.Windows.Media;
@@ -20,7 +21,7 @@ namespace ComposerCore {
 	}
 
 	[ScriptableType]
-	public class Playlist : DependencyObject {
+	public class Playlist : DependencyObject, IPlaylist {
 
 		/// <summary>
 		/// Event fired when a playlist has been loaded and is read for use.
@@ -32,8 +33,8 @@ namespace ComposerCore {
 		/// </summary>
 		public Playlist () {
 			StretchMode = Stretch.None;
-			_Items = new PlaylistCollection();
-			_Items.CollectionChanged += Items_CollectionChanged;
+			items = new PlaylistCollection();
+			items.CollectionChanged += Items_CollectionChanged;
 			Init();
 		}
 
@@ -50,8 +51,8 @@ namespace ComposerCore {
 		public void ReadPlaylist (string Contents) {
 			try {
 				StretchMode = Stretch.None;
-				_Items = new PlaylistCollection();
-				_Items.CollectionChanged += Items_CollectionChanged;
+				items = new PlaylistCollection();
+				items.CollectionChanged += Items_CollectionChanged;
 
 				Init();
 
@@ -59,19 +60,21 @@ namespace ComposerCore {
 				string strPlaylist = Uri.UnescapeDataString(Contents);
 				if (strPlaylist.StartsWith("<?xml")) { // assume it's a raw playlist
 					ParseXml(strPlaylist);
+				} else if (strPlaylist.StartsWith("[[JSON]]")) { // JW JSON playlist
+					ParseJSON(strPlaylist.Substring(8));
 				} else { // assume it's a url for the playlistStretchMode = Stretch.None;
 					var playlistUri = new Uri(strPlaylist);
 
 					var wc = new WebClient();
-					wc.DownloadStringCompleted += wc_DownloadStringCompleted;
+					wc.DownloadStringCompleted += WcDownloadStringCompleted;
 					wc.DownloadStringAsync(playlistUri);
 				}
 			} catch (XmlException) {
 				// special case. Encoder precompiled template? fail silently...
 				if (Contents.IndexOf("<$=", StringComparison.OrdinalIgnoreCase) > 0 && Contents.IndexOf("$>", StringComparison.OrdinalIgnoreCase) > 0) {
 					StretchMode = Stretch.None;
-					_Items = new PlaylistCollection();
-					_Items.CollectionChanged += Items_CollectionChanged;
+					items = new PlaylistCollection();
+					items.CollectionChanged += Items_CollectionChanged;
 					Init();
 					return;
 				}
@@ -93,7 +96,7 @@ namespace ComposerCore {
 		/// <summary>
 		/// Respond to a downloaded playlist XML asset.
 		/// </summary>
-		private void wc_DownloadStringCompleted (object sender, DownloadStringCompletedEventArgs e) {
+		private void WcDownloadStringCompleted (object sender, DownloadStringCompletedEventArgs e) {
 			if (e.Cancelled || e.Error != null) throw new Exception("Could not load playlist", e.Error);
 			ParseXml(e.Result);
 		}
@@ -101,21 +104,18 @@ namespace ComposerCore {
 		/// <summary>
 		/// playlist options
 		/// </summary>
-		private bool m_loopPlaylist;
-		private bool m_autoLoad;
-		private bool m_autoPlay;
-		private bool m_displayTimeCode;
-		private bool m_enableCachedComposition;
-		private bool m_enableCaptions;
-		private bool m_enableOffline;
-		private bool m_enablePopOut;
-		private bool m_startMuted;
-		private Stretch m_stretchMode;
-		private Color m_background;
+		private bool loopPlaylist;
+		private bool autoLoad;
+		private bool autoPlay;
+		private bool enableCachedComposition;
+		private bool enableCaptions;
+		private bool startMuted;
+		private Stretch stretchMode;
+		private Color background;
 		/// <summary>
 		/// list of playlist items
 		/// </summary>        
-		private PlaylistCollection _Items = new PlaylistCollection();
+		private PlaylistCollection items = new PlaylistCollection();
 		/// <summary>
 		/// Playlist changed event. This event fires on pretty much everything.
 		/// Use 'PlaylistLoaded' if you want to capture the post-load event.
@@ -128,10 +128,10 @@ namespace ComposerCore {
 		[Description("Automatically cue video when page is loaded"), DefaultValue(true)]
 		public bool AutoLoad {
 			get {
-				return m_autoLoad;
+				return autoLoad;
 			}
 			set {
-				m_autoLoad = value;
+				autoLoad = value;
 				if (PlaylistChanged != null) {
 					PlaylistChanged(this, null);
 				}
@@ -146,10 +146,10 @@ namespace ComposerCore {
 		[Description("Restart playlist from beginning once ended"), DefaultValue(false)]
 		public bool Loop {
 			get {
-				return m_loopPlaylist;
+				return loopPlaylist;
 			}
 			set {
-				m_loopPlaylist = value;
+				loopPlaylist = value;
 				if (PlaylistChanged != null) {
 					PlaylistChanged(this, null);
 				}
@@ -162,25 +162,10 @@ namespace ComposerCore {
 		[Description("Automatically start video when cued"), DefaultValue(true)]
 		public bool AutoPlay {
 			get {
-				return m_autoPlay;
+				return autoPlay;
 			}
 			set {
-				m_autoPlay = value;
-				if (PlaylistChanged != null) {
-					PlaylistChanged(this, null);
-				}
-			}
-		}
-		/// <summary>
-		/// display timecodes
-		/// </summary>
-		[Description("Display Timecode")]
-		public bool DisplayTimeCode {
-			get {
-				return m_displayTimeCode;
-			}
-			set {
-				m_displayTimeCode = value;
+				autoPlay = value;
 				if (PlaylistChanged != null) {
 					PlaylistChanged(this, null);
 				}
@@ -192,10 +177,10 @@ namespace ComposerCore {
 		[Description("Enable Cached Composition"), DefaultValue(true)]
 		public bool EnableCachedComposition {
 			get {
-				return m_enableCachedComposition;
+				return enableCachedComposition;
 			}
 			set {
-				m_enableCachedComposition = value;
+				enableCachedComposition = value;
 				if (PlaylistChanged != null) {
 					PlaylistChanged(this, null);
 				}
@@ -207,40 +192,10 @@ namespace ComposerCore {
 		[Description("Allow closed captions to show"), DefaultValue(true)]
 		public bool EnableCaptions {
 			get {
-				return m_enableCaptions;
+				return enableCaptions;
 			}
 			set {
-				m_enableCaptions = value;
-				if (PlaylistChanged != null) {
-					PlaylistChanged(this, null);
-				}
-			}
-		}
-		/// <summary>
-		/// offlining enabled
-		/// </summary>
-		[Description("Enable Player to be run offline"), DefaultValue(true)]
-		public bool EnableOffline {
-			get {
-				return m_enableOffline;
-			}
-			set {
-				m_enableOffline = value;
-				if (PlaylistChanged != null) {
-					PlaylistChanged(this, null);
-				}
-			}
-		}
-		/// <summary>
-		/// popout enabled
-		/// </summary>
-		[Description("Enable Player popout"), DefaultValue(true)]
-		public bool EnablePopOut {
-			get {
-				return m_enablePopOut;
-			}
-			set {
-				m_enablePopOut = value;
+				enableCaptions = value;
 				if (PlaylistChanged != null) {
 					PlaylistChanged(this, null);
 				}
@@ -252,10 +207,10 @@ namespace ComposerCore {
 		[Description("Mute player on start")]
 		public bool StartMuted {
 			get {
-				return m_startMuted;
+				return startMuted;
 			}
 			set {
-				m_startMuted = value;
+				startMuted = value;
 				if (PlaylistChanged != null) {
 					PlaylistChanged(this, null);
 				}
@@ -267,10 +222,10 @@ namespace ComposerCore {
 		[Description("Stretch Mode")]
 		public Stretch StretchMode {
 			get {
-				return m_stretchMode;
+				return stretchMode;
 			}
 			set {
-				m_stretchMode = value;
+				stretchMode = value;
 				if (PlaylistChanged != null) {
 					PlaylistChanged(this, null);
 				}
@@ -281,10 +236,10 @@ namespace ComposerCore {
 		/// </summary>
 		public Color Background {
 			get {
-				return m_background;
+				return background;
 			}
 			set {
-				m_background = value;
+				background = value;
 				if (PlaylistChanged != null) {
 					PlaylistChanged(this, null);
 				}
@@ -296,10 +251,10 @@ namespace ComposerCore {
 		[Description("Playlist")]
 		public PlaylistCollection Items {
 			get {
-				return _Items;
+				return items;
 			}
 			set {
-				_Items = value;
+				items = value;
 			}
 		}
 
@@ -316,11 +271,11 @@ namespace ComposerCore {
 			CustomProperties = new Dictionary<string, string>();
 			Loop = false;
 			AutoLoad = true;
-			AutoPlay = true;
+			AutoPlay = false;
 			EnableCachedComposition = true;
 			EnableCaptions = true;
-			EnablePopOut = true;
-			EnableOffline = true;
+			StartMuted = false;
+			StretchMode = Stretch.Uniform;
 		}
 		/// <summary>
 		/// construct a playlist item, provided for scripting.
@@ -365,6 +320,55 @@ namespace ComposerCore {
 			}
 			OnPlaylistLoaded(this, null);
 		}
+
+		public void ParseJSON (string jsonObject) {
+			var value = (JsonArray)JsonValue.Parse(jsonObject);
+			if (value == null) return;
+
+			Items.Clear();
+			foreach (JsonObject item in value) {
+				if (!item.ContainsKey("file")) continue;
+				var playItem = new PlaylistItem();
+
+				foreach (var key in item.Keys) {
+					switch (key) {
+						case "file":
+							var fileUrl = ((string)item[key]);
+							playItem.MediaSource = new Uri(fileUrl, UriKind.RelativeOrAbsolute);
+							break;
+						case "image":
+							var thumbUrl = ((string)item[key]);
+							playItem.ThumbSource = new Uri(thumbUrl, UriKind.RelativeOrAbsolute);
+							break;
+						case "duration":
+							playItem.StopPosition = double.Parse(item[key].ToString());
+							break;
+						case "start":
+							playItem.ResumePosition = double.Parse(item[key]);
+							break;
+						case "title":
+							playItem.Title = item[key];
+							break;
+						case "description":
+							playItem.Description = item[key];
+							break;
+						case "captions":
+							var captionUrl = ((string)item[key]);
+							playItem.CaptionSource = new Uri(captionUrl, UriKind.RelativeOrAbsolute);
+							break;
+						default:
+							playItem.CustomProperties.Add(key, item[key]);
+							break;
+					}
+				}
+
+				Items.Add(playItem);
+			}
+			if (PlaylistChanged != null) {
+				PlaylistChanged(this, null);
+			}
+			OnPlaylistLoaded(this, null);
+		}
 		#endregion
 
 		#region Serialization
@@ -390,16 +394,10 @@ namespace ComposerCore {
 					AutoLoad = reader.ReadElementContentAsBoolean();
 				else if (reader.IsStartElement("AutoPlay"))
 					AutoPlay = reader.ReadElementContentAsBoolean();
-				else if (reader.IsStartElement("DisplayTimeCode"))
-					DisplayTimeCode = reader.ReadElementContentAsBoolean();
 				else if (reader.IsStartElement("EnableCachedComposition"))
 					EnableCachedComposition = reader.ReadElementContentAsBoolean();
 				else if (reader.IsStartElement("EnableCaptions"))
 					EnableCaptions = reader.ReadElementContentAsBoolean();
-				else if (reader.IsStartElement("EnablePopOut"))
-					EnablePopOut = reader.ReadElementContentAsBoolean();
-				else if (reader.IsStartElement("EnableOffline"))
-					EnableOffline = reader.ReadElementContentAsBoolean();
 				else if (reader.IsStartElement("StartMuted"))
 					StartMuted = reader.ReadElementContentAsBoolean();
 				else if (reader.IsStartElement("StretchMode"))
@@ -419,18 +417,15 @@ namespace ComposerCore {
 		/// <summary>
 		/// Write the current playlist out to an xml-writer.
 		/// </summary>
-		internal void Serialize (XmlWriter writer) {
+		public void Serialize (XmlWriter writer) {
 			writer.WriteStartElement(xmlNode);
 			writer.WriteElementString("AutoLoad", AutoLoad.ToString().ToLower(CultureInfo.InvariantCulture));
 			writer.WriteElementString("AutoPlay", AutoPlay.ToString().ToLower(CultureInfo.InvariantCulture));
-			writer.WriteElementString("DisplayTimeCode", DisplayTimeCode.ToString().ToLower(CultureInfo.InvariantCulture));
 			writer.WriteElementString("EnableCachedComposition", EnableCachedComposition.ToString().ToLower(CultureInfo.InvariantCulture));
 			writer.WriteElementString("EnableCaptions", EnableCaptions.ToString().ToLower(CultureInfo.InvariantCulture));
-			writer.WriteElementString("EnablePopOut", EnablePopOut.ToString().ToLower(CultureInfo.InvariantCulture));
-			writer.WriteElementString("EnableOffline", EnableOffline.ToString().ToLower(CultureInfo.InvariantCulture));
 			writer.WriteElementString("StartMuted", StartMuted.ToString().ToLower(CultureInfo.InvariantCulture));
 			writer.WriteElementString("StretchMode", StretchMode.ToString());
-			_Items.Serialize(writer);
+			items.Serialize(writer);
 			writer.WriteEndElement();
 		}
 		#endregion

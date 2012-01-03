@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -15,7 +16,7 @@ namespace jwSkinControls {
 	/// show a captions tile. It also handles hiding or showing
 	/// </summary>
 	public partial class JW5_Dock : UserControl, IPlayerController, IXmlSkinReader {
-		Playlist lastPlaylist;
+		IPlaylist lastPlaylist;
 		bool showCaptions;
 		readonly ComposerControlHelper players;
 
@@ -49,7 +50,9 @@ namespace jwSkinControls {
 			if (handler != null) handler(this, new ToggleVisibilityEventArgs {IsVisible = visible});
 		}
 
-		public void PlaylistChanged (Playlist NewPlaylist) { lastPlaylist = NewPlaylist; }
+		public void PlaylistChanged (IPlaylist NewPlaylist) { 
+			lastPlaylist = NewPlaylist;
+		}
 		public void StatusUpdate (PlayerStatus NewStatus) {
 			CaptionsButton.Visibility = HasCaptions(NewStatus) ? Visibility.Visible : Visibility.Collapsed;
 		}

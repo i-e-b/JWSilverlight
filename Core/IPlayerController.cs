@@ -11,7 +11,7 @@ namespace ComposerCore {
 		/// <summary>
 		/// Method called when the playlist is loaded or updated.
 		/// </summary>
-		void PlaylistChanged(Playlist NewPlaylist);
+		void PlaylistChanged(IPlaylist NewPlaylist);
 
 		/// <summary>
 		/// Method called when the media player state changes (including switching playlist items)

@@ -226,7 +226,7 @@ namespace JwslPlayer {
 
 		PlayerStatus lastState;
 
-		public void PlaylistChanged (Playlist NewPlaylist) { }
+		public void PlaylistChanged (IPlaylist NewPlaylist) { }
 		public void StateChanged (PlayerStatus NewStatus) { lastState = NewStatus; }
 		public void StatusUpdate (PlayerStatus NewStatus) { lastState = NewStatus; } 
 		public void CaptionFired (TimelineMarker Caption) { } 
