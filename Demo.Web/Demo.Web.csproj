@@ -48,6 +48,7 @@
   <ItemGroup>
     <Content Include="captions_tt.xml" />
     <Content Include="ClientBin\player.swf" />
+    <Content Include="Scripts\jwplayer.embed.flash.js" />
     <Content Include="Scripts\jwplayer.embed.silverlight.js" />
     <Content Include="Scripts\jwplayer.min.js" />
     <Content Include="thumbnail.jpg" />

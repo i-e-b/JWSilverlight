@@ -13,10 +13,11 @@
 
 		<!-- embed includes and call -->
 		<script type="text/javascript" src="/Scripts/jwplayer.min.js"></script>
+		<script type="text/javascript" src="/Scripts/jwplayer.embed.flash.js"></script><!-- to fix an issue, remove later -->
 		<script type="text/javascript" src="/Scripts/jwplayer.embed.silverlight.js"></script>
 		<script type="text/javascript">
 			jwplayer('container').setup({
-				//file: 'http://cdn1.cache.twofourdigital.net/Mediafreedom/Storage/origin/amyprosser/da1908af-3316-4884-b064-9faa00ccb193/video/en/smoothstream/0631e6c4-3b4f-401f-a561-36ed109974d5.ism/MANIFEST',
+				//file: 'http://cdn1.cache.twofourdigital.net/Mediafreedom/Storage/origin/amyprosser/da1908af-3316-4884-b064-9faa00ccb193/video/en/smoothstream/0631e6c4-3b4f-401f-a561-36ed109974d5.ism',
 				height: 480,
 				width: 853,
 				skin: '/ExampleSkins/glow.zip',
@@ -24,9 +25,10 @@
 					{
 						//duration: 32,
 						title: "Road Warriors",
-						file: 'http://cdn1.cache.twofourdigital.net/Mediafreedom/Storage/origin/amyprosser/da1908af-3316-4884-b064-9faa00ccb193/video/en/smoothstream/0631e6c4-3b4f-401f-a561-36ed109974d5.ism/MANIFEST',
+						file: 'http://cdn1.cache.twofourdigital.net/Mediafreedom/Storage/origin/amyprosser/da1908af-3316-4884-b064-9faa00ccb193/video/en/smoothstream/0631e6c4-3b4f-401f-a561-36ed109974d5.ism',
 						image: '/thumbnail.jpg',
-						captions: 'http://localhost:49832/captions_tt.xml'
+						captions: 'http://localhost:49832/captions_tt.xml',
+						provider: 'http'
 					},
 					{ file: "/video.mp4", image: "/thumbnail.jpg", title:"Second"},
 					{ file: "/video.mp4", image: "/thumbnail.jpg", title: "Third" }

@@ -5,6 +5,12 @@
  * @version 5.5
  */
 (function (jwplayer) {
+	// Bind new extensions that only Silverlight can handle:
+	jwplayer.utils.extensionmap["ism"] = { "silverlight": "video/smooth" },
+	jwplayer.utils.extensionmap["isml"]= { "silverlight": "video/smooth" },
+	jwplayer.utils.extensionmap["wmv"] = { "silverlight": "video/windowsmedia" },
+	jwplayer.utils.extensionmap["wma"] = { "silverlight": "audio/windowsmedia" },
+	jwplayer.utils.extensionmap["avi"] = { "silverlight": "video/avi" },
 
 	jwplayer.embed.silverlight = function (_container, _player, _options, _loader, _api) {
 		function appendAttribute(object, name, value) {
@@ -193,5 +199,5 @@
 		}
 	};
 
-	
+
 })(jwplayer);

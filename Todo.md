@@ -6,6 +6,7 @@ Skins
 Javascript API
 --------------
 * Complete JW/JS bridge.
+* Add proper Silverlight detection and extension detection to Silverlight embed plugin.
 
 Playlists
 ---------

@@ -157,7 +157,22 @@ namespace ComposerCore {
 			}
 
 			set {
-				m_mediaUri = value;
+				if (value == null || !value.IsAbsoluteUri) {
+					m_mediaUri = value;
+				OnPropertyChanged("MediaSource");
+					return;
+				}
+				
+				var labsPath = value.AbsolutePath.ToLower();
+				if (labsPath.EndsWith("manifest")) {
+					m_mediaUri = value;
+				} else if (labsPath.EndsWith(".ism") || labsPath.EndsWith(".isml")) {
+					var left = value.GetComponents(UriComponents.SchemeAndServer, UriFormat.Unescaped);
+					m_mediaUri = new Uri(left + value.AbsolutePath + "/manifest" + value.Query);
+				} else {
+					m_mediaUri = value;
+				}
+
 				OnPropertyChanged("MediaSource");
 			}
 		}
