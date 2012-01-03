@@ -99,6 +99,7 @@
     <Compile Include="InnerWorkings\ScriptableObservableCollection.cs" />
     <Compile Include="InnerWorkings\SmpteFrameRate.cs" />
     <Compile Include="InnerWorkings\TimeCode.cs" />
+    <Compile Include="UriExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

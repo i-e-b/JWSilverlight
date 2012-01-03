@@ -902,7 +902,7 @@ window.onbeforeunload = function() {
 		/// Change background poster.
 		/// </summary>
 		private void ShowThumbnail (Uri uri) {
-			Poster.ImageSource = new BitmapImage(uri);
+			Poster.ImageSource = new BitmapImage(uri.ForceAbsoluteByPage());
 
 			Poster.Stretch = CurrentPlaylist.StretchMode;
 			Poster.AlignmentX = AlignmentX.Center;
@@ -1035,7 +1035,7 @@ window.onbeforeunload = function() {
 			if (CurrentItem.IsAdaptiveStreaming) {
 				MediaPlayer.SmoothStreamingSource = CurrentItem.MediaSource;
 			} else {
-				MediaPlayer.Source = CurrentItem.MediaSource;
+				MediaPlayer.Source = CurrentItem.MediaSource.ForceAbsoluteByPage();
 			}
 
 			if (!PosterMode && InPlayMode && MediaPlayer.CanSeek) {

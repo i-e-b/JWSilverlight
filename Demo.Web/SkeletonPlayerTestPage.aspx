@@ -28,12 +28,11 @@
 						image: '/thumbnail.jpg',
 						captions: 'http://localhost:49832/captions_tt.xml'
 					},
-					{ duration: 124, file: "/uploads/bbb.mp4", image: "/uploads/bbb.jpg" },
-					{ duration: 542, file: "/uploads/ed.mp4", image: "/uploads/ed.jpg" }
+					{ file: "/video.mp4", image: "/thumbnail.jpg" }
 				],
 				modes: [
 					{ type: 'silverlight', src: '/ClientBin/jwslPlayer.xap' },
-					{ type: 'flash', src: 'player.swf' },
+					{ type: 'flash', src: '/ClientBin/player.swf' },
 					{ type: 'html5' },
 					{ type: 'download' }
 				]
