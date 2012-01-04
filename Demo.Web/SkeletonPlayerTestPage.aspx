@@ -7,7 +7,7 @@
     <style type="text/css"> html, body { height: 100%; overflow: auto; } body { padding: 0; margin: 0; } </style>
 </head>
 <body>
-	<form id="form1" runat="server">
+	<form id="form1" runat="server"> 
 		<!-- Target div for player: -->
 		<div id="container">Loading the player...</div>
 
@@ -57,8 +57,8 @@
 			});
 		</script>
 
-
 		<!-- Test functions: -->
+		<div id="Test-Functions" style="font-size:small">
 		<a href="#" onclick="jwplayer().stop()">Stop</a> |
 		<a href="#" onclick="jwplayer().pause(false)">Pause</a> |
 		<a href="#" onclick="jwplayer().play()">Toggle Play</a> |
@@ -92,8 +92,24 @@
 		<br />
 		<a href="#" onclick="jwplayer().getPlugin('controlbar').show()">Show Control Bar</a> |
 		<a href="#" onclick="jwplayer().getPlugin('controlbar').hide()">Hide Control Bar</a>
-		<br />
+		<br /></div>
 
+		<!-- Test event code: -->
+		<script type="text/javascript">
+			function setText(text) {
+				document.getElementById("message").innerHTML += text;
+			}
+
+			jwplayer().onPlay(function () { setText("Playing; "); });
+			jwplayer().onPlaylistItem(function (o) { setText("Item "+o.index+"; "); });
+			jwplayer().onVolume(function () { setText("Volume Changed; "); });
+			jwplayer().onPause(function () { setText("Paused; "); });
+			jwplayer().onBuffer(function () { setText("Buffering; "); });
+			jwplayer().onIdle(function () { setText("Idle; "); });
+		</script>
+		
+		<!-- Event messages -->
+		<p id="message"></p>
 	</form>
 </body>
 </html>

@@ -11,23 +11,11 @@ namespace JwslPlayer {
 	public class HtmlInteraction : IPlayerController {
 		private readonly ComposerControlHelper players;
 
-		/*
-		 * Notes -- jwGetBuffer is 0..100 of buffered %, jwGetMeta is JSON string of playlist clip info,
-		 * 
-		 * The following events will need to be triggered:
-		 * 
-		 * jwplayerAPIReady & jwplayerReady (on plugin loaded?), 
-		 * jwplayerFullscreen, jwplayerResize, jwplayerError,
-		 * jwplayerMediaBeforePlay, jwplayerComponentShow, jwplayerComponentHide, jwplayerMediaBuffer,
-		 * jwplayerMediaBufferFull, jwplayerMediaError, jwplayerMediaLoaded, jwplayerMediaComplete,
-		 * jwplayerMediaSeek, jwplayerMediaTime, jwplayerMediaVolume, jwplayerMediaMeta,
-		 * jwplayerMediaMute, jwplayerPlayerState, jwplayerPlaylistLoaded, jwplayerPlaylistItem
-		 * 
-		 */
-
 		const string ScriptRegistration = "jwplayer";
+		readonly EventRegistry javascriptEvents;
 		public HtmlInteraction () {
 			players = new ComposerControlHelper();
+			javascriptEvents = new EventRegistry();
 
 			// Register normal Silverlight bridge object
 			HtmlPage.RegisterScriptableObject(ScriptRegistration, this);
@@ -270,22 +258,42 @@ namespace JwslPlayer {
 
 		[ScriptableMember]
 		public void jwAddEventListener (string eventType, string callback) {
-			// todo: event callbacks!
+			javascriptEvents.Bind(eventType, callback);
 		}
 		[ScriptableMember]
 		public void jwRemoveEventListener (string eventType, string callback) {
-			// todo: event callbacks!
+			javascriptEvents.Unbind(eventType, callback);
 		}
 
 		PlayerStatus lastState;
 
-		public void PlaylistChanged (IPlaylist NewPlaylist) { }
-		public void StateChanged (PlayerStatus NewStatus) { lastState = NewStatus; }
+		public void PlaylistChanged (IPlaylist NewPlaylist) {
+			string argsObject = "{index:0}";
+			foreach (var callback in javascriptEvents["jwplayerPlaylistItem"]) {
+				var str = "("+callback + ")(" + argsObject + ")";
+				HtmlPage.Window.Eval(str);
+			}
+		
+		}
+		public void StateChanged (PlayerStatus NewStatus) { StatusUpdate(NewStatus); }
 		public void StatusUpdate (PlayerStatus NewStatus) { lastState = NewStatus; } 
 		public void CaptionFired (TimelineMarker Caption) { } 
 		public void ErrorOccured (Exception Error) { } 
 		public void AddBinding (IPlayer PlayerToControl) { players.AddBinding(PlayerToControl, this); }
 		public void RemoveBinding (IPlayer PlayerToControl) { players.RemoveBinding(PlayerToControl, this); }
 
+
+
+		/*
+		 * The following events will need to be triggered:
+		 * 
+		 * jwplayerAPIReady & jwplayerReady (on plugin loaded?), 
+		 * jwplayerFullscreen, jwplayerResize, jwplayerError,
+		 * jwplayerMediaBeforePlay, jwplayerComponentShow, jwplayerComponentHide, jwplayerMediaBuffer,
+		 * jwplayerMediaBufferFull, jwplayerMediaError, jwplayerMediaLoaded, jwplayerMediaComplete,
+		 * jwplayerMediaSeek, jwplayerMediaTime, jwplayerMediaVolume, jwplayerMediaMeta,
+		 * jwplayerMediaMute, jwplayerPlayerState, jwplayerPlaylistLoaded, jwplayerPlaylistItem
+		 * 
+		 */
 	}
 }

@@ -15,10 +15,8 @@ Playlists
 
 Misc
 ----
-* Cleanup or re-write ComposerCore for Smooth 1.5 player
+* Cleanup or re-write ComposerCore
 * Keyboard commands?
-* Trace usage in ZIP library, exclude unused parts (for size)?
-
 
 For Ongoing
 -----------
