@@ -17,6 +17,10 @@ namespace ComposerCore {
 		/// </summary>
 		public List<IPlayer> PlayerList;
 
+		public IPlayer First {
+			get { return PlayerList.First(); }
+		}
+
 		/// <summary>
 		/// Bind a controller to a player.
 		/// This method should be called by the composing app.

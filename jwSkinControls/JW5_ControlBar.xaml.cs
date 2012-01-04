@@ -174,6 +174,8 @@ namespace jwSkinControls {
 					return Play;
 				case "pause":
 					return Pause;
+				case "stop":
+					return Stop;
 				case "fullscreen":
 				case "normalscreen":
 					return SwitchFullScreen;
@@ -255,6 +257,7 @@ namespace jwSkinControls {
 		#region Player controls
 		void Play (object sender, MouseButtonEventArgs e) { players.EachPlayer(p => p.Play()); }
 		void Pause (object sender, MouseButtonEventArgs e) { players.EachPlayer(p => p.Pause()); }
+		void Stop (object sender, MouseButtonEventArgs e) { players.EachPlayer(p => { p.Pause(); p.SeekTo(0); }); }
 		void PrevClip (object sender, MouseButtonEventArgs e) { players.EachPlayer(p => p.GoToPlaylistIndex(p.CurrentIndex - 1)); }
 		void NextClip (object sender, MouseButtonEventArgs e) { players.EachPlayer(p => p.GoToPlaylistIndex(p.CurrentIndex + 1)); }
 		void Ignore (object sender, MouseButtonEventArgs e) { }

@@ -40,9 +40,9 @@ namespace JwslPlayer {
 			BackBind("jwGetDuration", 0);//
 			BackBind("jwGetFullscreen", 0);//
 			BackBind("jwGetHeight", 0);//
-			BackBind("jwGetMute", 0);
+			BackBind("jwGetMute", 0);//
 			BackBind("jwGetPlaylist", 0);
-			BackBind("jwGetPlaylistIndex", 0);
+			BackBind("jwGetPlaylistIndex", 0);//
 			BackBind("jwGetPosition", 0);//
 			BackBind("jwGetState", 0);//
 			BackBind("jwGetWidth", 0);//
@@ -151,6 +151,26 @@ namespace JwslPlayer {
 		[ScriptableMember]
 		public double jwGetPosition () {
 			return players.PlayerList.First().Status.PlayTime.TotalSeconds;
+		}
+
+		[ScriptableMember]
+		public int jwGetPlaylistIndex () {
+			return players.First.CurrentIndex;
+		}
+
+		[ScriptableMember]
+		public void jwPlaylistItem (int index) {
+			players.EachPlayer(p => p.GoToPlaylistIndex(index));
+		}
+
+		[ScriptableMember]
+		public void jwPlaylistNext () {
+			players.EachPlayer(p => p.GoToPlaylistIndex(p.CurrentIndex + 1));
+		}
+
+		[ScriptableMember]
+		public void jwPlaylistPrev () {
+			players.EachPlayer(p => p.GoToPlaylistIndex(p.CurrentIndex - 1));
 		}
 
 		[ScriptableMember]

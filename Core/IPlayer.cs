@@ -76,7 +76,7 @@ namespace ComposerCore {
 		/// <summary>
 		/// Continue playing at the given playlist item index.
 		/// If player is currently paused, play will resume if "AutoPlay" is set to true.
-		/// If 'Index' is out of the range of the current playlist, the position will be reset to zero and the player paused.
+		/// If 'Index' is out of the range of the current playlist, the position be wrapped.
 		/// </summary>
 		void GoToPlaylistIndex (int Index);
 

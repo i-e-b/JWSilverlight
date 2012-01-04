@@ -20,7 +20,7 @@
 				//file: 'http://cdn1.cache.twofourdigital.net/Mediafreedom/Storage/origin/amyprosser/da1908af-3316-4884-b064-9faa00ccb193/video/en/smoothstream/0631e6c4-3b4f-401f-a561-36ed109974d5.ism',
 				height: 480,
 				width: 853,
-				skin: '/ExampleSkins/glow.zip',
+				skin: '/ExampleSkins/sbl.zip',
 				playlist: [
 					{
 						duration: 301.96,
@@ -59,25 +59,34 @@
 
 
 		<!-- Test functions: -->
-		<a href="#" onclick="jwplayer().stop()">Stop</a>
-		<a href="#" onclick="jwplayer().pause(false)">Pause</a>
-		<a href="#" onclick="jwplayer().play()">Toggle Play</a>
-		<a href="#" onclick="alert(jwplayer().getState())">Get Player State</a>
+		<a href="#" onclick="jwplayer().stop()">Stop</a> |
+		<a href="#" onclick="jwplayer().pause(false)">Pause</a> |
+		<a href="#" onclick="jwplayer().play()">Toggle Play</a> |
+		<a href="#" onclick="alert(jwplayer().getState())">Get Player State</a> |
 		<a href="#" onclick="jwplayer().seek(30)">Go to 30 Seconds</a>
 		<br />
-		<a href="#" onclick="alert(jwplayer().getPosition())">Get Position</a>
-		<a href="#" onclick="alert(jwplayer().getDuration())">Get Duration</a>
+		<a href="#" onclick="alert(jwplayer().getPosition())">Get Position</a> |
+		<a href="#" onclick="alert(jwplayer().getDuration())">Get Duration</a> |
 		<a href="#" onclick="alert(jwplayer().getBuffer()+'%')">Get Buffer Progress</a> (always shows 0% for smooth streams)
 		<br />
-		<a href="#" onclick="alert(jwplayer().getFullscreen())">Is Fullscreen?</a>
-		<a href="#" onclick="jwplayer().setFullscreen()">Toggle Fullscreen (HTML5 Only)</a>
-		<a href="#" onclick="alert(jwplayer().getVolume())">Get Volume</a>
-		<a href="#" onclick="jwplayer().setVolume(50)">Set Half Volume</a>
-		<a href="#" onclick="jwplayer().setVolume(100)">Set Full Volume</a>
+		<a href="#" onclick="alert(jwplayer().getFullscreen())">Is Fullscreen?</a> |
+		<a href="#" onclick="jwplayer().setFullscreen()">Toggle Fullscreen (HTML5 Only)</a> |
+		<a href="#" onclick="alert(jwplayer().getVolume())">Get Volume</a> |
+		<a href="#" onclick="jwplayer().setVolume(50)">Set Half Volume</a> |
+		<a href="#" onclick="jwplayer().setVolume(100)">Set Full Volume</a> |
 		<a href="#" onclick="jwplayer().setMute()">Toggle Mute</a>
 		<br />
-		<a href="#" onclick="alert(jwplayer().getWidth())">Get Width</a>
-		<a href="#" onclick="alert(jwplayer().getHeight())">Get Height</a>
+		<a href="#" onclick="alert(jwplayer().getWidth())">Get Width</a> |
+		<a href="#" onclick="alert(jwplayer().getHeight())">Get Height</a> |
+		<a href="#" onclick="jwplayer().resize(480,270)">Make Small</a> |
+		<a href="#" onclick="jwplayer().resize(853,480)">Make Big</a>
+		<br />
+		<a href="#" onclick="jwplayer().playlistItem(0)">First Playlist Item</a> |
+		<a href="#" onclick="jwplayer().playlistNext()">Next Playlist Item</a> |
+		<a href="#" onclick="jwplayer().playlistPrev()">Prev Playlist Item</a>
+		<br />
+		<a href="#" onclick="jwplayer().getPlugin('controlbar').show()">Show Control Bar</a> |
+		<a href="#" onclick="jwplayer().getPlugin('controlbar').hide()">Hide Control Bar</a>
 
 	</form>
 </body>

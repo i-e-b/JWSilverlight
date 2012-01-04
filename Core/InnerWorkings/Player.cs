@@ -161,7 +161,7 @@ namespace ComposerCore {
 		/// <summary>
 		/// Continue playing at the given playlist item index.
 		/// If player is currently paused, play will resume if "AutoPlay" is set to true.
-		/// If 'Index' is out of the range of the current playlist, the position will be reset to zero and the player paused.
+		/// If 'Index' is out of the range of the current playlist, the position be wrapped.
 		/// </summary>
 		public void GoToPlaylistIndex (int Index) {
 			if (InPosterDisplay() && Index > CurrentIndex) return; // can't leave poster yet.
@@ -171,8 +171,8 @@ namespace ComposerCore {
 				Pause();
 			} else if (Index < 0) {
 				if (CurrentIndex != 0) {
-					CurrentItem = CurrentPlaylist.Items[0];
-					CurrentIndex = 0;
+					CurrentIndex = CurrentPlaylist.Items.Count - 1;
+					CurrentItem = CurrentPlaylist.Items[CurrentIndex];
 					SeekToItem();
 				}
 			} else if (Index >= CurrentPlaylist.Items.Count) {
@@ -182,14 +182,9 @@ namespace ComposerCore {
 					CurrentItem = CurrentPlaylist.Items[CurrentIndex];
 					SeekToItem();
 				} else {
-					if (CurrentPlaylist.Loop) {
-						CurrentIndex = 0;
-						CurrentItem = CurrentPlaylist.Items[CurrentIndex];
-						SeekToItem();
-					} else {
-						CurrentIndex = 0;
-						Pause();
-					}
+					CurrentIndex = 0;
+					CurrentItem = CurrentPlaylist.Items[CurrentIndex];
+					SeekToItem();
 				}
 			} else {
 				CurrentItem = CurrentPlaylist.Items[Index];
