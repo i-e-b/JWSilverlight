@@ -13,7 +13,8 @@
 			<ColumnDefinition/>
 			<ColumnDefinition Width="Auto"/>
 		</Grid.ColumnDefinitions>
-		<StackPanel x:Name="PlaylistItemStack" Margin="0"/>
+		<Image x:Name="BackgroundImage" Margin="0" Grid.ColumnSpan="2" Stretch="Fill"/>
+		<StackPanel x:Name="PlaylistItemStack" Margin="0" VerticalAlignment="Top"/>
 		<jwSkinControls_ControlFragments:JwSliderVertical x:Name="ScrollSlider" Grid.Column="1" Margin="0" Width="10" HorizontalAlignment="Left"/>
 	</Grid>
 </UserControl>

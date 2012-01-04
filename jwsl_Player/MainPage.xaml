@@ -5,7 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:cp="clr-namespace:ComposerCore;assembly=ComposerCore" xmlns:jwSkinControls="clr-namespace:jwSkinControls;assembly=jwSkinControls" mc:Ignorable="d" x:Class="JwslPlayer.MainPage"
 	d:DesignHeight="480" d:DesignWidth="640">
-	<Grid x:Name="LayoutRoot" Background="Black" MouseEnter="LayoutRoot_MouseEnter" MouseLeave="LayoutRoot_MouseLeave" MouseMove="LayoutRoot_MouseMove">
+	<Grid x:Name="LayoutRoot" MouseEnter="LayoutRoot_MouseEnter" MouseLeave="LayoutRoot_MouseLeave" MouseMove="LayoutRoot_MouseMove">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition/>
 			<ColumnDefinition Width="Auto"/>

@@ -5,16 +5,16 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400">
-    
-    <Grid x:Name="LayoutRoot">
+
+    <Grid x:Name="LayoutRoot" SizeChanged="LayoutRoot_SizeChanged" MouseLeftButtonDown="SliderMouseLeftButtonDown" MouseLeftButtonUp="SliderMouseLeftButtonUp" MouseMove="SliderMouseMove">
     	<Grid.RowDefinitions>
     		<RowDefinition Height="Auto"/>
     		<RowDefinition/>
     		<RowDefinition Height="Auto"/>
     	</Grid.RowDefinitions>
-    	<Image x:Name="SliderCapTop" Margin="0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Stretch="None" Width="10" Height="10"/>
-    	<Image x:Name="SliderCapBottom" Margin="0" VerticalAlignment="Top" HorizontalAlignment="Center" Stretch="None" Width="10" Height="10" Grid.Row="2"/>
-    	<Image x:Name="SliderRail" HorizontalAlignment="Center" Margin="0" Grid.Row="1" Width="5" Stretch="Fill"/>
-    	<Image x:Name="SliderThumb" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="10" Height="10" Stretch="Fill"/>
+    	<Image x:Name="SliderCapTop" Margin="0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Stretch="None" Width="0" Height="0"/>
+    	<Image x:Name="SliderCapBottom" Margin="0" VerticalAlignment="Top" HorizontalAlignment="Center" Stretch="None" Width="0" Height="0" Grid.Row="2"/>
+    	<Image x:Name="SliderRail" HorizontalAlignment="Center" Margin="0" Grid.Row="1" Width="0" Stretch="Fill"/>
+    	<Image x:Name="SliderThumb" HorizontalAlignment="Center" Margin="0" Grid.Row="1" Width="1" Stretch="Fill"/>
     </Grid>
 </UserControl>

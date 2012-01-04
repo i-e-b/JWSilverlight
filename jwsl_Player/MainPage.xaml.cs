@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Threading;
 using jwSkinControls.ControlFragments;
 using jwSkinLoader;
@@ -58,6 +59,10 @@ namespace JwslPlayer {
 			DisplayView.SetSkin(jwSkinPackage);
 			DockView.SetSkin(jwSkinPackage);
 			PlaylistView.SetSkin(jwSkinPackage);
+
+			var color = jwSkinPackage.GetSettingValue("display", "backgroundcolor").HexToColor();
+			LayoutRoot.Background = new SolidColorBrush(color);
+			Player.BackgroundColor = color;
 		}
 
 

@@ -29,12 +29,14 @@ namespace ComposerCore {
 		/// </summary>
 		public IPlaylistItem CurrentItem { get; private set; }
 
+		Color backgroundColor = Color.FromArgb(0, 0, 0, 0);
 		public Color BackgroundColor {
 			set {
 				MediaPlayer.Background = new SolidColorBrush(value);
 				PosterDisplay.Fill = new SolidColorBrush(value);
+				backgroundColor = value;
 			}
-			get { return ((MediaPlayer.Background as SolidColorBrush) ?? new SolidColorBrush(Color.FromArgb(0, 0, 0, 0))).Color; }
+			get { return backgroundColor; }
 		}
 
 		/// <summary>
@@ -928,6 +930,7 @@ window.onbeforeunload = function() {
 			try {
 				if (HasVideo()) { // don't clear poster for audio-only
 					if (Background is ImageBrush) {
+						MediaPlayer.Background = new SolidColorBrush(BackgroundColor);
 						Background = new SolidColorBrush(BackgroundColor);
 					}
 					if (PosterDisplay.Visibility == Visibility.Visible) {

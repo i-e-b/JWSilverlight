@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using ComposerCore;
@@ -19,13 +20,18 @@ namespace jwSkinControls {
 		public JW5_Playlist () {
 			InitializeComponent();
 			players = new ComposerControlHelper();
+			ScrollSlider.TargetProportionChanged += ScrollSlider_TargetProportionChanged;
 		}
 
 		public void StateChanged (PlayerStatus NewStatus) {
 			lastStatus = NewStatus;
 			BindActiveStates();
 		}
-		public void StatusUpdate (PlayerStatus NewStatus) { }
+		public void StatusUpdate (PlayerStatus NewStatus) {
+
+			ScrollSlider.TotalHeight = PlaylistItemStack.ActualHeight;
+			ScrollSlider.VisibleHeight = LayoutRoot.ActualHeight;
+		}
 
 		void BindActiveStates() {
 			foreach (var child in PlaylistItemStack.Children.OfType<JwPlaylistItem>()) {
@@ -56,6 +62,16 @@ namespace jwSkinControls {
 				                skinPackage.GetNamedElement(PlaylistComponent, "itemImage")
 					);
 			}
+
+			ScrollSlider.SetSkin(
+				skinPackage.GetNamedElement(PlaylistComponent, "sliderRail"),
+				skinPackage.GetNamedElement(PlaylistComponent, "sliderThumb"),
+				skinPackage.GetNamedElement(PlaylistComponent, "sliderCapTop"),
+				skinPackage.GetNamedElement(PlaylistComponent, "sliderCapBottom")
+				);
+
+			BackgroundImage.Source = skinPackage.GetNamedElement(PlaylistComponent, "background");
+
 			BindActiveStates();
 		}
 
@@ -74,6 +90,16 @@ namespace jwSkinControls {
 		void button_Clicked(object sender, IndexEventArgs e) {
 			players.EachPlayer(p => p.GoToPlaylistIndex(e.Index));
 			players.EachPlayer(p => p.Play());
+		}
+
+		void ScrollSlider_TargetProportionChanged (object sender, ProportionEventArgs e) {
+			var toScroll = PlaylistItemStack.ActualHeight - LayoutRoot.ActualHeight;
+			if (double.IsNaN(toScroll) || toScroll < 1) {
+				PlaylistItemStack.Margin = new Thickness(0);
+				return;
+			}
+
+			PlaylistItemStack.Margin = new Thickness(0, -(toScroll * e.Proportion), 0, 0);
 		}
 	}
 }
