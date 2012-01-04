@@ -116,7 +116,7 @@ namespace ComposerCore {
 		/// <summary>
 		/// Returns a JSON object representing the state of the playlist item
 		/// </summary>
-		string JSON ();
+		string Json ();
 
 		/// <summary>
 		/// Load or reload captions for the playlist item based on the captions source property.

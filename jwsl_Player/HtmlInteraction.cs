@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -43,7 +41,7 @@ namespace JwslPlayer {
 			BackBind("jwGetFullscreen", 0);//
 			BackBind("jwGetHeight", 0);//
 			BackBind("jwGetMute", 0);//
-			BackBind("jwGetPlaylist", 0);
+			BackBind("jwGetPlaylist", 0);//
 			BackBind("jwGetPlaylistIndex", 0);//
 			BackBind("jwGetPosition", 0);//
 			BackBind("jwGetState", 0);//
@@ -55,7 +53,7 @@ namespace JwslPlayer {
 			BackBind("jwPause", 1);//
 			BackBind("jwStop", 0);//
 			BackBind("jwSeek", 1);//
-			BackBind("jwLoad", 1);
+			BackBind("jwLoad", 1);//
 			BackBind("jwPlaylistItem", 1);//
 			BackBind("jwPlaylistNext", 0);//
 			BackBind("jwPlaylistPrev", 0);//
@@ -173,6 +171,11 @@ namespace JwslPlayer {
 		[ScriptableMember]
 		public void jwPlaylistPrev () {
 			players.EachPlayer(p => p.GoToPlaylistIndex(p.CurrentIndex - 1));
+		}
+
+		[ScriptableMember]
+		public object jwGetPlaylist () {
+			return HtmlPage.Window.Eval(players.First.CurrentPlaylist.Json());
 		}
 
 		[ScriptableMember]

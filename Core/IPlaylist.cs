@@ -65,5 +65,8 @@ namespace ComposerCore {
 
 		/// <summary> Write the current playlist out to an xml-writer. </summary>
 		void Serialize (XmlWriter writer);
+
+		/// <summary> Write the current playlist out to a JSON formatted string </summary>
+		string Json();
 	}
 }

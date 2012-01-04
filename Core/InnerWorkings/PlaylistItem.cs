@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Net;
+using System.Text;
 using System.Windows.Browser;
 using System.Xml;
 using System.Globalization;
@@ -443,7 +444,26 @@ namespace ComposerCore {
 			writer.WriteEndElement();
 		}
 
-		public string JSON() { throw new NotImplementedException(); }
+		public string Json() {
+			var sb = new StringBuilder();
+			Action<string,object> addIfNotEmpty = (name, value) => {
+				if (value != null && !string.IsNullOrEmpty(value.ToString())){
+					sb.Append(name); sb.Append(":\""); sb.Append(value); sb.Append("\",");
+				}
+			};
+			sb.Append("{");
+
+			addIfNotEmpty("file", MediaSource);
+			addIfNotEmpty("image", ThumbSource);
+			addIfNotEmpty("duration", StopPosition);
+			addIfNotEmpty("start", StartPosition);
+			addIfNotEmpty("title", Title);
+			addIfNotEmpty("description", Description);
+			addIfNotEmpty("captions", CaptionSource);
+
+			sb.Append("},");
+			return sb.ToString().Replace(",}","}");
+		}
 		#endregion
 		public void UpdateCaptions(TimeSpan currentPlaybackTime) {
 			LoadCaptionsFromSource(currentPlaybackTime);

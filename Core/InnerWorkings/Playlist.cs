@@ -428,6 +428,18 @@ namespace ComposerCore {
 			items.Serialize(writer);
 			writer.WriteEndElement();
 		}
+
+		public string Json() {
+			var sb = new StringBuilder();
+
+			sb.Append("[");
+			foreach (var item in Items) {
+				sb.Append(item.Json());
+			}
+			sb.Append("]");
+
+			return sb.ToString().Replace(",]", "]");
+		}
 		#endregion
 	}
 }
