@@ -200,9 +200,11 @@ namespace ComposerCore {
 
 		void TryPlay () {
 			try { MediaPlayer.Play(); } catch (Exception ex) { drop(ex); }
+			UpdateSubscribers_MajorStatus();
 		}
 		void TryPause () {
 			try { MediaPlayer.Pause(); } catch (Exception ex) { drop(ex); }
+			UpdateSubscribers_MajorStatus();
 		}
 
 		/// <summary>

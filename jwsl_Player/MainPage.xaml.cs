@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using jwSkinControls.Animations;
@@ -22,6 +23,8 @@ namespace JwslPlayer {
 			jwSkinPackage = new JwSkinPackage();
 			jwSkinPackage.SkinReady += JwSkinPackageSkinPackageReady;
 
+			Player.MouseLeftButtonUp += Player_MouseLeftButtonUp;
+
 			bridge = new HtmlInteraction();
 			bridge.AddBinding(Player);
 
@@ -40,6 +43,10 @@ namespace JwslPlayer {
 			controlBarFader = new OpacityFader(ControlBarView);
 			dockFader = new OpacityFader(DockView);
 			SetFadeTimer();
+		}
+
+		void Player_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
+			bridge.jwPlay(null);
 		}
 
 		void DockView_CaptionVisibilityChanged(object sender, ToggleVisibilityEventArgs e) {
