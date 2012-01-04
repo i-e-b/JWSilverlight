@@ -4,13 +4,13 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows;
 using ComposerCore;
+using jwSkinControls.Animations;
 using jwSkinLoader;
 using Microsoft.Web.Media.SmoothStreaming;
 
 namespace jwSkinControls {
 	public partial class JW5_Display : UserControl, IPlayerController, IXmlSkinReader {
-		private readonly RotateTransform rot;
-		private double degreesPerMillisecond;
+		private RotationAnimation spinAnimation;
 		private readonly ComposerControlHelper players;
 		const string componentName = "display";
 
@@ -21,7 +21,6 @@ namespace jwSkinControls {
 		public JW5_Display () {
 			InitializeComponent();
 			players = new ComposerControlHelper();
-			rot = new RotateTransform();
 		}
 
 		public void StateChanged (PlayerStatus NewStatus) {
@@ -43,7 +42,7 @@ namespace jwSkinControls {
 					PlayIcon.Visibility = Visibility.Visible;
 					BackgroundIcon.Visibility = Visibility.Visible;
 					break;
-
+				
 				default:
 					BufferIcon.Visibility = Visibility.Visible;
 					BackgroundIcon.Visibility = Visibility.Visible;
@@ -51,9 +50,9 @@ namespace jwSkinControls {
 			}
 
 			if (BufferIcon.Visibility == Visibility.Visible) {
-				rot.Angle = ((DateTime.Now - DateTime.Today).TotalMilliseconds * degreesPerMillisecond) % 360;
-				// todo: add an animation to improve animation smoothness here.
-				BufferIcon.RenderTransform = rot;
+				if(spinAnimation != null) spinAnimation.Start();
+			} else {
+				if (spinAnimation != null) spinAnimation.Stop();
 			}
 		}
 		public void AddBinding (IPlayer PlayerToControl) {
@@ -72,10 +71,9 @@ namespace jwSkinControls {
 
 			var interval = pkg.GetSettingValue(componentName, "bufferinterval") ?? "100";
 			var rotation = pkg.GetSettingValue(componentName, "bufferrotation") ?? "15";
-			degreesPerMillisecond = double.Parse(rotation) / double.Parse(interval);
-			
-			rot.CenterX = BufferIcon.Width / 2.0;
-			rot.CenterY = BufferIcon.Height / 2.0;
+
+			spinAnimation = new RotationAnimation(BufferIcon, TimeSpan.FromMilliseconds(double.Parse(interval)), double.Parse(rotation));
+
 			PlayIcon.Clicked += PlayIconClicked;
 		}
 

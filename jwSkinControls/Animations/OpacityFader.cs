@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Media.Animation;
 
-namespace JwslPlayer {
+namespace jwSkinControls.Animations {
 	public class OpacityFader {
 		protected Storyboard OverAnimation, OutAnimation;
 

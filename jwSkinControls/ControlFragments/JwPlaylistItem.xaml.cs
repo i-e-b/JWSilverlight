@@ -5,10 +5,12 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ComposerCore;
+using jwSkinLoader;
 
 namespace jwSkinControls.ControlFragments {
 	public partial class JwPlaylistItem : UserControl {
 		IPlaylistItem plistItem;
+		const string PlaylistComponent = "playlist";
 
 		public JwPlaylistItem () {
 			InitializeComponent();
@@ -75,7 +77,23 @@ namespace jwSkinControls.ControlFragments {
 			}
 		}
 
-		public void SetSkin (BitmapImage item, BitmapImage itemActive, BitmapImage itemOver, BitmapImage itemImageBackground) {
+		public void SetSkin (JwSkinPackage pkg) {
+			SetImages(
+				pkg.GetNamedElement(PlaylistComponent, "item"),
+				pkg.GetNamedElement(PlaylistComponent, "itemActive"),
+				pkg.GetNamedElement(PlaylistComponent, "itemOver"),
+				pkg.GetNamedElement(PlaylistComponent, "itemImage"));
+
+			var outHex = pkg.GetSettingValue(PlaylistComponent, "fontcolor") ?? "0xffffff";
+			outColor = (outHex).HexToColor();
+			overColor = (pkg.GetSettingValue(PlaylistComponent, "overcolor") ?? outHex).HexToColor();
+			activeColor = (pkg.GetSettingValue(PlaylistComponent, "activecolor") ?? outHex).HexToColor();
+		}
+
+		Color outColor, overColor, activeColor;
+
+
+		public void SetImages (BitmapImage item, BitmapImage itemActive, BitmapImage itemOver, BitmapImage itemImageBackground) {
 			SetWithHeight(OutBackground, item);
 			SetWithHeight(OverBackground, itemOver);
 			SetWithHeight(ActiveBackground, itemActive);
@@ -151,8 +169,22 @@ namespace jwSkinControls.ControlFragments {
 					ActiveBackground.Visibility = Visibility.Collapsed;
 				}
 			}
+			UpdateFontColours();
 		}
 
+		void UpdateFontColours () {
+			SolidColorBrush brush;
+			if (Active) {
+				brush = new SolidColorBrush(activeColor);
+			} else if (mouseOver) {
+				brush = new SolidColorBrush(overColor);
+			} else {
+				brush = new SolidColorBrush(outColor);
+			}
+			TitleBlock.Foreground = brush;
+			DurationBlock.Foreground = brush;
+			DescriptionBlock.Foreground = brush;
+		}
 
 		public event EventHandler<IndexEventArgs> Clicked;
 		public void InvokeClicked () {

@@ -69,11 +69,11 @@ namespace jwSkinControls.ControlFragments {
 			SetWithHeightAndWidth(SliderCapTop, topCap);
 			SetWithHeightAndWidth(SliderCapBottom, bottomCap);
 
-			Width = Max(rail.PixelWidth, thumb.PixelWidth, topCap.PixelWidth, bottomCap.PixelWidth);
+			Width = Max(t=>t.PixelWidth, rail, thumb, topCap, bottomCap);
 
 			ResizeBars();
 		}
-		static int Max (params int[] values) { return values.Max(); }
+		static int Max<T> (Func<T, int> f, params T[] values) where T : class { return values.Where(v=>v!=null).Select(f).Max(); }
 
 		void SetWithWidth (Image dst, BitmapImage src) {
 			if (src == null) return;

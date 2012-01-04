@@ -55,12 +55,7 @@ namespace jwSkinControls {
 		void BindSkins() {
 			if (skinPackage == null) return;
 			foreach (var child in PlaylistItemStack.Children.OfType<JwPlaylistItem>()) {
-				(child).SetSkin(
-				                skinPackage.GetNamedElement(PlaylistComponent, "item"),
-				                skinPackage.GetNamedElement(PlaylistComponent, "itemActive"),
-				                skinPackage.GetNamedElement(PlaylistComponent, "itemOver"),
-				                skinPackage.GetNamedElement(PlaylistComponent, "itemImage")
-					);
+				(child).SetSkin(skinPackage);
 			}
 
 			ScrollSlider.SetSkin(
