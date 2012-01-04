@@ -1,6 +1,5 @@
 Skins
 -----
-* playlist reading and rendering
 * logo plugin rendering (link out)
 * "over" rendering of control bar
 * control bar and playlist positioning
@@ -17,7 +16,6 @@ Playlists
 Misc
 ----
 * Cleanup or re-write ComposerCore for Smooth 1.5 player
-* Background colour on poster view
 * Keyboard commands?
 * Trace usage in ZIP library, exclude unused parts (for size)?
 
