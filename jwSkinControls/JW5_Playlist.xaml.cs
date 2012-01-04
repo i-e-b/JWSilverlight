@@ -77,6 +77,7 @@ namespace jwSkinControls {
 				child.Clicked -= button_Clicked;
 			}
 			PlaylistItemStack.Children.Clear();
+			SetScroll(0);
 			foreach (var item in NewPlaylist.Items) {
 				var button = new JwPlaylistItem { PlaylistItem = item };
 				button.Clicked +=button_Clicked;
@@ -91,13 +92,18 @@ namespace jwSkinControls {
 		}
 
 		void ScrollSlider_TargetProportionChanged (object sender, ProportionEventArgs e) {
+			var prop = e.Proportion;
+			SetScroll(prop);
+		}
+
+		void SetScroll(double prop) {
 			var toScroll = PlaylistItemStack.ActualHeight - LayoutRoot.ActualHeight;
 			if (double.IsNaN(toScroll) || toScroll < 1) {
 				PlaylistItemStack.Margin = new Thickness(0);
 				return;
 			}
 
-			PlaylistItemStack.Margin = new Thickness(0, -(toScroll * e.Proportion), 0, 0);
+			PlaylistItemStack.Margin = new Thickness(0, -(toScroll * prop), 0, 0);
 		}
 	}
 }

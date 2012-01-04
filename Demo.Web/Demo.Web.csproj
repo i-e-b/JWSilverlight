@@ -58,7 +58,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Silverlight.js" />
-    <Content Include="SkeletonPlayerTestPage.aspx" />
+    <Content Include="Default.aspx" />
     <Content Include="video.mp4" />
     <Content Include="Web.config" />
   </ItemGroup>
