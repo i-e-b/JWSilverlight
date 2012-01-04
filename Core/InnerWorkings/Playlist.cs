@@ -62,7 +62,7 @@ namespace ComposerCore {
 					ParseXml(strPlaylist);
 				} else if (strPlaylist.StartsWith("[[JSON]]")) { // JW JSON playlist
 					ParseJSON(strPlaylist.Substring(8));
-				} else { // assume it's a url for the playlistStretchMode = Stretch.None;
+				} else { // assume it's a url for the playlist
 					var playlistUri = new Uri(strPlaylist);
 
 					var wc = new WebClient();

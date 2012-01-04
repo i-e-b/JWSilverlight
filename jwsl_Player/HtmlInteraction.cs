@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -54,10 +56,10 @@ namespace JwslPlayer {
 			BackBind("jwStop", 0);//
 			BackBind("jwSeek", 1);//
 			BackBind("jwLoad", 1);
-			BackBind("jwPlaylistItem", 1);
-			BackBind("jwPlaylistNext", 0);
-			BackBind("jwPlaylistPrev", 0);
-			BackBind("jwSetMute", 1);
+			BackBind("jwPlaylistItem", 1);//
+			BackBind("jwPlaylistNext", 0);//
+			BackBind("jwPlaylistPrev", 0);//
+			BackBind("jwSetMute", 1);//
 			BackBind("jwSetVolume", 1);//
 			BackBind("jwSetFullscreen", 1);//
 
@@ -171,6 +173,34 @@ namespace JwslPlayer {
 		[ScriptableMember]
 		public void jwPlaylistPrev () {
 			players.EachPlayer(p => p.GoToPlaylistIndex(p.CurrentIndex - 1));
+		}
+
+		[ScriptableMember]
+		public void jwLoad (object obj) {
+			if (obj is string) { 
+				jwLoad_Single((string)obj); 
+			} else if (obj is ScriptObject) { 
+				jwLoad_Json((ScriptObject)obj); 
+			} else throw new Exception("no way of interpreting data");
+		}
+
+		public void jwLoad_Single (string singleItem) {
+			var lower = singleItem.ToLower();
+
+			if (lower.EndsWith(".xml") || lower.EndsWith(".rss") || lower.EndsWith(".atom")) {
+				players.EachPlayer(p => p.LoadPlaylist(new Uri(singleItem, UriKind.RelativeOrAbsolute).ForceAbsoluteByPage().AbsoluteUri));
+			} else {
+				var fakePlaylist = "[[JSON]][{file:'" + singleItem + "'}]";
+				players.EachPlayer(p => p.LoadPlaylist(fakePlaylist)); 
+			}
+		}
+
+		public void jwLoad_Json (ScriptObject scriptPlaylist) {
+			var str = scriptPlaylist.ToJsonValue().ToString().Trim();
+			if (str.StartsWith("{") && str.EndsWith("}")) str = "["+str+"]";
+			if (str.StartsWith("[") && str.EndsWith("]")) str = "[[JSON]]" + str;
+
+			players.EachPlayer(p => p.LoadPlaylist(str));
 		}
 
 		[ScriptableMember]

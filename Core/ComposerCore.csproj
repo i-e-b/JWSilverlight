@@ -75,6 +75,7 @@
     <Reference Include="system" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
+    <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Browser" />
     <Reference Include="System.Xml" />
@@ -99,7 +100,7 @@
     <Compile Include="InnerWorkings\ScriptableObservableCollection.cs" />
     <Compile Include="InnerWorkings\SmpteFrameRate.cs" />
     <Compile Include="InnerWorkings\TimeCode.cs" />
-    <Compile Include="UriExtensions.cs" />
+    <Compile Include="Extensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

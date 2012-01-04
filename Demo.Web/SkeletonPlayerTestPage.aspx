@@ -20,7 +20,7 @@
 				//file: 'http://cdn1.cache.twofourdigital.net/Mediafreedom/Storage/origin/amyprosser/da1908af-3316-4884-b064-9faa00ccb193/video/en/smoothstream/0631e6c4-3b4f-401f-a561-36ed109974d5.ism',
 				height: 480,
 				width: 853,
-				skin: '/ExampleSkins/sbl.zip',
+				skin: '/ExampleSkins/beelden.zip',
 				playlist: [
 					{
 						duration: 301.96,
@@ -83,7 +83,10 @@
 		<br />
 		<a href="#" onclick="jwplayer().playlistItem(0)">First Playlist Item</a> |
 		<a href="#" onclick="jwplayer().playlistNext()">Next Playlist Item</a> |
-		<a href="#" onclick="jwplayer().playlistPrev()">Prev Playlist Item</a>
+		<a href="#" onclick="jwplayer().playlistPrev()">Prev Playlist Item</a> |
+		<a href="#" onclick="jwplayer().load([ { file: '/video.mp4', image: '/thumbnail.jpg', title: 'One' }, { file: '/video.mp4', image: '/thumbnail.jpg', title: 'Two' }, { file: '/video.mp4', image: '/thumbnail.jpg', title: 'Three' }])">Set New Playlist</a> |
+		<a href="#" onclick="jwplayer().load({ file: '/video.mp4', image: '/thumbnail.jpg', title: 'Single' })">Set single playlist item </a> |
+		<a href="#" onclick="jwplayer().load('/video.mp4')">Set single item </a>
 		<br />
 		<a href="#" onclick="jwplayer().getPlugin('controlbar').show()">Show Control Bar</a> |
 		<a href="#" onclick="jwplayer().getPlugin('controlbar').hide()">Hide Control Bar</a>

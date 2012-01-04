@@ -22,7 +22,7 @@ namespace jwslPlayer {
 			if (e.InitParams.TryGetValue("playlist", out playSource)) {
 				root.SourcePlaylist = Uri.UnescapeDataString(playSource);
 			} else if (e.InitParams.TryGetValue("file", out playSource)) {
-				root.SourcePlaylist = @"<?xml version='1.0' encoding='utf-8' ?><Playlist><Items><PlaylistItem><MediaSource>"+playSource+@"</MediaSource></PlaylistItem></Items></Playlist>";
+				root.SourcePlaylist = "[[JSON]][{file:'"+playSource+"'}]";
 			}
 
 			string skinPackage;

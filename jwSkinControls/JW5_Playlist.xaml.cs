@@ -27,10 +27,12 @@ namespace jwSkinControls {
 			lastStatus = NewStatus;
 			BindActiveStates();
 		}
-		public void StatusUpdate (PlayerStatus NewStatus) {
 
+		public void StatusUpdate (PlayerStatus NewStatus) {
 			ScrollSlider.TotalHeight = PlaylistItemStack.ActualHeight;
 			ScrollSlider.VisibleHeight = LayoutRoot.ActualHeight;
+			if (ScrollSlider.TotalHeight <= ScrollSlider.VisibleHeight) ScrollSlider.Visibility = Visibility.Collapsed;
+			else ScrollSlider.Visibility = Visibility.Visible;
 		}
 
 		void BindActiveStates() {
@@ -74,6 +76,7 @@ namespace jwSkinControls {
 			foreach (var child in PlaylistItemStack.Children.OfType<JwPlaylistItem>()) {
 				child.Clicked -= button_Clicked;
 			}
+			PlaylistItemStack.Children.Clear();
 			foreach (var item in NewPlaylist.Items) {
 				var button = new JwPlaylistItem { PlaylistItem = item };
 				button.Clicked +=button_Clicked;
