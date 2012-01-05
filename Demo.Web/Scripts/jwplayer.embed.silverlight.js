@@ -7,10 +7,14 @@
 (function (jwplayer) {
 	// Bind new extensions that only Silverlight can handle:
 	jwplayer.utils.extensionmap["ism"] = { "silverlight": "video/smooth" },
-	jwplayer.utils.extensionmap["isml"]= { "silverlight": "video/smooth" },
+	jwplayer.utils.extensionmap["isml"] = { "silverlight": "video/smooth" },
 	jwplayer.utils.extensionmap["wmv"] = { "silverlight": "video/windowsmedia" },
 	jwplayer.utils.extensionmap["wma"] = { "silverlight": "audio/windowsmedia" },
 	jwplayer.utils.extensionmap["avi"] = { "silverlight": "video/avi" },
+
+	// Bind into existing extensions that Silverlight can handle:
+	jwplayer.utils.extensionmap["mp4"].silverlight = "video/mp4";
+	jwplayer.utils.extensionmap["m4v"].silverlight = "video/mp4";
 
 	jwplayer.embed.silverlight = function (_container, _player, _options, _loader, _api) {
 		function appendAttribute(object, name, value) {
@@ -52,6 +56,54 @@
 
 			return flat;
 		};
+		function axDetect(ax) {
+			// adapted from http://www.silverlightversion.com/
+			var v = [0, 0, 0, 0],
+					loopMatch = function (ax, v, i, n) {
+						while (ax.isVersionSupported(v[0] + "." + v[1] + "." + v[2] + "." + v[3])) {
+							v[i] += n;
+						}
+						v[i] -= n;
+					};
+			loopMatch(ax, v, 0, 1);
+			loopMatch(ax, v, 1, 1);
+			loopMatch(ax, v, 2, 10000);
+			loopMatch(ax, v, 2, 1000);
+			loopMatch(ax, v, 2, 100);
+			loopMatch(ax, v, 2, 10);
+			loopMatch(ax, v, 2, 1);
+			loopMatch(ax, v, 3, 1);
+
+			return v;
+		};
+
+		function detectPlugin(pluginName, mimeType, activeX) {
+			var nav = window.navigator;
+			var version = [0, 0, 0], description, i, ax;
+
+			// Firefox, Webkit, Opera
+			if (typeof (nav.plugins) != 'undefined' && typeof nav.plugins[pluginName] == 'object') {
+				description = nav.plugins[pluginName].description;
+				if (description && !(typeof nav.mimeTypes != 'undefined' && nav.mimeTypes[mimeType] && !nav.mimeTypes[mimeType].enabledPlugin)) {
+					version = description.replace(pluginName, '').replace(/^\s+/, '').replace(/\sr/gi, '.').split('.');
+					for (i = 0; i < version.length; i++) {
+						version[i] = parseInt(version[i].match(/\d+/), 10);
+					}
+				}
+				// Internet Explorer / ActiveX
+			} else if (typeof (window.ActiveXObject) != 'undefined') {
+				try {
+					ax = new ActiveXObject(activeX);
+					if (ax) { version = axDetect(ax); }
+				} catch (e) { }
+			}
+			return version;
+		};
+		function hasSilverlight() {
+			var slversion = detectPlugin('Silverlight Plug-In', 'application/x-silverlight-2', 'AgControl.AgControl');
+			if (slversion[0] < 3) return false;
+			return true;
+		}
 
 		function parseConfigBlock(options, blockName) {
 			if (options[blockName]) {
@@ -192,11 +244,44 @@
 			flashPlayer = document.getElementById(_container.id);
 			_api.container = flashPlayer;
 			_api.setPlayer(flashPlayer, "flash");
-		}
+		};
 
 		this.supportsConfig = function () {
-			return true; // todo: Silverlight detection & file can play.
+			if (hasSilverlight()) {
+				if (_options) {
+					var item = jwplayer.utils.getFirstPlaylistItemFromConfig(_options);
+					if (typeof item.file == "undefined" && typeof item.levels == "undefined") {
+						return true;
+					} else if (item.file) {
+						return silverlightCanPlay(item.file, item.provider);
+					} else if (item.levels && item.levels.length) {
+						for (var i = 0; i < item.levels.length; i++) {
+							if (item.levels[i].file && silverlightCanPlay(item.levels[i].file, item.provider)) {
+								return true;
+							}
+						}
+					}
+				} else {
+					return true;
+				}
+			}
+			return false;
 		}
+
+		silverlightCanPlay = function (file, provider) {
+			var extension = jwplayer.utils.extension(file);
+			// If there is no extension, use Flash
+			if (!extension) {
+				return false;
+			}
+			// Extension is in the extension map, but not supported by Silverlight - fail
+			if (jwplayer.utils.exists(jwplayer.utils.extensionmap[extension]) &&
+					!jwplayer.utils.exists(jwplayer.utils.extensionmap[extension].silverlight)) {
+				return false;
+			}
+
+			return true;
+		};
 	};
 
 
