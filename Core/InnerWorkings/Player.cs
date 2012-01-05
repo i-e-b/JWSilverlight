@@ -538,13 +538,7 @@ window.onbeforeunload = function() {
 				PlayProgress = 0.0
 			};
 			Status = new_status;
-			foreach (var ctrl in ControlSets) {
-				try {
-					ctrl.PlayStateChanged(Status);
-				} catch (Exception ex) {
-					ctrl.ErrorOccured(ex);
-				}
-			}
+			SendToControls(c => c.PlayStateChanged(Status));
 		}
 
 		void Player_LayoutUpdated (object sender, EventArgs e) {
@@ -565,7 +559,8 @@ window.onbeforeunload = function() {
 
 			MediaPlayer = new SmoothStreamingMediaElement();
 			Children.Insert(0, MediaPlayer);
-			
+
+			MediaPlayer.CurrentStateChanged += MediaPlayer_StateChange;
 			MediaPlayer.MediaOpened += MediaPlayer_MediaOpened;
 			MediaPlayer.MediaEnded += MediaPlayer_MediaEnded;
 			MediaPlayer.ClipStateChanged += MediaPlayer_PlaybackStateChange;
@@ -581,6 +576,11 @@ window.onbeforeunload = function() {
 			} else {
 				MediaPlayer.Stretch = Stretch.Uniform;
 			}
+		}
+
+		void MediaPlayer_StateChange(object sender, RoutedEventArgs e) {
+			RefreshStatus();
+			SendToControls(c => c.PlayStateChanged(Status));
 		}
 
 		void CurrentPlaylist_PlaylistChanged (object sender, RoutedEventArgs e) {
@@ -873,6 +873,9 @@ window.onbeforeunload = function() {
 				} else {
 					MediaPlayer.Position = safe_end;
 				}
+
+				RefreshStatus();
+				SendToControls(c => c.SeekCompleted(Status));
 			} catch {
 				ShouldSeek = true;
 			}
@@ -1056,9 +1059,6 @@ window.onbeforeunload = function() {
 				TrySetPosition(ResumeTime);
 				TryPlay();
 			}
-			
-			RefreshStatus();
-			SendToControls(c => c.SeekCompleted(Status));
 		}
 
 		void TrySetPosition(TimeSpan resumeTime) {

@@ -20,16 +20,16 @@
 				//file: 'http://cdn1.cache.twofourdigital.net/Mediafreedom/Storage/origin/amyprosser/da1908af-3316-4884-b064-9faa00ccb193/video/en/smoothstream/0631e6c4-3b4f-401f-a561-36ed109974d5.ism',
 				height: 480,
 				width: 853,
-				skin: '/ExampleSkins/beelden.zip',
+				skin: '/ExampleSkins/sbl.zip',
 				playlist: [
-					{
+					/*{
 						duration: 301.96,
 						title: "Road Warriors",
 						file: 'http://cdn1.cache.twofourdigital.net/Mediafreedom/Storage/origin/amyprosser/da1908af-3316-4884-b064-9faa00ccb193/video/en/smoothstream/0631e6c4-3b4f-401f-a561-36ed109974d5.ism',
 						image: '/thumbnail.jpg',
 						captions: 'http://localhost:49832/captions_tt.xml',
 						provider: 'http'
-					},
+					},*/
 					{ start: 2, duration: 6, file: "/video.mp4", image: "/thumbnail.jpg", title: "Item", description : "This is a little test video" },
 					{ file: "/video.mp4", image: "/thumbnail.jpg", title: "Item",
 							description : "This is a little test video with a very long description, is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."  },
@@ -46,8 +46,8 @@
 					{ file: "/video.mp4", image: "/thumbnail.jpg", title: "Item" },
 					{ file: "/video.mp4", image: "/thumbnail.jpg", title: "Last One" }
 				],
-				"playlist.position": "right",
-				"playlist.size": 300,
+				/*"playlist.position": "right",
+				"playlist.size": 300,*/
 				modes: [
 					{ type: 'silverlight', src: '/ClientBin/jwslPlayer.xap' },
 					{ type: 'flash', src: '/ClientBin/player.swf' },
@@ -103,16 +103,39 @@
 			function setText(text) {
 				document.getElementById("message").innerHTML += text;
 			}
+			function setStatus(text) {
+				document.getElementById("status").innerHTML = text;
+			}
 
-			jwplayer().onPlay(function () { setText("Playing; "); });
-			jwplayer().onPlaylistItem(function (o) { setText("Item "+o.index+"; "); });
-			jwplayer().onVolume(function () { setText("Volume Changed; "); });
-			jwplayer().onPause(function () { setText("Paused; "); });
 			jwplayer().onBuffer(function () { setText("Buffering; "); });
+			jwplayer().onBufferChange(function (o) { setStatus("Buffering " + o.bufferPercent + "%"); });
+			jwplayer().onBufferFull(function () { setText("Buffer full; "); });
+			jwplayer().onComplete(function () { setText("Playback complete; "); });
+			jwplayer().onError(function (o) { setText("Error " + o.message + "; "); });
+			jwplayer().onFullscreen(function (o) { setText("Fullscreen " + o.fullscreen + "; "); });
 			jwplayer().onIdle(function () { setText("Idle; "); });
+			jwplayer().onMeta(function (o) { setText("Metadata; "); });
+			jwplayer().onMute(function (o) { setText("Mute: " + o.mute + "; "); });
+			jwplayer().onPause(function () { setText("Paused; "); });
+			jwplayer().onPlay(function () { setText("Playing; "); });
+			jwplayer().onPlaylist(function (o) { setText("Loaded playlist; "); });
+			jwplayer().onPlaylistItem(function (o) { setText(o.index + "; "); });
+			jwplayer().onReady(function () { setText("Ready; "); });
+			jwplayer().onResize(function (o) { setText("Resized: " + o.width + "x" + o.height + "; "); });
+			jwplayer().onSeek(function (o) { setText("Moved to " + o.offset + " from " + o.position + "; "); });
+			jwplayer().onTime(function (o) { setStatus("Update, duration: " + o.duration + ", seeking: " + o.offset + ", position:" + o.position); });
+			jwplayer().onVolume(function (o) { setText("Volume "+o.volume+"%; "); });
+
+			jwplayer().getPlugin('controlbar').onHide(function (o) { setText("Control bar hidden; "); });
+			jwplayer().getPlugin('controlbar').onShow(function (o) { setText("Control bar shown; "); });
+			jwplayer().getPlugin('dock').onHide(function (o) { setText("Dock hidden; "); });
+			jwplayer().getPlugin('dock').onShow(function (o) { setText("Dock shown; "); });
+			jwplayer().getPlugin('display').onHide(function (o) { setText("Display hidden; "); });
+			jwplayer().getPlugin('display').onShow(function (o) { setText("Display shown; "); });
 		</script>
 		
 		<!-- Event messages -->
+		<p id="status"></p>
 		<p id="message"></p>
 	</form>
 </body>

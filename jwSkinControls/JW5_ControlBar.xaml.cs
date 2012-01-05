@@ -213,7 +213,7 @@ namespace jwSkinControls {
 
 		void VolumeSlider_TargetProportionChanged(object sender, ProportionEventArgs e) {
 			players.EachPlayer(p => p.AudioVolume = e.Proportion);
-			Unmute(null,null);
+			players.EachPlayer(p => { if (p.Mute) p.Mute = false; });
 			UpdateSoundButtonState();
 		}
 

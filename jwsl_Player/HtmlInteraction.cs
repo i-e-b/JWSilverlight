@@ -59,8 +59,14 @@ namespace JwslPlayer {
 			BackBind("jwDockSetButton", 4);
 			BackBind("jwDockShow", 0);//
 
+			Application.Current.Host.Content.FullScreenChanged += Content_FullScreenChanged;
+
 			// trigger player ready event
 			HtmlPage.Window.Eval("jwplayer().playerReady(document.getElementById('" + HtmlPage.Plugin.Id + "'))");
+		}
+
+		void Content_FullScreenChanged(object sender, EventArgs e) {
+			FireJwEvent("jwplayerFullscreen", "{fullscreen:" + Application.Current.Host.Content.IsFullScreen.ToString().ToLower() + "}");
 		}
 
 		void BackBind (string methodName, int argCount) {
@@ -256,46 +262,44 @@ namespace JwslPlayer {
 		[ScriptableMember]
 		public void jwControlbarShow () {
 			jwPlayer.ControlBarView.Visibility = Visibility.Visible;
+			FireJwEvent("jwplayerComponentShow", "{component:'controlbar'}");
 		}
 		[ScriptableMember]
 		public void jwControlbarHide () {
 			jwPlayer.ControlBarView.Visibility = Visibility.Collapsed;
+			FireJwEvent("jwplayerComponentHide", "{component:'controlbar'}");
 		}
 
 		[ScriptableMember]
 		public void jwDisplayShow () {
 			jwPlayer.DisplayView.Visibility = Visibility.Visible;
+			FireJwEvent("jwplayerComponentShow", "{component:'display'}");
 		}
 		[ScriptableMember]
 		public void jwDisplayHide () {
 			jwPlayer.DisplayView.Visibility = Visibility.Collapsed;
+			FireJwEvent("jwplayerComponentHide", "{component:'display'}");
 		}
 
 		[ScriptableMember]
 		public void jwDockShow () {
 			jwPlayer.DockView.Visibility = Visibility.Visible;
+			FireJwEvent("jwplayerComponentShow", "{component:'dock'}");
 		}
 		[ScriptableMember]
 		public void jwDockHide () {
 			jwPlayer.DockView.Visibility = Visibility.Collapsed;
+			FireJwEvent("jwplayerComponentHide", "{component:'dock'}");
 		}
 
 		PlayerStatus lastState;
-		void FireJwEvent(string eventName, string argsObject) {
-			foreach (var callback in javascriptEvents[eventName]) {
-				var str = "("+callback + ")(" + argsObject + ")";
-				HtmlPage.Window.Eval(str);
-			}
-		}
 
 		public void PlaylistChanged (IPlaylist NewPlaylist) {
 			FireJwEvent("jwplayerPlaylistLoaded", "{playlist:"+NewPlaylist.Json()+"}");
 		}
-
 		public void PlayingClipChanged (IPlaylistItem NewClip) {
 			FireJwEvent("jwplayerPlaylistItem", "{index:"+NewClip.PlaylistIndex+"}");
 		}
-
 		public void PlayStateChanged(PlayerStatus NewStatus) {
 			var oldState = jwState(lastState.CurrentPlayState);
 			var newState = jwState(NewStatus.CurrentPlayState);
@@ -304,34 +308,37 @@ namespace JwslPlayer {
 
 			FireJwEvent("jwplayerPlayerState", "{oldstate:\"" + oldState + "\", newstate:\"" + newState + "\"}");
 		}
-
 		public void SeekCompleted(PlayerStatus NewStatus) {
 			FireJwEvent("jwplayerMediaSeek", "{position:" + lastState.PlayTime.TotalSeconds + ", offset:" + NewStatus.PlayTime.TotalSeconds + "}");
 			lastState = NewStatus;
 		}
-
 		public void VolumeChanged(double NewVolume) {
-			FireJwEvent("jwplayerMediaVolume", "{volume:" + NewVolume + "}");
+			FireJwEvent("jwplayerMediaVolume", "{volume:" + (NewVolume*100.0) + "}");
 		}
-
 		public void MuteChanged(bool IsMuted) {
-			FireJwEvent("jwplayerMediaMute", "{mute:"+IsMuted+"}");
+			FireJwEvent("jwplayerMediaMute", "{mute:"+IsMuted.ToString().ToLower()+"}");
 		}
 		public void StatusUpdate (PlayerStatus NewStatus) {
 			lastState = NewStatus;
 			FireJwEvent("jwplayerMediaTime",
 				"{duration: " + NewStatus.NaturalDuration.TimeSpan.TotalSeconds +
-				", offset: " + NewStatus.PlayTime.TotalSeconds + // todo: this should be last seek target (regardless of actual seek position)
+				//", offset: " + NewStatus.PlayTime.TotalSeconds + // todo: this should be last seek target (regardless of actual seek position)
 				", position: " + NewStatus.PlayTime.TotalSeconds +
 				"}");
 		} 
 		public void CaptionFired (TimelineMarker Caption) { } 
-		public void ErrorOccured (Exception Error) { } 
+		public void ErrorOccured (Exception Error) {
+			FireJwEvent("jwplayerMediaError", "{message:'" + Error.Message.Replace("'","\'") + "'}");
+		} 
 		public void AddBinding (IPlayer PlayerToControl) { players.AddBinding(PlayerToControl, this); }
 		public void RemoveBinding (IPlayer PlayerToControl) { players.RemoveBinding(PlayerToControl, this); }
 
-
-
+		void FireJwEvent(string eventName, string argsObject) {
+			foreach (var callback in javascriptEvents[eventName]) {
+				var str = "("+callback + ")(" + argsObject + ")";
+				HtmlPage.Window.Eval(str);
+			}
+		}
 		string jwState(SmoothStreamingMediaElementState playState) {
 			switch (playState) {
 				case SmoothStreamingMediaElementState.ClipPlaying:
@@ -349,17 +356,5 @@ namespace JwslPlayer {
 					return "BUFFERING";
 			}
 		}
-
-		/*
-		 * The following events will need to be triggered:
-		 * 
-		 * jwplayerAPIReady & jwplayerReady (on plugin loaded?), 
-		 * jwplayerFullscreen, jwplayerResize, jwplayerError,
-		 * jwplayerMediaBeforePlay, jwplayerComponentShow, jwplayerComponentHide, jwplayerMediaBuffer,
-		 * jwplayerMediaBufferFull, jwplayerMediaError, jwplayerMediaLoaded, jwplayerMediaComplete,
-		 * jwplayerMediaSeek, jwplayerMediaTime, jwplayerMediaVolume, jwplayerMediaMeta,
-		 * jwplayerMediaMute, jwplayerPlayerState, jwplayerPlaylistLoaded, jwplayerPlaylistItem
-		 * 
-		 */
 	}
 }
