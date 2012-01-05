@@ -184,6 +184,7 @@ namespace ComposerCore {
 					CurrentIndex = 0;
 					CurrentItem = CurrentPlaylist.Items[CurrentIndex];
 					SeekToItem();
+					Pause();
 				}
 			} else {
 				CurrentItem = CurrentPlaylist.Items[Index];
@@ -239,12 +240,9 @@ namespace ComposerCore {
 			}
 
 			MediaPlayer.Visibility = Visibility.Visible; // ensure we're visible.
-			MediaPlayer.Opacity = 0.0; // but don't show until frames start
 			// ReSharper disable RedundantCheckBeforeAssignment
 			try {
-				if (MediaPlayer.Position != ResumeTime) {
-					MediaPlayer.Position = ResumeTime;
-				}
+				if (MediaPlayer.Position != ResumeTime) MediaPlayer.Position = ResumeTime;
 			} catch (Exception ex) { drop(ex); }
 			// ReSharper restore RedundantCheckBeforeAssignment
 			WantToPlay = true;

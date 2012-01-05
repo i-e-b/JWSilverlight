@@ -82,15 +82,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animations\RotationAnimation.cs" />
-    <Compile Include="ControlFragments\IndexEventArgs.cs" />
+    <Compile Include="EventArgs\IndexEventArgs.cs" />
     <Compile Include="ControlFragments\JwPlaylistItem.xaml.cs">
       <DependentUpon>JwPlaylistItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="ControlFragments\JwSliderVertical.xaml.cs">
       <DependentUpon>JwSliderVertical.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ControlFragments\ToggleVisibilityEventArgs.cs" />
-    <Compile Include="ControlFragments\ProportionEventArgs.cs" />
+    <Compile Include="EventArgs\ToggleVisibilityEventArgs.cs" />
+    <Compile Include="EventArgs\ProportionEventArgs.cs" />
     <Compile Include="ControlBarLayout.cs" />
     <Compile Include="ControlFragments\ImageHoverButton.xaml.cs">
       <DependentUpon>ImageHoverButton.xaml</DependentUpon>

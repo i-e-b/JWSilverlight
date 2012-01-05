@@ -48,6 +48,7 @@
   <ItemGroup>
     <Content Include="captions_tt.xml" />
     <Content Include="ClientBin\player.swf" />
+    <Content Include="SimpleEmbedSample.html" />
     <Content Include="ExampleSkins\glow_with_html5\controlbar\background.png" />
     <Content Include="ExampleSkins\glow_with_html5\controlbar\blankButton.png" />
     <Content Include="ExampleSkins\glow_with_html5\controlbar\divider.png" />

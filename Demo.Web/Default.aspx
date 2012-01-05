@@ -17,37 +17,21 @@
 		<script type="text/javascript" src="/Scripts/jwplayer.embed.silverlight.js"></script>
 		<script type="text/javascript">
 			jwplayer('container').setup({
-				//file: 'http://mediadl.microsoft.com/mediadl/iisnet/smoothmedia/Experience/BigBuckBunny_720p.ism',
 				height: 480,
 				width: 853,
 				skin: '/ExampleSkins/glow_with_html5/glow.zip',
 				playlist: [
-					/*{
-						duration: 301.96,
+					{
+						duration: 596,
 						title: "Big Buck Bunny",
 						file: 'http://mediadl.microsoft.com/mediadl/iisnet/smoothmedia/Experience/BigBuckBunny_720p.ism',
 						image: '/thumbnail.jpg',
-						captions: 'http://localhost:49832/captions_tt.xml',
-						provider: 'http'
-					},*/
-					{ start: 2, duration: 6, file: "/video.mp4", image: "/thumbnail.jpg", title: "Item", description : "This is a little test video" },
-					{ file: "/video.mp4", image: "/thumbnail.jpg", title: "Item",
-							description : "This is a little test video with a very long description, is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."  },
-					{ file: "/video.mp4", title: "Item, with no thumb" },
-					{ file: "/video.mp4", image: "/thumbnail.jpg", title: "Item" },
-					{ file: "/video.mp4", image: "/thumbnail.jpg", title: "Item" },
-					{ file: "/video.mp4", image: "/thumbnail.jpg", title: "Item" },
-					{ file: "/video.mp4", image: "/thumbnail.jpg", title: "Item" },
-					{ file: "/video.mp4", image: "/thumbnail.jpg", title: "Item" },
-					{ file: "/video.mp4", image: "/thumbnail.jpg", title: "Item" },
-					{ file: "/video.mp4", image: "/thumbnail.jpg", title: "Item" },
-					{ file: "/video.mp4", image: "/thumbnail.jpg", title: "Item" },
-					{ file: "/video.mp4", image: "/thumbnail.jpg", title: "Item" },
-					{ file: "/video.mp4", image: "/thumbnail.jpg", title: "Item" },
-					{ file: "/video.mp4", image: "/thumbnail.jpg", title: "Last One" }
+						captions: 'http://localhost:49832/captions_tt.xml'
+					},
+					{ start: 2, duration: 6, file: "/video.mp4", image: "/thumbnail.jpg", title: "JW Player Standard Sample Video", description : "This is a little test video" },
 				],
-				"playlist.position": "right",
-				"playlist.size": 300,
+				/*"playlist.position": "right",
+				"playlist.size": 300,*/
 				modes: [
 					{ type: 'silverlight', src: '/ClientBin/jwslPlayer.xap' },
 					{ type: 'flash', src: '/ClientBin/player.swf' },
