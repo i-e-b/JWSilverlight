@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using ComposerCore;
@@ -10,6 +11,11 @@ namespace jwSkinControls {
 		public JW5_CaptionText () {
 			InitializeComponent();
 			players = new ComposerControlHelper();
+			LayoutRoot.SizeChanged += LayoutRoot_SizeChanged;
+		}
+
+		void LayoutRoot_SizeChanged(object sender, SizeChangedEventArgs e) {
+			CaptionBlock.FontSize = Math.Max(e.NewSize.Width / 40.0, 10.0);
 		}
 
 		public void CaptionFired(TimelineMarker Caption) {
