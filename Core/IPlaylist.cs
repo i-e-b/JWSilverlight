@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Browser;
 using System.Windows.Media;
-using System.Xml;
 
 namespace ComposerCore {
 	public interface IPlaylist {
@@ -45,13 +44,13 @@ namespace ComposerCore {
 
 		/// <summary> list of playlist items. </summary>
 		[Description("Playlist")]
-		PlaylistCollection Items { get; set; }
+		PlaylistCollection Items { get; }
 
 		/// <summary>
 		/// This dictionary is populated with any unknown elements found in the playlist.
 		/// These will NOT be serialised.
 		/// </summary>
-		Dictionary<string, string> CustomProperties { get; set; }
+		Dictionary<string, string> CustomProperties { get; }
 
 		/// <summary> Populate this playlist from either a raw XML string or Uri to a playlist XML asset. </summary>
 		void ReadPlaylist (string Contents);
@@ -62,9 +61,6 @@ namespace ComposerCore {
 		/// </summary>
 		[ScriptableMember]
 		event RoutedEventHandler PlaylistChanged;
-
-		/// <summary> Write the current playlist out to an xml-writer. </summary>
-		void Serialize (XmlWriter writer);
 
 		/// <summary> Write the current playlist out to a JSON formatted string </summary>
 		string Json();

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Xml;
 using ComposerCore.InnerWorkings;
 
 namespace ComposerCore {
@@ -110,8 +109,6 @@ namespace ComposerCore {
 		/// </summary>
 		[Description("optional duration to display thumbnail as poster frame before starting media"), DefaultValue(0)]
 		double ThumbDuration { get; set; }
-
-		void Serialize (XmlWriter writer);
 
 		/// <summary>
 		/// Returns a JSON object representing the state of the playlist item

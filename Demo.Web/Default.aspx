@@ -46,8 +46,8 @@
 					{ file: "/video.mp4", image: "/thumbnail.jpg", title: "Item" },
 					{ file: "/video.mp4", image: "/thumbnail.jpg", title: "Last One" }
 				],
-				/*"playlist.position": "right",
-				"playlist.size": 300,*/
+				"playlist.position": "right",
+				"playlist.size": 300,
 				modes: [
 					{ type: 'silverlight', src: '/ClientBin/jwslPlayer.xap' },
 					{ type: 'flash', src: '/ClientBin/player.swf' },

@@ -3,8 +3,6 @@ using System.ComponentModel;
 using System.Net;
 using System.Text;
 using System.Windows.Browser;
-using System.Xml;
-using System.Globalization;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using ComposerCore.InnerWorkings;
@@ -19,8 +17,8 @@ namespace ComposerCore {
 		/// parameterless constructor required for Edit in Blend.
 		/// </summary>
 		public PlaylistItem () {
-			m_chapters = new ScriptableObservableCollection<ChapterItem>();
-			m_chapters.CollectionChanged += Chapters_CollectionChanged;
+			chapters = new ScriptableObservableCollection<ChapterItem>();
+			chapters.CollectionChanged += Chapters_CollectionChanged;
 			Init();
 		}
 		/// <summary>
@@ -28,7 +26,7 @@ namespace ComposerCore {
 		/// </summary>
 		public PlaylistItem (PlaylistCollection collectionParent) {
 			Init();
-			m_collectionParent = collectionParent;
+			this.collectionParent = collectionParent;
 		}
 
 		/// <summary>
@@ -44,8 +42,8 @@ namespace ComposerCore {
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public int PlaylistIndex {
 			get {
-				if (m_collectionParent != null) {
-					return m_collectionParent.IndexOf(this);
+				if (collectionParent != null) {
+					return collectionParent.IndexOf(this);
 				}
 				return -1;
 			}
@@ -56,11 +54,11 @@ namespace ComposerCore {
 		[Description("Description of media item")]
 		public String Description {
 			get {
-				return m_description;
+				return description;
 			}
 
 			set {
-				m_description = value;
+				description = value;
 				OnPropertyChanged("Description");
 			}
 		}
@@ -70,10 +68,10 @@ namespace ComposerCore {
 		[Description("file size of item in bytes"), DefaultValue(0)]
 		public long FileSize {
 			get {
-				return m_fileSize;
+				return fileSize;
 			}
 			set {
-				m_fileSize = value;
+				fileSize = value;
 			}
 		}
 		/// <summary>
@@ -82,10 +80,10 @@ namespace ComposerCore {
 		[Description("frame rate in frames per second"), DefaultValue(30)]
 		public double FrameRate {
 			get {
-				return m_frameRateFPS;
+				return frameRateFPS;
 			}
 			set {
-				m_frameRateFPS = value;
+				frameRateFPS = value;
 				SmpteFrameRate = TimeCode.ParseFrameRate(value);
 			}
 		}
@@ -95,10 +93,10 @@ namespace ComposerCore {
 		[Description("height in pixels"), DefaultValue(480)]
 		public Double VideoHeight {
 			get {
-				return m_height;
+				return height;
 			}
 			set {
-				m_height = value;
+				height = value;
 			}
 		}
 
@@ -142,10 +140,10 @@ namespace ComposerCore {
 		/// </summary>
 		internal long OfflineVideoBitrateInKbps {
 			get {
-				return m_offlineVideoBitrateInKbps;
+				return offlineVideoBitrateInKbps;
 			}
 			set {
-				m_offlineVideoBitrateInKbps = value;
+				offlineVideoBitrateInKbps = value;
 			}
 		}
 		/// <summary>
@@ -154,24 +152,24 @@ namespace ComposerCore {
 		[Description("uri of item")]
 		public Uri MediaSource {
 			get {
-				return m_mediaUri;
+				return mediaUri;
 			}
 
 			set {
 				if (value == null || !value.IsAbsoluteUri) {
-					m_mediaUri = value;
-				OnPropertyChanged("MediaSource");
+					mediaUri = value;
+					OnPropertyChanged("MediaSource");
 					return;
 				}
-				
+
 				var labsPath = value.AbsolutePath.ToLower();
 				if (labsPath.EndsWith("manifest")) {
-					m_mediaUri = value;
+					mediaUri = value;
 				} else if (labsPath.EndsWith(".ism") || labsPath.EndsWith(".isml")) {
 					var left = value.GetComponents(UriComponents.SchemeAndServer, UriFormat.Unescaped);
-					m_mediaUri = new Uri(left + value.AbsolutePath + "/manifest" + value.Query);
+					mediaUri = new Uri(left + value.AbsolutePath + "/manifest" + value.Query);
 				} else {
-					m_mediaUri = value;
+					mediaUri = value;
 				}
 
 				OnPropertyChanged("MediaSource");
@@ -185,11 +183,11 @@ namespace ComposerCore {
 		[Description("optional thumbnail for gallery and poster frame")]
 		public Uri ThumbSource {
 			get {
-				return m_thumbSource;
+				return thumbSource;
 			}
 
 			set {
-				m_thumbSource = value;
+				thumbSource = value;
 				OnPropertyChanged("ThumbSource");
 			}
 		}
@@ -207,11 +205,11 @@ namespace ComposerCore {
 		[Description("title of item")]
 		public String Title {
 			get {
-				return m_title;
+				return title;
 			}
 
 			set {
-				m_title = value;
+				title = value;
 				OnPropertyChanged("Title");
 			}
 		}
@@ -221,10 +219,10 @@ namespace ComposerCore {
 		[Description("width in pixels"), DefaultValue(640)]
 		public Double VideoWidth {
 			get {
-				return m_width;
+				return width;
 			}
 			set {
-				m_width = value;
+				width = value;
 			}
 		}
 		/// <summary>
@@ -232,8 +230,8 @@ namespace ComposerCore {
 		/// </summary>
 		[Description("list of chapters")]
 		public ScriptableObservableCollection<ChapterItem> Chapters {
-			get { return m_chapters; }
-			set { m_chapters = value; }
+			get { return chapters; }
+			set { chapters = value; }
 		}
 		/// <summary>
 		/// Gets or sets the frame rate of this item.
@@ -241,11 +239,11 @@ namespace ComposerCore {
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public SmpteFrameRate SmpteFrameRate {
 			get {
-				return m_frameRate;
+				return frameRate;
 			}
 			set {
-				m_frameRate = value;
-				m_frameRateFPS = 1 / TimeCode.FromFrames(1, value).TotalSeconds;
+				frameRate = value;
+				frameRateFPS = 1 / TimeCode.FromFrames(1, value).TotalSeconds;
 				OnPropertyChanged("FrameRate");
 			}
 		}
@@ -256,39 +254,19 @@ namespace ComposerCore {
 
 
 		#region Inner workings
-		/// <summary>The parent collection of this item.</summary>
-		private readonly PlaylistCollection m_collectionParent;
-		/// <summary>The title of this item.</summary>
-		private String m_title;
-		/// <summary>The description of this item.</summary>
-		private String m_description;
-		/// <summary>The thumbnail source for this item.</summary>
-		private Uri m_thumbSource;
-		/// <summary>The width of the encoded video for this item.</summary>
-		private Double m_width;
-		/// <summary>The height of the encoded video for this item.</summary>
-		private Double m_height;
-		/// <summary>total filesize of this item</summary>
-		private long m_fileSize;
-		/// <summary>The Url for the media of this item.</summary>
-		private Uri m_mediaUri;
-		/// <summary>
-		/// The video bitrate of the adaptive stream that was downloaded and stored in isolated storage for offline playback. 
-		/// </summary>
-		private long m_offlineVideoBitrateInKbps;
-		/// <summary>The frame rate of this item.</summary>
-		private SmpteFrameRate m_frameRate = SmpteFrameRate.Unknown;
-		/// <summary>frame rate in FPS as persisted.</summary>
-		private double m_frameRateFPS;
-		/// <summary>The chapters in this item.</summary>
-		private ScriptableObservableCollection<ChapterItem> m_chapters = new ScriptableObservableCollection<ChapterItem>();
-
-
-		/// <summary>Property changed event.</summary>
+		private readonly PlaylistCollection collectionParent;
+		private String title;
+		private String description;
+		private Uri thumbSource;
+		private Double width;
+		private Double height;
+		private long fileSize;
+		private Uri mediaUri;
+		private long offlineVideoBitrateInKbps;
+		private SmpteFrameRate frameRate = SmpteFrameRate.Unknown;
+		private double frameRateFPS;
+		private ScriptableObservableCollection<ChapterItem> chapters = new ScriptableObservableCollection<ChapterItem>();
 		public event PropertyChangedEventHandler PropertyChanged;
-
-
-
 
 		/// <summary>
 		/// This dictionary is populated with any unknown elements found in the playlist.
@@ -301,14 +279,14 @@ namespace ComposerCore {
 		/// </summary>
 		private void Init () {
 			CustomProperties = new Dictionary<string, string>();
-			m_title = string.Empty;
-			m_description = string.Empty;
-			m_thumbSource = null;
-			m_fileSize = 0;
-			m_frameRate = SmpteFrameRate.Smpte30;
-			m_width = 640;
-			m_height = 480;
-			m_offlineVideoBitrateInKbps = 0;
+			title = string.Empty;
+			description = string.Empty;
+			thumbSource = null;
+			fileSize = 0;
+			frameRate = SmpteFrameRate.Smpte30;
+			width = 640;
+			height = 480;
+			offlineVideoBitrateInKbps = 0;
 		}
 
 		/// <summary>
@@ -330,124 +308,12 @@ namespace ComposerCore {
 		}
 		#endregion
 
-		#region Serialization
-		/// <summary>
-		/// top level XML node for this class & chapters
-		/// </summary>
-		internal const string xmlNode = "PlaylistItem";
-		internal const string xmlChaptersNode = "Chapters";
-		/// <summary>
-		/// deserialise chapters
-		/// </summary>
-		/// <param name="reader">XmlReader to deserialize from</param>
-		/// <returns>this</returns>
-		private void DeserializeChapters (XmlReader reader) {
-			if (!reader.IsStartElement(xmlChaptersNode))
-				throw new InvalidPlaylistException();
 
-			reader.Read();
-			while (!(reader.Name == xmlChaptersNode && reader.NodeType == XmlNodeType.EndElement)) {
-				if (reader.IsStartElement("ChapterItem"))
-					Chapters.Add(new ChapterItem().Deserialize(reader));
-				else if (reader.IsStartElement())
-					throw new InvalidPlaylistException(xmlChaptersNode);
-				else if (!reader.Read())
-					break;
-			}
-		}
-		/// <summary>
-		/// deserialise this object
-		/// </summary>
-		/// <param name="reader">XmlReader to deserialize from</param>
-		/// <returns>this</returns>
-		internal PlaylistItem Deserialize (XmlReader reader) {
-			if (!reader.IsStartElement(xmlNode))
-				throw new InvalidPlaylistException();
-
-			Init();
-			reader.Read();
-			while (!(reader.Name == xmlNode && reader.NodeType == XmlNodeType.EndElement)) {
-				if (reader.IsStartElement("Description"))
-					Description = reader.ReadElementContentAsString();
-				else if (reader.IsStartElement("FileSize"))
-					FileSize = reader.ReadElementContentAsLong();
-				else if (reader.IsStartElement("FrameRate"))
-					FrameRate = reader.ReadElementContentAsDouble();
-				else if (reader.IsStartElement("Height"))
-					VideoHeight = reader.ReadElementContentAsDouble();
-				else if (reader.IsStartElement("OfflineVideoBitrateInKbps"))
-					OfflineVideoBitrateInKbps = reader.ReadElementContentAsLong();
-				else if (reader.IsStartElement("MediaSource")) {
-					string rawMediaSourceUrl = reader.ReadElementContentAsString();
-					string decodedMediaSourceUrl = HttpUtility.UrlDecode(rawMediaSourceUrl) ?? "Broken URL";
-					MediaSource = new Uri(decodedMediaSourceUrl, UriKind.RelativeOrAbsolute);
-				} else if (reader.IsStartElement("ThumbSource")) {
-					string rawThumbSourceUrl = reader.ReadElementContentAsString();
-					string decodedThumbSourceUrl = HttpUtility.UrlDecode(rawThumbSourceUrl) ?? "Broken URL";
-					ThumbSource = new Uri(decodedThumbSourceUrl, UriKind.RelativeOrAbsolute);
-				} else if (reader.IsStartElement("Title"))
-					Title = reader.ReadElementContentAsString();
-				else if (reader.IsStartElement("Width"))
-					VideoWidth = reader.ReadElementContentAsDouble();
-				else if (reader.IsStartElement(xmlChaptersNode))
-					DeserializeChapters(reader);
-				else if (reader.IsStartElement("AudioCodec"))
-					reader.ReadElementContentAsObject(); // ignored
-				else if (reader.IsStartElement("VideoCodec"))
-					reader.ReadElementContentAsObject(); // ignored
-				else if (reader.IsStartElement("In"))
-					StartPosition = reader.ReadElementContentAsDouble();
-				else if (reader.IsStartElement("Out"))
-					StopPosition = reader.ReadElementContentAsDouble();
-				else if (reader.IsStartElement("Resume"))
-					ResumePosition = reader.ReadElementContentAsDouble();
-				else if (reader.IsStartElement("CaptionUrl")) {
-					string rawCaptionSourceUrl = reader.ReadElementContentAsString();
-					CaptionSource = new Uri(rawCaptionSourceUrl, UriKind.RelativeOrAbsolute);
-				} else if (reader.IsStartElement("ThumbDuration"))
-					ThumbDuration = reader.ReadElementContentAsDouble();
-				else if (reader.IsStartElement()) {
-					string key = reader.Name;
-					string value = reader.ReadElementContentAsString();
-					if (CustomProperties.ContainsKey(key)) CustomProperties[key] = value;
-					else CustomProperties.Add(key, value);
-				} else if (!reader.Read())
-					break;
-			}
-			return this;
-		}
-
-
-		/// <summary>
-		/// serialize this object
-		/// </summary>
-		/// <param name="writer">XmlWriter to serialze to</param>
-		public void Serialize (XmlWriter writer) {
-			writer.WriteStartElement(xmlNode);
-			writer.WriteElementString("Description", Description);
-			writer.WriteElementString("FileSize", FileSize.ToString(CultureInfo.InvariantCulture));
-			writer.WriteElementString("FrameRate", FrameRate.ToString(CultureInfo.InvariantCulture));
-			writer.WriteElementString("Height", VideoHeight.ToString(CultureInfo.InvariantCulture));
-			writer.WriteElementString("IsAdaptiveStreaming", IsAdaptiveStreaming.ToString().ToLower(CultureInfo.InvariantCulture));
-			writer.WriteElementString("OfflineVideoBitrateInKbps", OfflineVideoBitrateInKbps.ToString(CultureInfo.InvariantCulture));
-			writer.WriteElementString("MediaSource", MediaSource.ToString());
-			writer.WriteElementString("ThumbSource", ThumbSource.ToString());
-			writer.WriteElementString("Title", Title);
-			writer.WriteElementString("Width", VideoWidth.ToString(CultureInfo.InvariantCulture));
-			if (Chapters.Count > 0) {
-				writer.WriteStartElement("Chapters");
-				foreach (var item in Chapters) {
-					item.Serialize(writer);
-				}
-				writer.WriteEndElement();
-			}
-			writer.WriteEndElement();
-		}
-
-		public string Json() {
+		public string Json () {
 			var sb = new StringBuilder();
-			Action<string,object> addIfNotEmpty = (name, value) => {
-				if (value != null && !string.IsNullOrEmpty(value.ToString())){
+			Action<string, object> addIfNotEmpty = (name, value) =>
+			{
+				if (value != null && !string.IsNullOrEmpty(value.ToString())) {
 					sb.Append(name); sb.Append(":\""); sb.Append(value); sb.Append("\",");
 				}
 			};
@@ -462,10 +328,9 @@ namespace ComposerCore {
 			addIfNotEmpty("captions", CaptionSource);
 
 			sb.Append("},");
-			return sb.ToString().Replace(",}","}");
+			return sb.ToString().Replace(",}", "}");
 		}
-		#endregion
-		public void UpdateCaptions(TimeSpan currentPlaybackTime) {
+		public void UpdateCaptions (TimeSpan currentPlaybackTime) {
 			LoadCaptionsFromSource(currentPlaybackTime);
 		}
 
@@ -480,7 +345,8 @@ namespace ComposerCore {
 			try {
 				var webRequest = (HttpWebRequest)WebRequest.Create(captionUri);
 
-				webRequest.BeginGetResponse(callback => {
+				webRequest.BeginGetResponse(callback =>
+				{
 					var req = (HttpWebRequest)callback.AsyncState;
 					var res = (HttpWebResponse)req.EndGetResponse(callback);
 					XDocument captionXml = XDocument.Load(res.GetResponseStream());
