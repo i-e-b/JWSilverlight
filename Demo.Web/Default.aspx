@@ -22,14 +22,14 @@
 				width: 853,
 				skin: '/ExampleSkins/beelden.zip',
 				playlist: [
-					/*{
+					{
 						duration: 301.96,
 						title: "Road Warriors",
 						file: 'http://cdn1.cache.twofourdigital.net/Mediafreedom/Storage/origin/amyprosser/da1908af-3316-4884-b064-9faa00ccb193/video/en/smoothstream/0631e6c4-3b4f-401f-a561-36ed109974d5.ism',
 						image: '/thumbnail.jpg',
 						captions: 'http://localhost:49832/captions_tt.xml',
 						provider: 'http'
-					},*/
+					},
 					{ start: 2, duration: 6, file: "/video.mp4", image: "/thumbnail.jpg", title: "Item", description : "This is a little test video" },
 					{ file: "/video.mp4", image: "/thumbnail.jpg", title: "Item",
 							description : "This is a little test video with a very long description, is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."  },
@@ -91,7 +91,11 @@
 		<a href="#" onclick="jwplayer().load('/video.mp4')">Set single item </a>
 		<br />
 		<a href="#" onclick="jwplayer().getPlugin('controlbar').show()">Show Control Bar</a> |
-		<a href="#" onclick="jwplayer().getPlugin('controlbar').hide()">Hide Control Bar</a>
+		<a href="#" onclick="jwplayer().getPlugin('controlbar').hide()">Hide Control Bar</a> |
+		<a href="#" onclick="jwplayer().getPlugin('dock').show()">Show Dock Buttons</a> |
+		<a href="#" onclick="jwplayer().getPlugin('dock').hide()">Hide Dock Buttons</a> |
+		<a href="#" onclick="jwplayer().getPlugin('display').show()">Show Display Box</a> |
+		<a href="#" onclick="jwplayer().getPlugin('display').hide()">Hide Display Box</a>
 		<br /></div>
 
 		<!-- Test event code: -->

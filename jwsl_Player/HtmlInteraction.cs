@@ -9,11 +9,13 @@ using Microsoft.Web.Media.SmoothStreaming;
 
 namespace JwslPlayer {
 	public class HtmlInteraction : IPlayerController {
+		readonly MainPage jwPlayer;
 		private readonly ComposerControlHelper players;
 
 		const string ScriptRegistration = "jwplayer";
 		readonly EventRegistry javascriptEvents;
-		public HtmlInteraction () {
+		public HtmlInteraction (MainPage jwPlayer) {
+			this.jwPlayer = jwPlayer;
 			players = new ComposerControlHelper();
 			javascriptEvents = new EventRegistry();
 
@@ -21,8 +23,8 @@ namespace JwslPlayer {
 			HtmlPage.RegisterScriptableObject(ScriptRegistration, this);
 
 			// bind scriptable object events back to html element (like Flash does):
-			BackBind("jwAddEventListener", 2);
-			BackBind("jwRemoveEventListener", 2);
+			BackBind("jwAddEventListener", 2);//
+			BackBind("jwRemoveEventListener", 2);//
 
 			BackBind("jwGetBuffer", 0);//
 			BackBind("jwGetDuration", 0);//
@@ -49,13 +51,13 @@ namespace JwslPlayer {
 			BackBind("jwSetVolume", 1);//
 			BackBind("jwSetFullscreen", 1);//
 
-			BackBind("jwControlbarShow", 0);
-			BackBind("jwControlbarHide", 0);
-			BackBind("jwDisplayShow", 0);
-			BackBind("jwDisplayHide", 0);
-			BackBind("jwDockHide", 0);
+			BackBind("jwControlbarShow", 0);//
+			BackBind("jwControlbarHide", 0);//
+			BackBind("jwDisplayShow", 0);//
+			BackBind("jwDisplayHide", 0);//
+			BackBind("jwDockHide", 0);//
 			BackBind("jwDockSetButton", 4);
-			BackBind("jwDockShow", 0);
+			BackBind("jwDockShow", 0);//
 
 			// trigger player ready event
 			HtmlPage.Window.Eval("jwplayer().playerReady(document.getElementById('" + HtmlPage.Plugin.Id + "'))");
@@ -263,6 +265,33 @@ namespace JwslPlayer {
 		[ScriptableMember]
 		public void jwRemoveEventListener (string eventType, string callback) {
 			javascriptEvents.Unbind(eventType, callback);
+		}
+
+		[ScriptableMember]
+		public void jwControlbarShow () {
+			jwPlayer.ControlBarView.Visibility = Visibility.Visible;
+		}
+		[ScriptableMember]
+		public void jwControlbarHide () {
+			jwPlayer.ControlBarView.Visibility = Visibility.Collapsed;
+		}
+
+		[ScriptableMember]
+		public void jwDisplayShow () {
+			jwPlayer.DisplayView.Visibility = Visibility.Visible;
+		}
+		[ScriptableMember]
+		public void jwDisplayHide () {
+			jwPlayer.DisplayView.Visibility = Visibility.Collapsed;
+		}
+
+		[ScriptableMember]
+		public void jwDockShow () {
+			jwPlayer.DockView.Visibility = Visibility.Visible;
+		}
+		[ScriptableMember]
+		public void jwDockHide () {
+			jwPlayer.DockView.Visibility = Visibility.Collapsed;
 		}
 
 		PlayerStatus lastState;

@@ -25,7 +25,7 @@ namespace JwslPlayer {
 
 			Player.MouseLeftButtonUp += Player_MouseLeftButtonUp;
 
-			bridge = new HtmlInteraction();
+			bridge = new HtmlInteraction(this);
 			bridge.AddBinding(Player);
 
 			if (!String.IsNullOrEmpty(srcPlaylist)) {
