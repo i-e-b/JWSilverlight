@@ -51,14 +51,13 @@ namespace ComposerCore {
 		/// </summary>
 		public PlayerStatus Status { get; private set; }
 
-
 		public TimeSpan CurrentSliderPosition { get; set; }
 
 		public bool Mute {
 			get { return MediaPlayer.IsMuted; }
 			set {
 				MediaPlayer.IsMuted = value;
-				UpdateSubscribers_MajorStatus();
+				SendToControls(c => c.MuteChanged(value));
 			}
 		}
 
@@ -69,7 +68,7 @@ namespace ComposerCore {
 			get { return MediaPlayer.Volume; }
 			set {
 				MediaPlayer.Volume = Math.Min(1.0, Math.Max(0.0, value));
-				UpdateSubscribers_MajorStatus();
+				SendToControls(c => c.VolumeChanged(MediaPlayer.Volume));
 			}
 		}
 
@@ -191,15 +190,15 @@ namespace ComposerCore {
 				CurrentIndex = Index;
 				SeekToItem();
 			}
+
+			SendToControls(c => c.PlayingClipChanged(CurrentItem));
 		}
 
 		void TryPlay () {
 			try { MediaPlayer.Play(); } catch (Exception ex) { drop(ex); }
-			UpdateSubscribers_MajorStatus();
 		}
 		void TryPause () {
 			try { MediaPlayer.Pause(); } catch (Exception ex) { drop(ex); }
-			UpdateSubscribers_MajorStatus();
 		}
 
 		/// <summary>
@@ -541,7 +540,7 @@ window.onbeforeunload = function() {
 			Status = new_status;
 			foreach (var ctrl in ControlSets) {
 				try {
-					ctrl.StateChanged(Status);
+					ctrl.PlayStateChanged(Status);
 				} catch (Exception ex) {
 					ctrl.ErrorOccured(ex);
 				}
@@ -656,8 +655,8 @@ window.onbeforeunload = function() {
 
 
 		void MediaPlayer_PlaybackStateChange (object sender, ClipEventArgs e) {
-			UpdateSubscribers_MajorStatus();
-			//this.MediaPlayer.CurrentState
+			RefreshStatus();
+			SendToControls(c => c.PlayStateChanged(Status));
 			if (e.Context.CurrentClipState == MediaElementState.Playing) {
 				WantToPlay = false;
 			}
@@ -830,7 +829,20 @@ window.onbeforeunload = function() {
 
 				// update status, wherever we left the loop:
 				RefreshStatus();
-				UpdateSubscribers_Status(Status);
+				SendToControls(c => c.StatusUpdate(Status));
+			}
+		}
+
+
+		void SendToControls (Action<IPlayerController> action) {
+			foreach (var ctrl in ControlSets) {
+				try {
+					action(ctrl);
+				} catch (Exception ex) {
+					try {
+						ctrl.ErrorOccured(ex);
+					} catch (Exception e) { drop(e); }
+				}
 			}
 		}
 
@@ -953,7 +965,7 @@ window.onbeforeunload = function() {
 			return false;
 		}
 		#endregion
-
+/*
 		private void UpdateSubscribers_Status (PlayerStatus status) {
 			foreach (var ctrl in ControlSets) {
 				try {
@@ -977,7 +989,7 @@ window.onbeforeunload = function() {
 					} catch (Exception e) { drop(e); }
 				}
 			}
-		}
+		}*/
 
 		private TimeSpan BestDuration () {
 			try {
@@ -1046,15 +1058,7 @@ window.onbeforeunload = function() {
 			}
 			
 			RefreshStatus();
-			foreach (var ctrl in ControlSets) {
-				try {
-					ctrl.StateChanged(Status);
-				} catch (Exception ex) {
-					try {
-						ctrl.ErrorOccured(ex);
-					} catch (Exception e) { drop(e); }
-				}
-			}
+			SendToControls(c => c.SeekCompleted(Status));
 		}
 
 		void TrySetPosition(TimeSpan resumeTime) {

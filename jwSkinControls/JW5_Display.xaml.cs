@@ -15,6 +15,11 @@ namespace jwSkinControls {
 		const string componentName = "display";
 
 		public void PlaylistChanged (IPlaylist NewPlaylist) { }
+		public void PlayingClipChanged(IPlaylistItem NewClip) {  }
+		public void PlayStateChanged(PlayerStatus NewStatus) { }
+		public void SeekCompleted(PlayerStatus NewStatus) {}
+		public void VolumeChanged(double NewVolume) { }
+		public void MuteChanged(bool IsMuted) {  }
 		public void CaptionFired (TimelineMarker Caption) { }
 		public void ErrorOccured (Exception Error) { }
 
@@ -23,9 +28,6 @@ namespace jwSkinControls {
 			players = new ComposerControlHelper();
 		}
 
-		public void StateChanged (PlayerStatus NewStatus) {
-			StatusUpdate(NewStatus);
-		}
 		public void StatusUpdate (PlayerStatus NewStatus) {
 			BackgroundIcon.Visibility = Visibility.Collapsed;
 			PlayIcon.Visibility = Visibility.Collapsed;

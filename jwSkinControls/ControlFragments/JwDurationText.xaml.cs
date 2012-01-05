@@ -31,7 +31,11 @@ namespace jwSkinControls.ControlFragments {
 		}
 
 		public void PlaylistChanged(IPlaylist NewPlaylist) { }
-		public void StateChanged(PlayerStatus NewStatus) { }
+		public void PlayingClipChanged(IPlaylistItem NewClip) { }
+		public void PlayStateChanged(PlayerStatus NewStatus) { }
+		public void SeekCompleted(PlayerStatus NewStatus) { }
+		public void VolumeChanged(double NewVolume) { }
+		public void MuteChanged(bool IsMuted) {}
 		public void StatusUpdate(PlayerStatus NewStatus) {
 			DurationTime.Text = NewStatus.ClipDuration.TimeSpan.Minutes.ToString("00") + ":" + NewStatus.ClipDuration.TimeSpan.Seconds.ToString("00");
 		}

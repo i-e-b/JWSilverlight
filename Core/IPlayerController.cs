@@ -14,9 +14,29 @@ namespace ComposerCore {
 		void PlaylistChanged(IPlaylist NewPlaylist);
 
 		/// <summary>
-		/// Method called when the media player state changes (including switching playlist items)
+		/// Called when current clip is changed
 		/// </summary>
-		void StateChanged (PlayerStatus NewStatus);
+		void PlayingClipChanged (IPlaylistItem NewClip);
+
+		/// <summary>
+		/// Called when player state changes
+		/// </summary>
+		void PlayStateChanged (PlayerStatus NewStatus);
+
+		/// <summary>
+		/// Called when a seek takes effect
+		/// </summary>
+		void SeekCompleted (PlayerStatus NewStatus);
+
+		/// <summary>
+		/// Called when player audio volume is changed
+		/// </summary>
+		void VolumeChanged (double NewVolume);
+
+		/// <summary>
+		/// Called when player is muted or unmuted
+		/// </summary>
+		void MuteChanged (bool IsMuted);
 
 		/// <summary>
 		/// Method called periodically to drive visual status updates

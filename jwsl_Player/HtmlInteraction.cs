@@ -232,21 +232,7 @@ namespace JwslPlayer {
 
 		[ScriptableMember]
 		public string jwGetState () {
-			switch (lastState.CurrentPlayState) {
-				case SmoothStreamingMediaElementState.ClipPlaying:
-				case SmoothStreamingMediaElementState.Playing:
-					return "PLAYING";
-
-				case SmoothStreamingMediaElementState.Paused:
-					return "PAUSED";
-
-				case SmoothStreamingMediaElementState.Closed:
-				case SmoothStreamingMediaElementState.Stopped:
-					return "IDLE";
-
-				default:
-					return "BUFFERING";
-			}
+			return jwState(lastState.CurrentPlayState);
 		}
 
 		[ScriptableMember]
@@ -295,23 +281,74 @@ namespace JwslPlayer {
 		}
 
 		PlayerStatus lastState;
-
-		public void PlaylistChanged (IPlaylist NewPlaylist) {
-			string argsObject = "{index:0}";
-			foreach (var callback in javascriptEvents["jwplayerPlaylistItem"]) {
+		void FireJwEvent(string eventName, string argsObject) {
+			foreach (var callback in javascriptEvents[eventName]) {
 				var str = "("+callback + ")(" + argsObject + ")";
 				HtmlPage.Window.Eval(str);
 			}
-		
 		}
-		public void StateChanged (PlayerStatus NewStatus) { StatusUpdate(NewStatus); }
-		public void StatusUpdate (PlayerStatus NewStatus) { lastState = NewStatus; } 
+
+		public void PlaylistChanged (IPlaylist NewPlaylist) {
+			FireJwEvent("jwplayerPlaylistLoaded", "{playlist:"+NewPlaylist.Json()+"}");
+		}
+
+		public void PlayingClipChanged (IPlaylistItem NewClip) {
+			FireJwEvent("jwplayerPlaylistItem", "{index:"+NewClip.PlaylistIndex+"}");
+		}
+
+		public void PlayStateChanged(PlayerStatus NewStatus) {
+			var oldState = jwState(lastState.CurrentPlayState);
+			var newState = jwState(NewStatus.CurrentPlayState);
+
+			lastState = NewStatus;
+
+			FireJwEvent("jwplayerPlayerState", "{oldstate:\"" + oldState + "\", newstate:\"" + newState + "\"}");
+		}
+
+		public void SeekCompleted(PlayerStatus NewStatus) {
+			FireJwEvent("jwplayerMediaSeek", "{position:" + lastState.PlayTime.TotalSeconds + ", offset:" + NewStatus.PlayTime.TotalSeconds + "}");
+			lastState = NewStatus;
+		}
+
+		public void VolumeChanged(double NewVolume) {
+			FireJwEvent("jwplayerMediaVolume", "{volume:" + NewVolume + "}");
+		}
+
+		public void MuteChanged(bool IsMuted) {
+			FireJwEvent("jwplayerMediaMute", "{mute:"+IsMuted+"}");
+		}
+		public void StatusUpdate (PlayerStatus NewStatus) {
+			lastState = NewStatus;
+			FireJwEvent("jwplayerMediaTime",
+				"{duration: " + NewStatus.NaturalDuration.TimeSpan.TotalSeconds +
+				", offset: " + NewStatus.PlayTime.TotalSeconds + // todo: this should be last seek target (regardless of actual seek position)
+				", position: " + NewStatus.PlayTime.TotalSeconds +
+				"}");
+		} 
 		public void CaptionFired (TimelineMarker Caption) { } 
 		public void ErrorOccured (Exception Error) { } 
 		public void AddBinding (IPlayer PlayerToControl) { players.AddBinding(PlayerToControl, this); }
 		public void RemoveBinding (IPlayer PlayerToControl) { players.RemoveBinding(PlayerToControl, this); }
 
 
+
+		string jwState(SmoothStreamingMediaElementState playState) {
+			switch (playState) {
+				case SmoothStreamingMediaElementState.ClipPlaying:
+				case SmoothStreamingMediaElementState.Playing:
+					return "PLAYING";
+
+				case SmoothStreamingMediaElementState.Paused:
+					return "PAUSED";
+
+				case SmoothStreamingMediaElementState.Closed:
+				case SmoothStreamingMediaElementState.Stopped:
+					return "IDLE";
+
+				default:
+					return "BUFFERING";
+			}
+		}
 
 		/*
 		 * The following events will need to be triggered:

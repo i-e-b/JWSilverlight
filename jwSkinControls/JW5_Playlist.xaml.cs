@@ -23,10 +23,7 @@ namespace jwSkinControls {
 			ScrollSlider.TargetProportionChanged += ScrollSlider_TargetProportionChanged;
 		}
 
-		public void StateChanged (PlayerStatus NewStatus) {
-			lastStatus = NewStatus;
-			BindActiveStates();
-		}
+		public void MuteChanged(bool IsMuted) { }
 
 		public void StatusUpdate (PlayerStatus NewStatus) {
 			ScrollSlider.TotalHeight = PlaylistItemStack.ActualHeight;
@@ -85,6 +82,19 @@ namespace jwSkinControls {
 			}
 			BindSkins();
 		}
+
+		public void PlayingClipChanged (IPlaylistItem NewClip) {
+			BindActiveStates();
+		}
+		public void PlayStateChanged (PlayerStatus NewStatus) {
+			lastStatus = NewStatus;
+			BindActiveStates();
+		}
+		public void SeekCompleted (PlayerStatus NewStatus) {
+			lastStatus = NewStatus;
+			BindActiveStates();
+		}
+		public void VolumeChanged(double NewVolume) {  }
 
 		void button_Clicked(object sender, IndexEventArgs e) {
 			players.EachPlayer(p => p.GoToPlaylistIndex(e.Index));

@@ -53,11 +53,15 @@ namespace jwSkinControls {
 		public void PlaylistChanged (IPlaylist NewPlaylist) { 
 			lastPlaylist = NewPlaylist;
 		}
+
+		public void PlayingClipChanged(IPlaylistItem NewClip) {  }
+		public void PlayStateChanged(PlayerStatus NewStatus) {  }
+		public void SeekCompleted(PlayerStatus NewStatus) { }
+		public void VolumeChanged(double NewVolume) { }
+		public void MuteChanged(bool IsMuted) {  }
+
 		public void StatusUpdate (PlayerStatus NewStatus) {
 			CaptionsButton.Visibility = HasCaptions(NewStatus) ? Visibility.Visible : Visibility.Collapsed;
-		}
-		public void StateChanged (PlayerStatus NewStatus) {
-			StatusUpdate(NewStatus);
 		}
 
 		bool HasCaptions(PlayerStatus NewStatus) {

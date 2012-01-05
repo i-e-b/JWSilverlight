@@ -273,11 +273,11 @@ namespace jwSkinControls {
 			}
 		}
 
-		public void StateChanged (PlayerStatus NewStatus) {
-			UpdateSoundButtonState();
 
-			StatusUpdate(NewStatus);
+		public void MuteChanged(bool IsMuted) { 
+			UpdateSoundButtonState(); 
 		}
+
 		public void StatusUpdate (PlayerStatus NewStatus) {
 			if (timeSlider != null) {
 				timeSlider.SliderProgress = NewStatus.PlayProgress;
@@ -364,6 +364,12 @@ namespace jwSkinControls {
 			if (elapsedText != null) players.RemoveBinding(PlayerToControl, elapsedText); 
 		}
 		public void PlaylistChanged (IPlaylist NewPlaylist) { }
+		public void PlayingClipChanged(IPlaylistItem NewClip) { }
+		public void PlayStateChanged(PlayerStatus NewStatus) {  }
+		public void SeekCompleted(PlayerStatus NewStatus) {  }
+		public void VolumeChanged (double NewVolume) {
+			UpdateSoundButtonState();
+		}
 		public void CaptionFired (TimelineMarker Caption) { }
 		public void ErrorOccured (Exception Error) { }
 		#endregion
