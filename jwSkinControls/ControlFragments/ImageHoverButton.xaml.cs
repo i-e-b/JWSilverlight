@@ -56,6 +56,14 @@ namespace jwSkinControls.ControlFragments {
 			}
 		}
 
+		public BitmapImage BadgeImageOver {
+			get { return BadgeOver.Source as BitmapImage; }
+			set {
+				BadgeOver.Source = value;
+				Resize();
+			}
+		}
+
 		void Resize() {
 			var a = Over.Source as BitmapImage;
 			var b = Out.Source as BitmapImage;
@@ -83,14 +91,18 @@ namespace jwSkinControls.ControlFragments {
 				Over.Visibility = Visibility.Visible;
 				Out.Visibility = Visibility.Collapsed;
 			}
+			if (BadgeOver.Source != null) {
+				BadgeOver.Visibility = Visibility.Visible;
+				Badge.Visibility = Visibility.Collapsed;
+			}
 		}
 
 		private void LayoutRoot_MouseLeave(object sender, MouseEventArgs e)
 		{
-			if (Out.Source != null) {
-				Out.Visibility = Visibility.Visible;
-				Over.Visibility = Visibility.Collapsed;
-			}
+			Out.Visibility = Visibility.Visible;
+			Badge.Visibility = Visibility.Visible;
+			BadgeOver.Visibility = Visibility.Collapsed;
+			Over.Visibility = Visibility.Collapsed;
 		}
 
 		public event EventHandler<MouseButtonEventArgs> Clicked;
@@ -100,6 +112,10 @@ namespace jwSkinControls.ControlFragments {
 		}
 		private void LayoutRoot_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
 			InvokeClicked(e);
+		}
+
+		public void ClearEvents() {
+			Clicked = null;
 		}
 	}
 }

@@ -60,9 +60,15 @@ namespace JwslPlayer {
 			BackBind("jwDockShow", 0);//
 
 			Application.Current.Host.Content.FullScreenChanged += Content_FullScreenChanged;
+			Application.Current.Host.Content.Resized +=Content_Resized;
 
 			// trigger player ready event
 			HtmlPage.Window.Eval("jwplayer().playerReady(document.getElementById('" + HtmlPage.Plugin.Id + "'))");
+		}
+
+		void Content_Resized(object sender, EventArgs e) {
+			FireJwEvent("jwplayerResize", "{width:" + Application.Current.Host.Content.ActualWidth + ", height:"
+			+ Application.Current.Host.Content.ActualHeight + "}");
 		}
 
 		void Content_FullScreenChanged(object sender, EventArgs e) {
@@ -101,7 +107,15 @@ namespace JwslPlayer {
 
 		[ScriptableMember]
 		public void jwDockSetButton (string id, string callback, string outGraphic, string overGraphic) {
-			jwPlayer.DockView.SetButton(id, () => HtmlPage.Window.Eval("("+callback+")()"), outGraphic, overGraphic);
+			if (string.IsNullOrEmpty(callback)) {
+				jwPlayer.DockView.RemoveCustomButton(id);
+			} else {
+				jwPlayer.DockView.SetCustomButton(id, () => {
+					try {
+						HtmlPage.Window.Eval(callback);
+					} catch { }
+				}, outGraphic, overGraphic);
+			}
 		}
 
 		[ScriptableMember]

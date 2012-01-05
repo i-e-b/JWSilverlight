@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using ComposerCore;
 using jwSkinControls.ControlFragments;
 using jwSkinLoader;
@@ -27,7 +29,7 @@ namespace jwSkinControls {
 
 		public JW5_Dock () {
 			InitializeComponent();
-
+			customButtons = new Dictionary<string, ImageHoverButton>();
 			players = new ComposerControlHelper();
 			CaptionsButton.Clicked += CaptionsButtonClicked;
 		}
@@ -71,14 +73,37 @@ namespace jwSkinControls {
 		}
 
 		public void SetSkin(JwSkinPackage pkg) {
+			skinPackage = pkg;
+
 			pkg.BindHoverButton(CaptionsButton, "dock", "button", "buttonOver");
 			CaptionsButton.BadgeImage = pkg.GetNamedElement("captions", "dockIcon");
 			CaptionsButton.CaptionText = "Subtitles\r\nOff";
 			CaptionsButton.CaptionColor = (pkg.GetSettingValue("dock", "fontcolor") ?? "0xffffff").HexToColor();
 		}
 
-		public void SetButton (string id, Action callback, string outGraphic, string overGraphic) {
-			callback();
+		readonly Dictionary<string, ImageHoverButton> customButtons;
+		JwSkinPackage skinPackage;
+
+		public void SetCustomButton (string id, Action callback, string outGraphic, string overGraphic) {
+			if (string.IsNullOrEmpty(outGraphic)) return;
+			if (!customButtons.ContainsKey(id)) customButtons.Add(id, new ImageHoverButton());
+			var button = customButtons[id];
+
+			button.ClearEvents();
+			button.Clicked += (s, e) => callback();
+			skinPackage.BindHoverButton(button, "dock", "button", "buttonOver");
+			button.BadgeImage = new BitmapImage(new Uri(outGraphic, UriKind.RelativeOrAbsolute).ForceAbsoluteByPage());
+			if (!string.IsNullOrEmpty(overGraphic)) {
+				button.BadgeImageOver = new BitmapImage(new Uri(overGraphic, UriKind.RelativeOrAbsolute).ForceAbsoluteByPage());
+			}
+			LayoutRoot.Children.Add(button);
+		}
+
+		public void RemoveCustomButton(string id) {
+			if (!customButtons.ContainsKey(id)) return;
+			customButtons[id].ClearEvents();
+			LayoutRoot.Children.Remove(customButtons[id]);
+			customButtons.Remove(id);
 		}
 	}
 }
