@@ -76,5 +76,9 @@ namespace jwSkinControls {
 			CaptionsButton.CaptionText = "Subtitles\r\nOff";
 			CaptionsButton.CaptionColor = (pkg.GetSettingValue("dock", "fontcolor") ?? "0xffffff").HexToColor();
 		}
+
+		public void SetButton (string id, Action callback, string outGraphic, string overGraphic) {
+			callback();
+		}
 	}
 }

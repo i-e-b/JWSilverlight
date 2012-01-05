@@ -191,7 +191,7 @@
 
 			flashPlayer = document.getElementById(_container.id);
 			_api.container = flashPlayer;
-			_api.setPlayer(flashPlayer.content.jwplayer, "flash");
+			_api.setPlayer(flashPlayer, "flash");
 		}
 
 		this.supportsConfig = function () {

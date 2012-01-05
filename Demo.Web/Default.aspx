@@ -96,6 +96,9 @@
 		<a href="#" onclick="jwplayer().getPlugin('dock').hide()">Hide Dock Buttons</a> |
 		<a href="#" onclick="jwplayer().getPlugin('display').show()">Show Display Box</a> |
 		<a href="#" onclick="jwplayer().getPlugin('display').hide()">Hide Display Box</a>
+		<br />
+		<a href="#" onclick="jwplayer().getPlugin('dock').setButton('tstbtn', function(){alert('button pushed');}, '/Images/DemoButton.png', '/Images/DemoButtonOver.png')">Add Plugin Button</a> |
+		<a href="#" onclick="jwplayer().getPlugin('dock').setButton('tstbtn')">Remove Plugin Button</a>
 		<br /></div>
 
 		<!-- Test event code: -->

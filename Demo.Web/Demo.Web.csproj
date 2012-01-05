@@ -48,6 +48,8 @@
   <ItemGroup>
     <Content Include="captions_tt.xml" />
     <Content Include="ClientBin\player.swf" />
+    <Content Include="Images\DemoButton.png" />
+    <Content Include="Images\DemoButtonOver.png" />
     <Content Include="Scripts\jwplayer.embed.flash.js" />
     <Content Include="Scripts\jwplayer.embed.silverlight.js" />
     <Content Include="Scripts\jwplayer.min.js" />
@@ -79,6 +81,7 @@
   <ItemGroup>
     <Content Include="ClientBin\System.Json.zip" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

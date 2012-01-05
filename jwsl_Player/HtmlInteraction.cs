@@ -56,7 +56,7 @@ namespace JwslPlayer {
 			BackBind("jwDisplayShow", 0);//
 			BackBind("jwDisplayHide", 0);//
 			BackBind("jwDockHide", 0);//
-			BackBind("jwDockSetButton", 4);
+			BackBind("jwDockSetButton", 4);//
 			BackBind("jwDockShow", 0);//
 
 			Application.Current.Host.Content.FullScreenChanged += Content_FullScreenChanged;
@@ -97,6 +97,11 @@ namespace JwslPlayer {
 			sb.Append(");};");
 			HtmlPage.Window.Eval(sb.ToString());
 			// var x = document.getElementById('container'); x.jwPlay = function(){return x.content.jwplayer.jwPlay();};
+		}
+
+		[ScriptableMember]
+		public void jwDockSetButton (string id, string callback, string outGraphic, string overGraphic) {
+			jwPlayer.DockView.SetButton(id, () => HtmlPage.Window.Eval("("+callback+")()"), outGraphic, overGraphic);
 		}
 
 		[ScriptableMember]
