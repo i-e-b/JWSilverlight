@@ -86,7 +86,10 @@ namespace jwSkinControls {
 
 		public void SetCustomButton (string id, Action callback, string outGraphic, string overGraphic) {
 			if (string.IsNullOrEmpty(outGraphic)) return;
-			if (!customButtons.ContainsKey(id)) customButtons.Add(id, new ImageHoverButton());
+			if (!customButtons.ContainsKey(id)) {
+				customButtons.Add(id, new ImageHoverButton());
+				LayoutRoot.Children.Add(customButtons[id]);
+			}
 			var button = customButtons[id];
 
 			button.ClearEvents();
@@ -96,7 +99,6 @@ namespace jwSkinControls {
 			if (!string.IsNullOrEmpty(overGraphic)) {
 				button.BadgeImageOver = new BitmapImage(new Uri(overGraphic, UriKind.RelativeOrAbsolute).ForceAbsoluteByPage());
 			}
-			LayoutRoot.Children.Add(button);
 		}
 
 		public void RemoveCustomButton(string id) {

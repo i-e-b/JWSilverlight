@@ -48,6 +48,43 @@
   <ItemGroup>
     <Content Include="captions_tt.xml" />
     <Content Include="ClientBin\player.swf" />
+    <Content Include="ExampleSkins\glow_with_html5\controlbar\background.png" />
+    <Content Include="ExampleSkins\glow_with_html5\controlbar\blankButton.png" />
+    <Content Include="ExampleSkins\glow_with_html5\controlbar\divider.png" />
+    <Content Include="ExampleSkins\glow_with_html5\controlbar\fullscreenButton.png" />
+    <Content Include="ExampleSkins\glow_with_html5\controlbar\fullscreenButtonOver.png" />
+    <Content Include="ExampleSkins\glow_with_html5\controlbar\muteButton.png" />
+    <Content Include="ExampleSkins\glow_with_html5\controlbar\muteButtonOver.png" />
+    <Content Include="ExampleSkins\glow_with_html5\controlbar\normalscreenButton.png" />
+    <Content Include="ExampleSkins\glow_with_html5\controlbar\normalscreenButtonOver.png" />
+    <Content Include="ExampleSkins\glow_with_html5\controlbar\pauseButton.png" />
+    <Content Include="ExampleSkins\glow_with_html5\controlbar\pauseButtonOver.png" />
+    <Content Include="ExampleSkins\glow_with_html5\controlbar\playButton.png" />
+    <Content Include="ExampleSkins\glow_with_html5\controlbar\playButtonOver.png" />
+    <Content Include="ExampleSkins\glow_with_html5\controlbar\timeSliderBuffer.png" />
+    <Content Include="ExampleSkins\glow_with_html5\controlbar\timeSliderCapLeft.png" />
+    <Content Include="ExampleSkins\glow_with_html5\controlbar\timeSliderCapRight.png" />
+    <Content Include="ExampleSkins\glow_with_html5\controlbar\timeSliderProgress.png" />
+    <Content Include="ExampleSkins\glow_with_html5\controlbar\timeSliderRail.png" />
+    <Content Include="ExampleSkins\glow_with_html5\controlbar\unmuteButton.png" />
+    <Content Include="ExampleSkins\glow_with_html5\controlbar\unmuteButtonOver.png" />
+    <Content Include="ExampleSkins\glow_with_html5\controlbar\volumeSliderBuffer.png" />
+    <Content Include="ExampleSkins\glow_with_html5\controlbar\volumeSliderProgress.png" />
+    <Content Include="ExampleSkins\glow_with_html5\controlbar\volumeSliderRail.png" />
+    <Content Include="ExampleSkins\glow_with_html5\display\background.png" />
+    <Content Include="ExampleSkins\glow_with_html5\display\bufferIcon.png" />
+    <Content Include="ExampleSkins\glow_with_html5\display\muteIcon.png" />
+    <Content Include="ExampleSkins\glow_with_html5\display\playIcon.png" />
+    <Content Include="ExampleSkins\glow_with_html5\dock\button.png" />
+    <Content Include="ExampleSkins\glow_with_html5\glow.xml" />
+    <Content Include="ExampleSkins\glow_with_html5\playlist\item.png" />
+    <Content Include="ExampleSkins\glow_with_html5\playlist\itemOver.png" />
+    <Content Include="ExampleSkins\glow_with_html5\playlist\sliderCapBottom.png" />
+    <Content Include="ExampleSkins\glow_with_html5\playlist\sliderCapTop.png" />
+    <Content Include="ExampleSkins\glow_with_html5\playlist\sliderRail.png" />
+    <Content Include="ExampleSkins\glow_with_html5\playlist\sliderThumb.png" />
+    <Content Include="ExampleSkins\glow_with_html5\sharing\embedScreen.png" />
+    <Content Include="ExampleSkins\glow_with_html5\sharing\shareScreen.png" />
     <Content Include="Images\DemoButton.png" />
     <Content Include="Images\DemoButtonOver.png" />
     <Content Include="Scripts\jwplayer.embed.flash.js" />
@@ -81,7 +118,9 @@
   <ItemGroup>
     <Content Include="ClientBin\System.Json.zip" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="ExampleSkins\glow_with_html5\glow.zip" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

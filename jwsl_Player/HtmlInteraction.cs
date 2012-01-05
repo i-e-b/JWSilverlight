@@ -60,7 +60,7 @@ namespace JwslPlayer {
 			BackBind("jwDockShow", 0);//
 
 			Application.Current.Host.Content.FullScreenChanged += Content_FullScreenChanged;
-			Application.Current.Host.Content.Resized +=Content_Resized;
+			Application.Current.Host.Content.Resized += Content_Resized;
 
 			// trigger player ready event
 			HtmlPage.Window.Eval("jwplayer().playerReady(document.getElementById('" + HtmlPage.Plugin.Id + "'))");
