@@ -1,0 +1,11 @@
+﻿<asx version="3.0">
+<TITLE>Your playlist title goes here</TITLE>
+<ENTRY>
+ <TITLE>Stream or song title for this entry goes here</TITLE>
+  <AUTHOR>Artists name for this entry goes here</AUTHOR>
+	<COPYRIGHT>Stream or song copyright date goes here</COPYRIGHT>
+  <REF HREF = "http://wmservername/path/yourfilename" />
+  <REF HREF = "http://wmservername/publishingpointname" />
+  <REF HREF = "http://ShoutCastservername:portnumber" />
+ </ENTRY>
+</asx>

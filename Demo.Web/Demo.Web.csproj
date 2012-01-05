@@ -48,6 +48,11 @@
   <ItemGroup>
     <Content Include="captions_tt.xml" />
     <Content Include="ClientBin\player.swf" />
+    <Content Include="Playlists\ASX_Sample.asx" />
+    <Content Include="Playlists\ATOM_media.xml" />
+    <Content Include="Playlists\mRSS.xml" />
+    <Content Include="Playlists\RSS_iTunes.xml" />
+    <Content Include="Playlists\XSPF.xml" />
     <Content Include="SimpleEmbedSample.html" />
     <Content Include="ExampleSkins\glow_with_html5\controlbar\background.png" />
     <Content Include="ExampleSkins\glow_with_html5\controlbar\blankButton.png" />

@@ -12,4 +12,4 @@ Current Status:
 ---------------
 Works with a range of JWPlayer skins.
 Some behaviour is slightly different from the Flash JW player, but not more than HTML5 version is!
-Should be usable for simple player projects.
+Majority of functionality is now supported; Flash plugins and SWF skins will never be supported, but if anything else fails please let me know.
