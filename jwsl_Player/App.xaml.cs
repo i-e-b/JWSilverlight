@@ -21,15 +21,17 @@ namespace jwslPlayer {
 			string playSource;
 			if (e.InitParams.TryGetValue("playlist", out playSource)) {
 				root.SourcePlaylist = Uri.UnescapeDataString(playSource);
+			} else if (e.InitParams.TryGetValue("playlistfile", out playSource)) {
+				root.SourcePlaylist = playSource;
 			} else if (e.InitParams.TryGetValue("file", out playSource)) {
-				root.SourcePlaylist = "[[JSON]][{file:'"+playSource+"'}]";
+				root.SourcePlaylist = "[[JSON]][{file:'" + playSource + "'}]";
 			}
 
 			string skinPackage;
 			if (e.InitParams.TryGetValue("skin", out skinPackage)) {
 				root.SkinPackageUrl = Uri.UnescapeDataString(skinPackage);
 			} else {
-				root.SkinPackageUrl = "/ExampleSkins/beelden.zip";
+				root.SkinPackageUrl = "/ExampleSkins/beelden.zip"; // todo: built-in default skin?
 			}
 
 			string plistSize;
@@ -42,15 +44,7 @@ namespace jwslPlayer {
 
 		}
 		private void Application_UnhandledException (object sender, ApplicationUnhandledExceptionEventArgs e) {
-			// If the app is running outside of the debugger then report the exception using
-			// the browser's exception mechanism. On IE this will display it a yellow alert 
-			// icon in the status bar and Firefox will display a script error.
 			if (!System.Diagnostics.Debugger.IsAttached) {
-
-				// NOTE: This will allow the application to continue running after an exception has been thrown
-				// but not handled. 
-				// For production applications this error handling should be replaced with something that will 
-				// report the error to the website and stop the application.
 				e.Handled = true;
 				Deployment.Current.Dispatcher.BeginInvoke(() => ReportErrorToDOM(e));
 			}
@@ -61,8 +55,7 @@ namespace jwslPlayer {
 				errorMsg = errorMsg.Replace('"', '\'').Replace("\r\n", @"\n");
 
 				System.Windows.Browser.HtmlPage.Window.Eval("throw new Error(\"Unhandled Error in Silverlight Application " + errorMsg + "\");");
-			} catch {
-			}
+			} catch { }
 		}
 	}
 }

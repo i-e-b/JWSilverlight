@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Json;
+using System.Linq;
+using System.Net;
 using System.Text;
 using System.Windows;
 using System.Windows.Media;
+using System.Xml.Linq;
 
 namespace ComposerCore {
 	public class Playlist : IPlaylist {
@@ -36,27 +39,92 @@ namespace ComposerCore {
 		}
 
 		public void ReadPlaylist (string Contents) {
-			var strPlaylist = Uri.UnescapeDataString(Contents);
-			if (strPlaylist.StartsWith("<?xml")) { // assume it's a raw playlist
-				//ParseXml(strPlaylist);
-				//return;
-				throw new Exception("Raw XML playlists not yet supported");
+			var strPlaylist = Uri.UnescapeDataString(Contents).Trim();
+			var lower = strPlaylist.ToLower();
+
+			if (lower.StartsWith("<")) { // assume it's a raw playlist
+				InterpretXmlPlaylist(strPlaylist);
+				return;
 			}
 
-			if (strPlaylist.StartsWith("[[JSON]]")) { // JW JSON playlist
+			if (lower.StartsWith("[[json]]")) { // JW JSON playlist
 				ParseJSON(strPlaylist.Substring(8));
 				return;
 			} 
 			
 			// assume it's a url for the playlist
-			throw new Exception("Playlist URLs not yet supported");
-			/*var playlistUri = new Uri(strPlaylist);
-
+			var playlistUri = new Uri(strPlaylist, UriKind.RelativeOrAbsolute).ForceAbsoluteByPage();
 			var wc = new WebClient();
 			wc.DownloadStringCompleted += WcDownloadStringCompleted;
-			wc.DownloadStringAsync(playlistUri);*/
+			wc.DownloadStringAsync(playlistUri);
 		}
 
+		void WcDownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e) {
+			if (e.Cancelled || e.Error != null) throw e.Error ?? new Exception("Playlist download cancelled");
+
+			InterpretXmlPlaylist(e.Result.Trim());
+		}
+
+		void InterpretXmlPlaylist(string xmlString) {
+			if (!xmlString.StartsWith("<?xml")) xmlString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + xmlString; // fix bad xml
+
+			var doc = XDocument.Parse(xmlString);
+			if (doc == null) throw new Exception("Could not load XML playlist");
+
+			var firstElement = doc.Elements().First();
+			switch (firstElement.Name.LocalName.ToLower()) {
+				case "playlist": // XSPF
+					ParseXSPF(doc);
+					break;
+				case "rss": // mRSS or iTunes RSS
+					if (firstElement.Attribute("xmlns:itunes") != null) {
+						ParseITunes(doc);
+					} else {
+						ParseMRSS(doc);
+					}
+					break;
+				case "feed": // ATOM
+					ParseAtom(doc);
+					break;
+				case "asx": // ASX
+				case "ASX": // ASX
+					ParseAsx(doc);
+					break;
+
+				default:
+					throw new Exception("XML Playlist format not understood");
+			}
+		}
+
+		void ParseAsx (XDocument doc) {
+			Items.Clear();
+			var entries = doc.Descendants("ENTRY");
+
+			foreach (var entry in entries) {
+				if (!(entry.Descendants("REF").Count() > 0)) continue;
+				var playItem = new PlaylistItem(Items);
+
+				if (entry.Descendants("TITLE").FirstOrDefault() != null)
+					playItem.Title = entry.Descendants("TITLE").First().Value;
+
+				var href = entry.Descendants("REF").First().Attribute("HREF");
+				if (href == null) continue;
+
+				playItem.MediaSource = new Uri(href.Value, UriKind.RelativeOrAbsolute).ForceAbsoluteByPage();
+
+				Items.Add(playItem);
+			}
+			if (PlaylistChanged != null) PlaylistChanged(this, null);
+			OnPlaylistLoaded(null);
+		}
+
+		void ParseAtom(XDocument doc) { }
+
+		void ParseMRSS(XDocument doc) { }
+
+		void ParseITunes(XDocument doc) {  }
+
+		void ParseXSPF(XDocument doc) { }
 
 		public void ParseJSON (string jsonObject) {
 			var value = (JsonArray)JsonValue.Parse(jsonObject);
@@ -101,9 +169,7 @@ namespace ComposerCore {
 
 				Items.Add(playItem);
 			}
-			if (PlaylistChanged != null) {
-				PlaylistChanged(this, null);
-			}
+			if (PlaylistChanged != null) PlaylistChanged(this, null); 
 			OnPlaylistLoaded(null);
 		}
 

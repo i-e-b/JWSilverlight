@@ -4,8 +4,6 @@
  <TITLE>Stream or song title for this entry goes here</TITLE>
   <AUTHOR>Artists name for this entry goes here</AUTHOR>
 	<COPYRIGHT>Stream or song copyright date goes here</COPYRIGHT>
-  <REF HREF = "http://wmservername/path/yourfilename" />
-  <REF HREF = "http://wmservername/publishingpointname" />
-  <REF HREF = "http://ShoutCastservername:portnumber" />
+  <REF HREF = "/video.mp4" />
  </ENTRY>
 </asx>

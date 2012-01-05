@@ -48,6 +48,7 @@
   <ItemGroup>
     <Content Include="captions_tt.xml" />
     <Content Include="ClientBin\player.swf" />
+    <Content Include="Playlists_ASX_Sample.html" />
     <Content Include="Playlists\ASX_Sample.asx" />
     <Content Include="Playlists\ATOM_media.xml" />
     <Content Include="Playlists\mRSS.xml" />
@@ -99,10 +100,6 @@
     <Content Include="thumbnail.jpg" />
     <Content Include="ClientBin\jwslPlayer.xap" />
     <Content Include="ExampleSkins\Read Me.txt" />
-    <Content Include="Playlist.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Silverlight.js" />
     <Content Include="Default.aspx" />
     <Content Include="video.mp4" />
     <Content Include="Web.config" />
