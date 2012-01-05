@@ -100,7 +100,7 @@
 			  url='rtsp://rtsp2.youtube.com/ChoLENy73bIDRQ1kgGDA==/0/0/0/video.3gp'
 			  type='video/3gpp' medium='video'
 			  expression='full' duration='215' yt:format='6'/>
-			<media:thumbnail url='http://img.youtube.com/vi/ZTUVgYoeN_b/2.jpg'
+			<media:thumbnail url=''
 			  height='90' width='120' time='00:00:03.500'/>
 			<media:thumbnail url='http://img.youtube.com/vi/ZTUVgYoeN_b/1.jpg'
 			  height='90' width='120' time='00:00:01.750'/>

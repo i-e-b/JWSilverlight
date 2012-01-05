@@ -966,31 +966,6 @@ window.onbeforeunload = function() {
 			return false;
 		}
 		#endregion
-/*
-		private void UpdateSubscribers_Status (PlayerStatus status) {
-			foreach (var ctrl in ControlSets) {
-				try {
-					ctrl.StatusUpdate(status);
-				} catch (Exception ex) {
-					try {
-						ctrl.ErrorOccured(ex);
-					} catch (Exception e) { drop(e); }
-				}
-			}
-		}
-
-		private void UpdateSubscribers_MajorStatus () {
-			RefreshStatus();
-			foreach (var ctrl in ControlSets) {
-				try {
-					ctrl.StateChanged(Status);
-				} catch (Exception ex) {
-					try {
-						ctrl.ErrorOccured(ex);
-					} catch (Exception e) { drop(e); }
-				}
-			}
-		}*/
 
 		private TimeSpan BestDuration () {
 			try {

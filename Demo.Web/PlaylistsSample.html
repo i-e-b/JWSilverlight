@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head runat="server">
+	<title>Sample</title>
+</head>
+<body>
+	<form action=".">Choose a sample playlist: 
+		<select onchange="setPlaylist(this.options[this.selectedIndex].value)">
+			<option value=""></option>
+			<option value="/Playlists/ASX_Sample.asx">ASX</option>
+			<option value="/Playlists/ATOM_media.xml">Atom Media</option>
+			<option value="/Playlists/mRSS.xml">mRSS</option>
+			<option value="/Playlists/RSS_iTunes.xml">RSS from iTunes</option>
+			<option value="/Playlists/XSPF.xml">XSPF</option>
+		</select><br />
+
+		<!-- Target div for player: -->
+		<div id="container">Player will show here</div>
+	</form>
+
+	<!-- embed includes and call -->
+	<script type="text/javascript" src="/Scripts/jwplayer.min.js"></script>
+	<script type="text/javascript" src="/Scripts/jwplayer.embed.silverlight.js"></script>
+	<script type="text/javascript">
+		function setPlaylist(plist) {
+			jwplayer('container').setup({
+				height: 480, width: 853,
+				skin: '/ExampleSkins/glow_with_html5/glow.zip',
+				playlistfile: plist,
+				"playlist.position": "right",
+				"playlist.size": 300,
+				modes: [
+					{ type: 'silverlight', src: '/ClientBin/jwslPlayer.xap' },
+					{ type: 'flash', src: '/ClientBin/player.swf' },
+					{ type: 'html5' },
+					{ type: 'download' }
+				]
+			}).play();
+		}
+	</script>
+
+</body>
+</html>

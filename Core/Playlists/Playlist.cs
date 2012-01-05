@@ -124,7 +124,40 @@ namespace ComposerCore {
 
 		void ParseITunes(XDocument doc) {  }
 
-		void ParseXSPF(XDocument doc) { }
+		void ParseXSPF (XDocument doc) {
+			Items.Clear();
+			var tracks = doc.Descendants().Where(d=>d.Name.LocalName == "track");
+
+			foreach (var track in tracks) {
+				var playItem = new PlaylistItem(Items);
+
+				playItem.Title = getContent(track, "title");
+
+				var href = getContent(track, "location"); if (href == null) continue;
+				playItem.MediaSource = new Uri(href, UriKind.RelativeOrAbsolute).ForceAbsoluteByPage();
+
+				double dur;
+				if (double.TryParse(getContent(track, "duration"), out dur)) {
+					playItem.StopPosition = dur / 1000.0;
+				}
+
+				var thumb = getContent(track, "image");
+				if (thumb != null)
+					playItem.ThumbSource = new Uri(thumb, UriKind.RelativeOrAbsolute).ForceAbsoluteByPage();
+
+				playItem.Description = getContent(track, "annotation");
+				
+				Items.Add(playItem);
+			}
+			if (PlaylistChanged != null) PlaylistChanged(this, null);
+			OnPlaylistLoaded(null);
+		}
+
+		string getContent(XElement element, string name) {
+			return element.Descendants().Where(d => d.Name.LocalName == name).FirstOrDefault() == null 
+				? null
+				: element.Descendants().Where(d => d.Name.LocalName == name).First().Value;
+		}
 
 		public void ParseJSON (string jsonObject) {
 			var value = (JsonArray)JsonValue.Parse(jsonObject);

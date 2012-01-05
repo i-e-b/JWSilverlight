@@ -8,7 +8,7 @@
     <info>http://example.com/~jane</info>
     <trackList>
         <track>
-            <location>http://example.com/song_1.mp3</location>
+            <location>/video.mp4</location>
             <!-- artist or band name -->
             <creator>Led Zeppelin</creator>
             <!-- album title -->
