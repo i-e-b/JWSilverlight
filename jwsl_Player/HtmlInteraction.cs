@@ -214,7 +214,7 @@ namespace JwslPlayer {
 		}
 
 		public void jwLoad_Json (ScriptObject scriptPlaylist) {
-			var str = scriptPlaylist.ToJsonValue().ToString().Trim();
+			var str = scriptPlaylist.ToJsonString().Trim();
 			if (str.StartsWith("{") && str.EndsWith("}")) str = "["+str+"]";
 			if (str.StartsWith("[") && str.EndsWith("]")) str = "[[JSON]]" + str;
 

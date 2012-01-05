@@ -116,9 +116,6 @@
     <Content Include="ExampleSkins\sbl.zip" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ClientBin\System.Json.zip" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="ExampleSkins\glow_with_html5\glow.zip" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

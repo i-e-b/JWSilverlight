@@ -35,5 +35,8 @@ namespace ComposerCore {
 
 			return o;
 		}
+		public static string ToJsonString (this ScriptObject a) {
+			return a.ToJsonValue().ToString();
+		}
 	}
 }
