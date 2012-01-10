@@ -191,6 +191,7 @@ namespace ComposerCore {
 							playItem.Description = item[key];
 							break;
 						case "captions":
+						case "captions.file":
 							var captionUrl = ((string)item[key]);
 							playItem.CaptionSource = new Uri(captionUrl, UriKind.RelativeOrAbsolute);
 							break;
