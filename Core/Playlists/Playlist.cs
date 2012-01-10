@@ -172,11 +172,11 @@ namespace ComposerCore {
 					switch (key) {
 						case "file":
 							var fileUrl = ((string)item[key]);
-							playItem.MediaSource = new Uri(fileUrl, UriKind.RelativeOrAbsolute);
+							playItem.MediaSource = new Uri(fileUrl, UriKind.RelativeOrAbsolute).ForceAbsoluteByPage();
 							break;
 						case "image":
 							var thumbUrl = ((string)item[key]);
-							playItem.ThumbSource = new Uri(thumbUrl, UriKind.RelativeOrAbsolute);
+							playItem.ThumbSource = new Uri(thumbUrl, UriKind.RelativeOrAbsolute).ForceAbsoluteByPage();
 							break;
 						case "duration":
 							playItem.StopPosition = double.Parse(item[key].ToString());
@@ -193,7 +193,7 @@ namespace ComposerCore {
 						case "captions":
 						case "captions.file":
 							var captionUrl = ((string)item[key]);
-							playItem.CaptionSource = new Uri(captionUrl, UriKind.RelativeOrAbsolute);
+							playItem.CaptionSource = new Uri(captionUrl, UriKind.RelativeOrAbsolute).ForceAbsoluteByPage();
 							break;
 						default:
 							playItem.CustomProperties.Add(key, item[key]);

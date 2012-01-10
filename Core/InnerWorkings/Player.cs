@@ -696,10 +696,15 @@ window.onbeforeunload = function() {
 			if (CurrentItem == null) return;
 			CaptionTimer.Interval = TimeSpan.FromMilliseconds(3000);
 
-			// TODO: fix this for non-live/smooth transcripts!
-			CurrentItem.UpdateCaptions(CurrentSliderPosition);
+			if (CurrentItem.CaptionSource != null && (CurrentItem.CaptionItems == null || CurrentItem.CaptionItems.Count < 1)) {
+				CurrentItem.UpdateCaptions(CurrentSliderPosition);
+			}
 
 			if (MediaPlayer.Markers != null && CurrentItem.IsAdaptiveStreaming && CurrentItem.CaptionItems != null) {
+				// TODO: fix this for non-live/smooth transcripts!
+				CurrentItem.UpdateCaptions(CurrentSliderPosition);
+				AddCaptions(CurrentItem.CaptionItems);
+			} else if (CurrentItem.CaptionItems != null && MediaPlayer.Markers != null && MediaPlayer.Markers.Count != CurrentItem.CaptionItems.Count) {
 				AddCaptions(CurrentItem.CaptionItems);
 			}
 		}
@@ -999,7 +1004,6 @@ window.onbeforeunload = function() {
 				return TimeSpan.Zero;
 			}
 		}
-
 
 		private void AddCaptions (IEnumerable<CaptionItem> captions) {
 			MediaPlayer.Markers.Clear();
