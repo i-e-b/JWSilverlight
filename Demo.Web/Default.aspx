@@ -45,7 +45,7 @@
 		<!-- Test functions: -->
 		<div id="Test-Functions" style="font-size:small">
 		<a href="#" onclick="jwplayer().stop()">Stop</a> |
-		<a href="#" onclick="jwplayer().pause(false)">Pause</a> |
+		<a href="#" onclick="jwplayer().pause(true)">Pause</a> |
 		<a href="#" onclick="jwplayer().play()">Toggle Play</a> |
 		<a href="#" onclick="alert(jwplayer().getState())">Get Player State</a> |
 		<a href="#" onclick="jwplayer().seek(30)">Go to 30 Seconds</a>

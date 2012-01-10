@@ -237,8 +237,8 @@ namespace JwslPlayer {
 		public void jwPause (string state) {
 			foreach (var player in players.PlayerList) {
 				if (state == null) togglePlay(player);
-				else if (state.ToLower() == "false") player.Pause();
-				else player.Play();
+				else if (state.ToLower() == "false") player.Play();
+				else player.Pause();
 			}
 		}
 
@@ -246,8 +246,8 @@ namespace JwslPlayer {
 		public void jwPlay (string state) {
 			foreach (var player in players.PlayerList) {
 				if (state == null) togglePlay(player);
-				else if (state.ToLower() == "false") player.Play();
-				else player.Pause();
+				else if (state.ToLower() == "false") player.Pause();
+				else player.Play();
 			}
 		}
 
