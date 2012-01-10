@@ -32,6 +32,7 @@
 				],
 				/*"playlist.position": "right",
 				"playlist.size": 300,*/
+				plugins: 'captions-2',
 				modes: [
 					{ type: 'silverlight', src: '/ClientBin/jwslPlayer.xap' },
 					{ type: 'flash', src: '/ClientBin/player.swf' },

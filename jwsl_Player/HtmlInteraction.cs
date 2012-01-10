@@ -59,6 +59,8 @@ namespace JwslPlayer {
 			BackBind("jwDockSetButton", 4);//
 			BackBind("jwDockShow", 0);//
 
+			BackBind("getPluginConfig", 0);//
+
 			Application.Current.Host.Content.FullScreenChanged += Content_FullScreenChanged;
 			Application.Current.Host.Content.Resized += Content_Resized;
 
@@ -103,6 +105,11 @@ namespace JwslPlayer {
 			sb.Append(");};");
 			HtmlPage.Window.Eval(sb.ToString());
 			// var x = document.getElementById('container'); x.jwPlay = function(){return x.content.jwplayer.jwPlay();};
+		}
+
+		[ScriptableMember]
+		public string getPluginConfig () {
+			return "{}";
 		}
 
 		[ScriptableMember]
