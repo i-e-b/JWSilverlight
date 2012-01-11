@@ -47,6 +47,7 @@ namespace jwSkinControls {
 			CaptionsButton.CaptionText = "Subtitles\r\n" + (showCaptions ? "On" : "Off");
 			InvokeCaptionVisibilityChanged(showCaptions);
 		}
+
 		public void InvokeCaptionVisibilityChanged(bool visible) {
 			var handler = CaptionVisibilityChanged;
 			if (handler != null) handler(this, new ToggleVisibilityEventArgs {IsVisible = visible});
@@ -77,7 +78,7 @@ namespace jwSkinControls {
 
 			pkg.BindHoverButton(CaptionsButton, "dock", "button", "buttonOver");
 			CaptionsButton.BadgeImage = pkg.GetNamedElement("captions", "dockIcon");
-			CaptionsButton.CaptionText = "Subtitles\r\nOff";
+			CaptionsButton.CaptionText = "Subtitles\r\nOn";
 			CaptionsButton.CaptionColor = (pkg.GetSettingValue("dock", "fontcolor") ?? "0xffffff").HexToColor();
 		}
 

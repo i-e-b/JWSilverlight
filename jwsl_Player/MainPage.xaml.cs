@@ -43,6 +43,7 @@ namespace JwslPlayer {
 			controlBarFader = new OpacityFader(ControlBarView);
 			dockFader = new OpacityFader(DockView);
 			SetFadeTimer();
+			CaptionView.Margin = new Thickness(0, 0, 0, 33);// we don't know the height until images are all loaded... take a guess for now!
 		}
 
 		void Player_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
@@ -55,9 +56,9 @@ namespace JwslPlayer {
 		}
 
 		void UpdateCaptionsMargin() {
-			if (!ControlsAreFaded) {
+			if (!ControlsAreFaded && ControlBarView.BarHeight > 0) {
 				CaptionView.Margin = new Thickness(0, 0, 0, ControlBarView.BarHeight);
-			} else {
+			} else if (ControlBarView.BarHeight > 0) {
 				CaptionView.Margin = new Thickness(0, 0, 0, 0);
 			}
 		}
@@ -71,6 +72,7 @@ namespace JwslPlayer {
 			var color = jwSkinPackage.GetSettingValue("display", "backgroundcolor").HexToColor();
 			LayoutRoot.Background = new SolidColorBrush(color);
 			Player.BackgroundColor = color;
+			UpdateCaptionsMargin();
 		}
 
 
@@ -136,17 +138,17 @@ namespace JwslPlayer {
 			UpdateCaptionsMargin();
 		}
 
-		private void LayoutRoot_MouseEnter (object sender, System.Windows.Input.MouseEventArgs e) {
+		private void LayoutRoot_MouseEnter (object sender, MouseEventArgs e) {
 			UnfadeControls();
 			fadeTimer.Start();
 		}
 
-		private void LayoutRoot_MouseLeave (object sender, System.Windows.Input.MouseEventArgs e) {
+		private void LayoutRoot_MouseLeave (object sender, MouseEventArgs e) {
 			FadeControls();
 			fadeTimer.Stop();
 		}
 
-		private void LayoutRoot_MouseMove (object sender, System.Windows.Input.MouseEventArgs e) {
+		private void LayoutRoot_MouseMove (object sender, MouseEventArgs e) {
 			UnfadeControls();
 			fadeTimer.Stop();
 			fadeTimer.Start();
