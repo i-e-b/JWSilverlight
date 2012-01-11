@@ -15,7 +15,7 @@ namespace jwSkinControls {
 		}
 
 		void LayoutRoot_SizeChanged(object sender, SizeChangedEventArgs e) {
-			CaptionBlock.FontSize = Math.Max(e.NewSize.Width / 33.3, 16.0);
+			CaptionBlock.FontSize = Math.Max(e.NewSize.Width / 33.3, 12.0);
 		}
 
 		public void CaptionFired(TimelineMarker Caption) {
