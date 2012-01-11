@@ -48,6 +48,7 @@
   <ItemGroup>
     <Content Include="captions_tt.xml" />
     <Content Include="ClientBin\player.swf" />
+    <Content Include="broken_captions_tt.xml" />
     <Content Include="PlaylistsSample.html" />
     <Content Include="Playlists\ASX_Sample.asx" />
     <Content Include="Playlists\ATOM_media.xml" />

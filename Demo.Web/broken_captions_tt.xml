@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head runat="server">
+    <title>SkeletonPlayer</title>
+    <style type="text/css"> html, body { height: 100%; overflow: auto; } body { padding: 0; margin: 0; } </style>
+</head>
+<body></a><img>
+			<p id="subtitle1" begin="00:00:00.080" end="00:00:05.680" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">Chrisi Daviesi, co od tohoto koda&#x0148;sk&#x00e9;ho 
+summitu o&#x010d;ek&#x00e1;v&#x00e1;te?</p>
+			<p id="subtitle2" begin="00:00:05.760" end="00:00:07.760" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">Mo&#x017e;n&#x00e1; toho 
+ani tolik ne&#x010d;ek&#x00e1;m.</p>
+			<p id="subtitle3" begin="00:00:07.840" end="00:00:11.640" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">Pocity se m&#x011b;n&#x00ed; 
+ka&#x017e;d&#x00fd;m dnem vyjedn&#x00e1;v&#x00e1;n&#x00ed;.</p>
+			<p id="subtitle4" begin="00:00:11.720" end="00:00:13.720" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">Pr&#x00e1;v&#x011b; te&#x010f;</p>
+			<p id="subtitle5" begin="00:00:13.800" end="00:00:17.720" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">do&#x0161;lo k form&#x00e1;ln&#x00ed;mu 
+p&#x0159;eru&#x0161;en&#x00ed; cel&#x00e9; konference</p>
+			<p id="subtitle6" begin="00:00:17.800" end="00:00:22.760" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">kv&#x016f;li n&#x00e1;mitk&#x00e1;m Tuvalu, z&#x0159;ejm&#x011b; 
+nejmen&#x0161;&#x00ed;ho n&#x00e1;rodn&#x00ed;ho st&#x00e1;tu na sv&#x011b;t&#x011b;.</p>
+			<p id="subtitle7" begin="00:00:22.840" end="00:00:24.920" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">Rozhodnut&#x00ed; 
+se tu p&#x0159;ij&#x00ed;maj&#x00ed; konsenzu&#x00e1;ln&#x011b;.</p>
+			<p id="subtitle8" begin="00:00:25.000" end="00:00:29.960" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">Pokud se jeden st&#x00e1;t postav&#x00ed; z&#x00e1;sadn&#x011b; proti 
+a z&#x00ed;sk&#x00e1; pro to podporu,</p>
+			<p id="subtitle9" begin="00:00:30.040" end="00:00:32.560" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">v&#x0161;e se to zhrout&#x00ed;, 
+a to se pr&#x00e1;v&#x011b; stalo.</p>
+			<p id="subtitle10" begin="00:00:32.640" end="00:00:35.000" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">Jde o nez&#x00e1;va&#x017e;n&#x011b;j&#x0161;&#x00ed; ot&#x00e1;zku,</p>
+			<p id="subtitle11" begin="00:00:35.080" end="00:00:39.960" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">toti&#x017e; zdali maj&#x00ed; b&#x00fd;t z&#x00e1;v&#x011b;ry konference 
+pr&#x00e1;vn&#x011b; z&#x00e1;vazn&#x00e9;</p>
+			<p id="subtitle12" begin="00:00:40.040" end="00:00:45.160" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">a zdali m&#x00e1; b&#x00fd;t z&#x0159;&#x00ed;zen mechanismus, 
+kter&#x00fd; zajist&#x00ed;, &#x017e;e st&#x00e1;ty sv&#x00e9; sliby spln&#x00ed;.</p>
+			<p id="subtitle13" begin="00:00:45.240" end="00:00:51.480" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">Mysl&#x00ed;te, &#x017e;e evropsk&#x00e9; zem&#x011b; a EU 
+vyjedn&#x00e1;v&#x00e1;n&#x00ed; vedou?</p>
+			<p id="subtitle14" begin="00:00:51.560" end="00:00:54.760" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">Nic tomu 
+na plen&#x00e1;rn&#x00ed;m zased&#x00e1;n&#x00ed; nenasv&#x011b;d&#x010d;uje.</p>
+			<p id="subtitle15" begin="00:00:54.840" end="00:01:00.960" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">Jeden slab&#x00fd; hl&#x00e1;sek &#x0160;v&#x00e9;dska 
+mezi 192 nebo 191.</p>
+			<p id="subtitle16" begin="00:01:01.040" end="00:01:03.560" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">Douf&#x00e1;m, &#x017e;e hlavn&#x00ed; &#x00fa;sil&#x00ed; 
+prob&#x00ed;h&#x00e1; v z&#x00e1;kulis&#x00ed;.</p>
+			<p id="subtitle17" begin="00:01:03.640" end="00:01:07.360" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">&#x010c;asto se &#x0159;&#x00ed;k&#x00e1;, &#x017e;e n&#x00e1;s nalezen&#x00ed; 
+spole&#x010d;n&#x00e9;ho stanoviska</p>
+			<p id="subtitle18" begin="00:01:07.440" end="00:01:09.960" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">27 &#x010d;lensk&#x00fd;ch st&#x00e1;t&#x016f; 
+stoj&#x00ed; tolik &#x010d;asu,</p>
+			<p id="subtitle19" begin="00:01:10.040" end="00:01:13.560" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">&#x017e;e nem&#x00e1;me &#x010d;as vyjedn&#x00e1;vat 
+s ostatn&#x00ed;mi zem&#x011b;mi sv&#x011b;ta.</p>
+			<p id="subtitle20" begin="00:01:13.640" end="00:01:19.840" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">Jsem ale p&#x0159;esv&#x011b;d&#x010d;en, 
+&#x017e;e ukazujeme dobrou v&#x016f;li</p>
+			<p id="subtitle21" begin="00:01:19.920" end="00:01:25.200" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">a sna&#x017e;&#x00ed;me se posunout jedn&#x00e1;n&#x00ed; 
+kup&#x0159;edu k ambici&#x00f3;zn&#x00ed;m c&#x00ed;l&#x016f;m.</p>
+			<p id="subtitle22" begin="00:01:25.280" end="00:01:29.240" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">Mysl&#x00ed;te, &#x017e;e v dohod&#x011b;</p>
+			<p id="subtitle23" begin="00:01:29.320" end="00:01:35.520" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">nakonec bude 
+sn&#x00ed;&#x017e;en&#x00ed; emis&#x00ed; CO2 o 30 %?</p>
+			<p id="subtitle24" begin="00:01:35.600" end="00:01:40.920" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">Nen&#x00ed; pochyb o tom, &#x017e;e a&#x017e; p&#x0159;&#x00ed;&#x0161;t&#x00ed; t&#x00fd;den 
+p&#x0159;ijedou hlavy st&#x00e1;t&#x016f; a vl&#x00e1;d,</p>
+			<p id="subtitle25" begin="00:01:41.000" end="00:01:45.000" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">tak evropsk&#x00e9; stanovisko bude, 
+&#x017e;e jsme pro 30 % sn&#x00ed;&#x017e;en&#x00ed;.</p>
+			<p id="subtitle26" begin="00:01:45.080" end="00:01:48.200" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">Vzhledem k recesi 
+nebude t&#x011b;&#x017e;k&#x00e9; toho dos&#x00e1;hnout.</p>
+			<p id="subtitle27" begin="00:01:48.280" end="00:01:52.160" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">Hladina CO2 se za posledn&#x00ed; 
+1-2 roky v&#x00fd;razn&#x011b; propadla.</p>
+			<p id="subtitle28" begin="00:01:52.240" end="00:01:55.960" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">Pak bude tlak na to &#x0159;&#x00ed;ct: 
+&#x201e;Pokud jdete na 30 %</p>
+			<p id="subtitle29" begin="00:01:56.040" end="00:01:59.960" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">a pokud budeme m&#x00ed;t z&#x00e1;vaznou 
+mezin&#x00e1;rodn&#x00ed; dohodu, p&#x016f;jdete na 40 %?&#x201c;</p>
+			<p id="subtitle30" begin="00:02:00.040" end="00:02:05.360" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">Proto&#x017e;e podle IPCC 
+se rozvinut&#x00e9; zem&#x011b; mus&#x00ed; dostat na 40 %,</p>
+			<p id="subtitle31" begin="00:02:05.440" end="00:02:09.640" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">pokud m&#x00e1;me dos&#x00e1;hnout 
+celkov&#x00e9;ho c&#x00ed;le sn&#x00ed;&#x017e;en&#x00ed; do roku 2050.</p>
+			<p id="subtitle32" begin="00:02:09.720" end="00:02:15.240" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">M&#x00e1;te jako europoslanec 
+n&#x011b;jak&#x00fd; vliv na vyjedn&#x00e1;v&#x00e1;n&#x00ed;?</p>
+			<p id="subtitle33" begin="00:02:15.320" end="00:02:19.080" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">A v &#x010d;em va&#x0161;e s&#x00ed;la europoslance 
+zde spo&#x010d;&#x00ed;v&#x00e1;?</p>
+			<p id="subtitle34" begin="00:02:19.160" end="00:02:22.560" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">Nemysl&#x00ed;m, &#x017e;e bychom m&#x011b;li 
+na vyjedn&#x00e1;v&#x00e1;n&#x00ed; vliv.</p>
+			<p id="subtitle35" begin="00:02:22.640" end="00:02:28.200" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">Je to obrovsk&#x00e1; konference, 
+po dva t&#x00fd;dny tu je 30 000 lid&#x00ed;.</p>
+			<p id="subtitle36" begin="00:02:28.280" end="00:02:32.720" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">Je tu v&#x0161;ak jen n&#x011b;kolik vyjednava&#x010d;&#x016f; 
+a poslanci jimi nejsou.</p>
+			<p id="subtitle37" begin="00:02:32.800" end="00:02:34.800" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">M&#x00e1;me vliv 
+ve dvoj&#x00ed;m smyslu.</p>
+			<p id="subtitle38" begin="00:02:34.880" end="00:02:39.560" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">Jednak informujeme na&#x0161;e 
+st&#x00e1;ty, na&#x0161;i ve&#x0159;ejnost</p>
+			<p id="subtitle39" begin="00:02:39.640" end="00:02:43.520" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">o tom, co se tu d&#x011b;je, 
+a o co usilujeme.</p>
+			<p id="subtitle40" begin="00:02:43.600" end="00:02:48.200" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">Ale p&#x0159;edev&#x0161;&#x00ed;m se jednodu&#x0161;e pou&#x010d;it. Je to 
+skv&#x011b;l&#x00e1; p&#x0159;&#x00ed;le&#x017e;itost zjistit, co se d&#x011b;je.</p>
+			<p id="subtitle41" begin="00:02:48.280" end="00:02:51.840" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">Nejde jen o debaty 
+na plen&#x00e1;rn&#x00ed;ch zased&#x00e1;n&#x00ed;ch.</p>
+			<p id="subtitle42" begin="00:02:51.920" end="00:02:54.680" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">Je tu neuv&#x011b;&#x0159;iteln&#x00e9; mno&#x017e;stv&#x00ed; 
+doprovodn&#x00fd;ch akc&#x00ed;,</p>
+			<p id="subtitle43" begin="00:02:54.760" end="00:02:58.160" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">kde se nevl&#x00e1;dn&#x00ed; organizace 
+setk&#x00e1;vaj&#x00ed; s akademiky,</p>
+			<p id="subtitle44" begin="00:02:58.240" end="00:03:02.720" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">s uheln&#x00fd;mi a ropn&#x00fd;mi spole&#x010d;nostmi, 
+a finan&#x010d;n&#x00ed;ky.</p>
+			<p id="subtitle45" begin="00:03:02.800" end="00:03:08.200" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">Je to v&#x00fd;born&#x00e1; p&#x0159;&#x00ed;le&#x017e;itost se leccos dov&#x011b;d&#x011b;t 
+a p&#x0159;en&#x00e9;st tyto n&#x00e1;pady do Parlamentu.</p>
+			<p id="subtitle46" begin="00:03:08.280" end="00:03:13.680" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">A&#x0165; u&#x017e; z t&#x00e9;to konference vzejde cokoli, 
+bude to r&#x00e1;mec</p>
+			<p id="subtitle47" begin="00:03:13.760" end="00:03:18.440" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">pro z&#x00e1;vaznou evropskou legislativu, 
+na kter&#x00e9; se bude m&#x011b;s&#x00ed;ce a roky pracovat.</p>
+			<p id="subtitle48" begin="00:03:18.520" end="00:03:22.200" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">Co si mysl&#x00ed;te o obav&#x00e1;ch 
+m&#x00e9;n&#x011b; rozvinut&#x00fd;ch st&#x00e1;t&#x016f;,</p>
+			<p id="subtitle49" begin="00:03:22.280" end="00:03:28.760" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">&#x017e;e budou odsunuty tak trochu 
+mimo vyjedn&#x00e1;v&#x00e1;n&#x00ed;.</p>
+			<p id="subtitle50" begin="00:03:28.840" end="00:03:31.600" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">Mysl&#x00ed;m, &#x017e;e jejich obavy 
+jsou pochopiteln&#x00e9;.</p>
+			<p id="subtitle51" begin="00:03:31.680" end="00:03:35.680" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">Na tyto zem&#x011b; dolehnou 
+zm&#x011b;ny klimatu nejv&#x00ed;ce.</p>
+			<p id="subtitle52" begin="00:03:35.760" end="00:03:41.280" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">Podle dostupn&#x00fd;ch &#x00fa;daj&#x016f; 
+jist&#x011b; ji&#x017e; v nejbli&#x017e;&#x0161;&#x00ed;ch letech.</p>
+			<p id="subtitle53" begin="00:03:41.360" end="00:03:44.760" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">Z&#x00e1;rove&#x0148; tyto zem&#x011b; p&#x0159;isp&#x011b;ly velmi m&#x00e1;lo 
+ke glob&#x00e1;ln&#x00ed;mu oteplov&#x00e1;n&#x00ed;.</p>
+			<p id="subtitle54" begin="00:03:44.840" end="00:03:50.240" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">Nen&#x00ed; proto p&#x0159;ekvapiv&#x00e9;, &#x017e;e se sp&#x00ed;&#x0161;e sna&#x017e;&#x00ed; 
+bojovat i hol&#x00fd;ma rukama:</p>
+			<p id="subtitle55" begin="00:03:50.320" end="00:03:52.560" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">&#x201e;My za to 
+odpov&#x011b;dnost nem&#x00e1;me.&#x201c;</p>
+			<p id="subtitle56" begin="00:03:52.640" end="00:03:56.600" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">&#x201e;To vy, rozvinut&#x00e9; zem&#x011b;, 
+jste zbohatly spalov&#x00e1;n&#x00ed;m fosiln&#x00ed;ch paliv.&#x201c;</p>
+			<p id="subtitle57" begin="00:03:56.680" end="00:04:00.520" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">&#x201e;Pokud chcete, abychom &#x0161;li jinou cestou, 
+mus&#x00ed;te to zaplatit.&#x201c;</p>
+			<p id="subtitle58" begin="00:04:00.600" end="00:04:04.480" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">Oni ale v&#x011b;d&#x00ed;, 
+&#x017e;e dosa&#x017e;en&#x00ed; dohody nebude snadn&#x00e9;</p>
+			<p id="subtitle59" begin="00:04:04.560" end="00:04:10.240" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">a &#x017e;e se je bohat&#x00e9; &#x010d;lensk&#x00e9; st&#x00e1;ty 
+pokus&#x00ed; dostat ze hry.</p>
+			<p id="subtitle60" begin="00:04:10.320" end="00:04:14.160" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">Nebudou sahat do vlastn&#x00ed;ch kapes, 
+aby je zasypaly pen&#x011b;zi.</p>
+			<p id="subtitle61" begin="00:04:14.240" end="00:04:18.400" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">Je v z&#x00e1;jmu cel&#x00e9;ho sv&#x011b;ta,</p>
+			<p id="subtitle62" begin="00:04:18.480" end="00:04:22.400" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">aby bojovaly, jak jen um&#x00ed;, 
+o co nejlep&#x0161;&#x00ed; dohodu.</p>
+			<p id="subtitle63" begin="00:04:22.480" end="00:04:27.520" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">A jak jsme vid&#x011b;li dnes, pokud &#x010d;lensk&#x00fd; st&#x00e1;t 
+- zde Tuvalu s podporou dal&#x0161;&#x00ed;ch -</p>
+			<p id="subtitle64" begin="00:04:27.600" end="00:04:33.680" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">opravdu rozbou&#x0159;&#x00ed; hladinu a prohl&#x00e1;s&#x00ed;, 
+&#x017e;e pro rozhodnut&#x00ed; je t&#x0159;eba konsenzu,</p>
+			<p id="subtitle65" begin="00:04:33.760" end="00:04:36.720" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">ale &#x017e;e oni na &#x017e;&#x00e1;dn&#x00fd; konsenzus 
+p&#x0159;ipraven&#x00ed; nejsou,</p>
+			<p id="subtitle66" begin="00:04:36.800" end="00:04:38.880" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">pak &#x017e;&#x00e1;dn&#x00e1; dohoda nebude.</p>
+			<p id="subtitle67" begin="00:04:38.960" end="00:04:40.960" tts:textAlign="center" tts:textOutline="black 1px 0px" style="s1">D&#x011b;kuji za rozhovor.</p>
+		</div>
+	</body>
+</tt>

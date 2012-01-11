@@ -26,7 +26,7 @@
 						title: "Big Buck Bunny",
 						file: 'http://mediadl.microsoft.com/mediadl/iisnet/smoothmedia/Experience/BigBuckBunny_720p.ism',
 						image: '/thumbnail.jpg',
-						captions: 'http://localhost:49832/captions_tt.xml'
+						captions: 'http://localhost:49832/broken_captions_tt.xml'
 					},
 					{ start: 2, duration: 6, file: "/video.mp4", image: "/thumbnail.jpg", title: "JW Player Standard Sample Video", description : "This is a little test video" },
 				],

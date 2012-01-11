@@ -349,10 +349,11 @@ namespace ComposerCore {
 				{
 					var req = (HttpWebRequest)callback.AsyncState;
 					var res = (HttpWebResponse)req.EndGetResponse(callback);
-					XDocument captionXml = XDocument.Load(res.GetResponseStream());
-
-					CaptionItems = CaptionReader.Read(captionXml);
-
+					try {
+						CaptionItems = CaptionReader.Read(XDocument.Load(res.GetResponseStream()));
+					} catch (Exception ex) {
+						drop(ex);
+					}
 
 				}, webRequest);
 			} catch (Exception ex) {
