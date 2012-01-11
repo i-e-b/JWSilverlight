@@ -694,7 +694,6 @@ window.onbeforeunload = function() {
 
 		private void CaptionTimer_Tick (object sender, EventArgs e) {
 			if (CurrentItem == null) return;
-			CaptionTimer.Interval = TimeSpan.FromMilliseconds(3000);
 
 			if (CurrentItem.CaptionSource != null && (CurrentItem.CaptionItems == null || CurrentItem.CaptionItems.Count < 1)) {
 				CurrentItem.UpdateCaptions(CurrentSliderPosition);
@@ -705,6 +704,7 @@ window.onbeforeunload = function() {
 				CurrentItem.UpdateCaptions(CurrentSliderPosition);
 				AddCaptions(CurrentItem.CaptionItems);
 			} else if (CurrentItem.CaptionItems != null && MediaPlayer.Markers != null && MediaPlayer.Markers.Count != CurrentItem.CaptionItems.Count) {
+				CaptionTimer.Interval = TimeSpan.FromMilliseconds(3000);
 				AddCaptions(CurrentItem.CaptionItems);
 			}
 		}
