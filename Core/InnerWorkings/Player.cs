@@ -556,6 +556,7 @@ window.onbeforeunload = function() {
 			}
 
 			MediaPlayer = new SmoothStreamingMediaElement();
+			MediaPlayer.Volume = 0.9;
 			Children.Insert(0, MediaPlayer);
 
 			MediaPlayer.CurrentStateChanged += MediaPlayer_StateChange;
