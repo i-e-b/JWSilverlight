@@ -4,21 +4,24 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using ComposerCore;
 using jwSkinControls.Animations;
 using jwSkinControls.ControlFragments;
 using jwSkinLoader;
 
 namespace JwslPlayer {
-	public partial class MainPage : UserControl {
+	public partial class MainPage : UserControl, IPlayerController {
 		readonly HtmlInteraction bridge;
 		readonly JwSkinPackage jwSkinPackage;
 		string srcPlaylist = "";
 		const double ControlsFadeDelay = 3.0;
 		volatile bool ControlsAreFaded;
 		readonly OpacityFader controlBarFader, dockFader;
+		readonly ComposerControlHelper players;
 
 		public MainPage () {
 			InitializeComponent();
+			players = new ComposerControlHelper();
 
 			jwSkinPackage = new JwSkinPackage();
 			jwSkinPackage.SkinReady += JwSkinPackageSkinPackageReady;
@@ -37,6 +40,7 @@ namespace JwslPlayer {
 			DockView.AddBinding(Player);
 			PlaylistView.AddBinding(Player);
 			CaptionView.AddBinding(Player);
+			this.AddBinding(Player);
 
 			DockView.CaptionVisibilityChanged += DockView_CaptionVisibilityChanged;
 
@@ -102,6 +106,8 @@ namespace JwslPlayer {
 			}
 		}
 
+		public bool AutoPlay { get; set; }
+
 		private DispatcherTimer fadeTimer;
 		private void SetFadeTimer() {
 			if (fadeTimer != null) return;
@@ -153,5 +159,19 @@ namespace JwslPlayer {
 			fadeTimer.Stop();
 			fadeTimer.Start();
 		}
+
+		public void PlaylistChanged(IPlaylist NewPlaylist) {
+			if (AutoPlay) players.EachPlayer(p => p.Play());
+		}
+		public void PlayingClipChanged(IPlaylistItem NewClip) { }
+		public void PlayStateChanged(PlayerStatus NewStatus) {  }
+		public void SeekCompleted(PlayerStatus NewStatus) { }
+		public void VolumeChanged(double NewVolume) { }
+		public void MuteChanged(bool IsMuted) { }
+		public void StatusUpdate(PlayerStatus NewStatus) { }
+		public void CaptionFired(TimelineMarker Caption) { }
+		public void ErrorOccured(Exception Error) { }
+		public void AddBinding (IPlayer PlayerToControl) { players.AddBinding(PlayerToControl, this); }
+		public void RemoveBinding (IPlayer PlayerToControl) { players.RemoveBinding(PlayerToControl, this); }
 	}
 }

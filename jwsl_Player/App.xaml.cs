@@ -18,6 +18,11 @@ namespace jwslPlayer {
             var root = new MainPage();
             RootVisual = root;
 
+			string autoPlay;
+			if (e.InitParams.TryGetValue("autostart", out autoPlay)) {
+				if (autoPlay.ToLower() == "true") root.AutoPlay = true;
+			}
+
 			string playSource;
 			if (e.InitParams.TryGetValue("playlist", out playSource)) {
 				root.SourcePlaylist = Uri.UnescapeDataString(playSource);

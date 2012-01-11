@@ -17,18 +17,24 @@
 		<script type="text/javascript" src="/Scripts/jwplayer.embed.silverlight.js"></script>
 		<script type="text/javascript">
 			jwplayer('container').setup({
+				autoplay: "true",
 				height: 480,
 				width: 853,
 				skin: '/ExampleSkins/glow_with_html5/glow.zip',
 				playlist: [
-					{
+					/*{
 						duration: 596,
+						start: 10,
 						title: "Big Buck Bunny",
 						file: 'http://mediadl.microsoft.com/mediadl/iisnet/smoothmedia/Experience/BigBuckBunny_720p.ism',
 						image: '/thumbnail.jpg',
 						captions: 'http://localhost:49832/broken_captions_tt.xml'
+					},*/
+					{
+					duration: 6, file: "/video.mp4",
+					image: "/thumbnail.jpg", title: "JW Player Standard Sample Video",
+						description: "This is a little test video"
 					},
-					{ start: 2, duration: 6, file: "/video.mp4", image: "/thumbnail.jpg", title: "JW Player Standard Sample Video", description : "This is a little test video" },
 				],
 				/*"playlist.position": "right",
 				"playlist.size": 300,*/

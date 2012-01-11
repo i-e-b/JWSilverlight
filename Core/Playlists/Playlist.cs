@@ -170,6 +170,9 @@ namespace ComposerCore {
 
 				foreach (var key in item.Keys) {
 					switch (key) {
+						case "autoplay":
+							AutoPlay = bool.Parse(item[key]);
+							break;
 						case "file":
 							var fileUrl = ((string)item[key]);
 							playItem.MediaSource = new Uri(fileUrl, UriKind.RelativeOrAbsolute).ForceAbsoluteByPage();
