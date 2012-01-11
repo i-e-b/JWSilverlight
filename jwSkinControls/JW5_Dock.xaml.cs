@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -19,7 +18,7 @@ namespace jwSkinControls {
 	/// </summary>
 	public partial class JW5_Dock : UserControl, IPlayerController, IXmlSkinReader {
 		IPlaylist lastPlaylist;
-		bool showCaptions;
+		bool showCaptions = true;
 		readonly ComposerControlHelper players;
 
 		public void CaptionFired (TimelineMarker Caption) { }
