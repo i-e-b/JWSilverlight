@@ -182,10 +182,10 @@ namespace ComposerCore {
 							playItem.ThumbSource = new Uri(thumbUrl, UriKind.RelativeOrAbsolute).ForceAbsoluteByPage();
 							break;
 						case "duration":
-							playItem.StopPosition = double.Parse(item[key].ToString());
+							playItem.StopPosition = getNumber(item[key]);
 							break;
 						case "start":
-							playItem.ResumePosition = double.Parse(item[key].ToString());
+							playItem.ResumePosition = getNumber(item[key]);
 							break;
 						case "title":
 							playItem.Title = item[key];
@@ -208,6 +208,12 @@ namespace ComposerCore {
 			}
 			if (PlaylistChanged != null) PlaylistChanged(this, null); 
 			OnPlaylistLoaded(null);
+		}
+
+		double getNumber(JsonValue jsonValue) {
+			if (jsonValue.JsonType == JsonType.Number) return jsonValue;
+			if (jsonValue.JsonType == JsonType.String) return double.Parse(jsonValue);
+			return double.NaN;
 		}
 
 		void Items_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
