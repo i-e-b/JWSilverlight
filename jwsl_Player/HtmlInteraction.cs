@@ -345,12 +345,14 @@ namespace JwslPlayer {
 			FireJwEvent("jwplayerMediaMute", "{mute:"+IsMuted.ToString().ToLower()+"}");
 		}
 		public void StatusUpdate (PlayerStatus NewStatus) {
-			lastState = NewStatus;
-			FireJwEvent("jwplayerMediaTime",
-				"{duration: " + NewStatus.NaturalDuration.TimeSpan.TotalSeconds +
-				//", offset: " + NewStatus.PlayTime.TotalSeconds + // todo: this should be last seek target (regardless of actual seek position)
-				", position: " + NewStatus.PlayTime.TotalSeconds +
-				"}");
+			if (jwState(NewStatus.CurrentPlayState) == "PLAYING") {
+				lastState = NewStatus;
+				FireJwEvent("jwplayerMediaTime",
+					"{duration: " + NewStatus.NaturalDuration.TimeSpan.TotalSeconds +
+					//", offset: " + NewStatus.PlayTime.TotalSeconds + // todo: this should be last seek target (regardless of actual seek position)
+					", position: " + NewStatus.PlayTime.TotalSeconds +
+					"}");
+			}
 		} 
 		public void CaptionFired (TimelineMarker Caption) { } 
 		public void ErrorOccured (Exception Error) {
