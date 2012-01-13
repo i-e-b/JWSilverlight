@@ -230,7 +230,11 @@ namespace JwslPlayer {
 
 		[ScriptableMember]
 		public void jwSeek (double seconds) {
-			players.EachPlayer(p => p.SeekTo(TimeSpan.FromSeconds(seconds)));
+			players.EachPlayer(p =>
+			{
+				p.SeekTo(TimeSpan.FromSeconds(seconds));
+				p.Play();
+			});
 		}
 
 		[ScriptableMember]
@@ -345,14 +349,14 @@ namespace JwslPlayer {
 			FireJwEvent("jwplayerMediaMute", "{mute:"+IsMuted.ToString().ToLower()+"}");
 		}
 		public void StatusUpdate (PlayerStatus NewStatus) {
-			if (jwState(NewStatus.CurrentPlayState) == "PLAYING") {
-				lastState = NewStatus;
+			if (jwState(lastState.CurrentPlayState) == "PLAYING") {
 				FireJwEvent("jwplayerMediaTime",
 					"{duration: " + NewStatus.NaturalDuration.TimeSpan.TotalSeconds +
 					//", offset: " + NewStatus.PlayTime.TotalSeconds + // todo: this should be last seek target (regardless of actual seek position)
 					", position: " + NewStatus.PlayTime.TotalSeconds +
 					"}");
 			}
+			lastState = NewStatus;
 		} 
 		public void CaptionFired (TimelineMarker Caption) { } 
 		public void ErrorOccured (Exception Error) {
