@@ -233,6 +233,7 @@
 			html += '<param name="background" value="' + bgcolor + '">';
 			html += '<param name="minRuntimeVersion" value="3.0.40624.0" />';
 			html += '<param name="autoUpgrade" value="true" />';
+			html += '<param name="enablehtmlaccess" value="True"/>';
 			html += '<param name="windowless" value="' + wmode + '">';
 			html += '<param name="initParams" value="' +
 				jsonToFlashvars(params) +

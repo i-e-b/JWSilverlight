@@ -65,7 +65,7 @@ namespace JwslPlayer {
 			Application.Current.Host.Content.Resized += Content_Resized;
 
 			// trigger player ready event
-			HtmlPage.Window.Eval("jwplayer().playerReady(document.getElementById('" + HtmlPage.Plugin.Id + "'))");
+			HtmlPage.Window.Eval("if(jwplayer && jwplayer()) {jwplayer().playerReady(document.getElementById('" + HtmlPage.Plugin.Id + "'));}");
 		}
 
 		void Content_Resized(object sender, EventArgs e) {

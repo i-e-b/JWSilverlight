@@ -340,25 +340,18 @@ namespace ComposerCore {
 
 			// todo: reinstate smooth captions, with some intellegence!
 			//var captionUri = new Uri(string.Format(CaptionSource.AbsoluteUri + "&currentPosition={0}", currentPosition));
-			var captionUri = CaptionSource;
 
-			try {
-				var webRequest = (HttpWebRequest)WebRequest.Create(captionUri);
-
-				webRequest.BeginGetResponse(callback =>
-				{
-					var req = (HttpWebRequest)callback.AsyncState;
-					var res = (HttpWebResponse)req.EndGetResponse(callback);
+			var wc = new WebClient();
+			wc.DownloadStringCompleted+= (s,e) => {
+				if (e.Cancelled == false && e.Error == null) {
 					try {
-						CaptionItems = CaptionReader.Read(XDocument.Load(res.GetResponseStream()));
+						CaptionItems = CaptionReader.Read(XDocument.Parse(e.Result));
 					} catch (Exception ex) {
 						drop(ex);
 					}
-
-				}, webRequest);
-			} catch (Exception ex) {
-				drop(ex);
-			}
+				}
+			};
+			wc.DownloadStringAsync(CaptionSource);
 		}
 
 		// ReSharper disable UnusedParameter.Local

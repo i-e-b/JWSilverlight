@@ -10,6 +10,10 @@ namespace jwslPlayer {
 			Exit += Application_Exit;
 			UnhandledException += Application_UnhandledException;
 
+			if (Deployment.Current.ExternalCallersFromCrossDomain != CrossDomainAccess.ScriptableOnly) {
+				throw new Exception("The player doesn't have cross domain access");
+			}
+
 			InitializeComponent();
 		}
 
