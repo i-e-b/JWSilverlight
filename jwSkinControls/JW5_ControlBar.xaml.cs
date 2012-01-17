@@ -13,7 +13,7 @@ namespace jwSkinControls {
 		const string ControlBarComponent = "controlbar";
 		readonly ComposerControlHelper players;
 
-		double FullScreenMargin;
+		double ControlbarOverMargin;
 		JwElapsedText elapsedText;
 		JwDurationText durationText;
 		JwSliderHorizontal volumeSlider;
@@ -47,7 +47,7 @@ namespace jwSkinControls {
 		public void SetSkin (JwSkinPackage pkg) {
 			GetBackground(pkg);
 
-			FullScreenMargin = double.Parse(pkg.GetSettingValue(ControlBarComponent, "margin") ?? "0.0");
+			ControlbarOverMargin = double.Parse(pkg.GetSettingValue(ControlBarComponent, "margin") ?? "0.0");
 			TargetFontSize = double.Parse(pkg.GetSettingValue(ControlBarComponent, "fontsize") ?? "10.0");
 			FontColour = (pkg.GetSettingValue(ControlBarComponent, "fontcolor") ?? "0xffffff").HexToColor();
 
@@ -58,6 +58,7 @@ namespace jwSkinControls {
 			UpdateFullScreenButtonState(null, null);
 			UpdateSoundButtonState();
 			ShowPlayButton();
+			PaddingBorder.Padding = new Thickness(ControlbarOverMargin);
 		}
 
 		/// <summary>
@@ -313,13 +314,9 @@ namespace jwSkinControls {
 			if (Application.Current.Host.Content.IsFullScreen) {
 				fullScreenButton.Visibility = Visibility.Collapsed;
 				normalScreenButton.Visibility = Visibility.Visible;
-
-				PaddingBorder.Padding = new Thickness(FullScreenMargin);
 			} else {
 				normalScreenButton.Visibility = Visibility.Collapsed;
 				fullScreenButton.Visibility = Visibility.Visible;
-
-				PaddingBorder.Padding = new Thickness(0);
 			}
 		}
 
