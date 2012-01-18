@@ -10,11 +10,13 @@
     	<Grid.RowDefinitions>
     		<RowDefinition/>
     		<RowDefinition Height="Auto"/>
+    		<RowDefinition Height="Auto"/>
+    		<RowDefinition/>
     	</Grid.RowDefinitions>
-    	<Image x:Name="Over" Margin="0" Stretch="None" Visibility="Collapsed" Grid.RowSpan="2"/>
-    	<Image x:Name="Out" Margin="0" Stretch="None" Grid.RowSpan="2"/>
-        <Image x:Name="Badge" Margin="0" Stretch="None"/>
-        <Image x:Name="BadgeOver" Margin="0" Stretch="None" Visibility="Collapsed" />
-        <TextBlock x:Name="Caption" Margin="0,0,0,3" TextWrapping="Wrap" VerticalAlignment="Bottom" TextAlignment="Center" FontSize="9" FontWeight="Bold" Grid.Row="1" Visibility="Collapsed"/>
+    	<Image x:Name="Over" Margin="0" Stretch="None" Visibility="Collapsed" Grid.RowSpan="4"/>
+    	<Image x:Name="Out" Margin="0" Stretch="None" Grid.RowSpan="4"/>
+        <Image x:Name="Badge" Margin="0" Stretch="None" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <Image x:Name="BadgeOver" Margin="0" Stretch="None" Visibility="Collapsed" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" />
+        <TextBlock x:Name="Caption" Margin="0,0,0,3" TextWrapping="Wrap" VerticalAlignment="Top" TextAlignment="Center" FontSize="9" FontWeight="Bold" Grid.Row="2" Visibility="Collapsed"/>
     </Grid>
 </UserControl>
