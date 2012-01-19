@@ -12,8 +12,11 @@ namespace jwSkinControls {
 		public static ControlBarElement VolumeSlider () { return new ControlBarElement { Type = ElementType.VolumeSlider }; }
 		public static ControlBarElement Gap (int pixels) { return new ControlBarElement { Type = ElementType.Gap, Width = pixels }; }
 
+		public static ControlBarElement CapLeft () { return new ControlBarElement { Name = "capLeft", Type = ElementType.CapLeft }; }
+		public static ControlBarElement CapRight () { return new ControlBarElement { Name = "capRight", Type = ElementType.CapRight }; }
+
 		public enum ElementType {
-			Divider, Button, Text, TimeSlider, VolumeSlider, Gap
+			Divider, Button, Text, TimeSlider, VolumeSlider, Gap, CapLeft, CapRight
 		}
 		public ElementType Type { get; set; }
 		public string Name { get; set; } // also used for 'element' in dividers
@@ -24,6 +27,10 @@ namespace jwSkinControls {
 			if (Name == "capLeft" || Name == "capRight") return Name;
 			return Name + Type;
 		}
+
+		public override string ToString () {
+			return Name + ", " + Type;
+		}
 	}
 
 	public class ControlBarLayout {
@@ -33,7 +40,7 @@ namespace jwSkinControls {
 			var component = pkg.GetComponent("controlbar");
 			var layout = component.Elements("layout").ToArray();
 
-			elements.Add(ControlBarElement.Divider("capLeft"));
+			elements.Add(ControlBarElement.CapLeft());
 			if (layout.Length < 1) {
 				SetupDefaults();
 			} else {
@@ -41,7 +48,7 @@ namespace jwSkinControls {
 				ReadPlaceholders(layout[0], "center");
 				ReadPlaceholders(layout[0], "right");
 			}
-			elements.Add(ControlBarElement.Divider("capRight"));
+			elements.Add(ControlBarElement.CapRight());
 
 			InjectImplicitButton("pause", "play");
 			InjectImplicitButton("normalscreen", "fullscreen");
@@ -129,11 +136,10 @@ namespace jwSkinControls {
 			elements.Add(ControlBarElement.Button("next"));
 			elements.Add(ControlBarElement.Button("stop"));
 			elements.Add(ControlBarElement.Divider("divider"));
-			elements.Add(ControlBarElement.Button("elapsed"));
+			elements.Add(ControlBarElement.Text("elapsed"));
 			elements.Add(ControlBarElement.TimeSlider());
-			elements.Add(ControlBarElement.Button("duration"));
+			elements.Add(ControlBarElement.Text("duration"));
 			elements.Add(ControlBarElement.Divider("divider"));
-			elements.Add(ControlBarElement.Button("blank"));
 			elements.Add(ControlBarElement.Divider("divider"));
 			elements.Add(ControlBarElement.Button("fullscreen"));
 			elements.Add(ControlBarElement.Button("normalscreen"));

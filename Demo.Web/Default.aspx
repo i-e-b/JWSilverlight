@@ -20,16 +20,16 @@
 				autoplay: 'true',
 				height: 480,
 				width: 853,
-				skin: '/ExampleSkins/glow_with_html5/glow.zip',
+				skin: '/ExampleSkins/grungetape.zip',
 				playlist: [
-					{
+					/*{
 						duration: '596',
 						start: '10.2',
 						title: "Big Buck Bunny",
 						file: 'http://mediadl.microsoft.com/mediadl/iisnet/smoothmedia/Experience/BigBuckBunny_720p.ism',
 						image: '/thumbnail.jpg',
 						captions: 'http://localhost:49832/captions_tt.xml'
-					},
+					},*/
 					{
 						duration: "6", file: "/video.mp4",
 						image: "/thumbnail.jpg", title: "JW Player Standard Sample Video",
@@ -38,7 +38,7 @@
 				],
 				/*"playlist.position": "right",
 				"playlist.size": 300,*/
-				plugins: 'captions-2',
+				//plugins: 'captions-2',
 				modes: [
 					{ type: 'silverlight', src: '/ClientBin/jwslPlayer.xap' },
 					{ type: 'flash', src: '/ClientBin/player.swf' },

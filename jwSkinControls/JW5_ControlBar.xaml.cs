@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using ComposerCore;
 using jwSkinControls.ControlFragments;
 using jwSkinLoader;
@@ -24,6 +25,7 @@ namespace jwSkinControls {
 		ImageHoverButton normalScreenButton;
 		ImageHoverButton muteButton;
 		ImageHoverButton unmuteButton;
+		Image leftCap, rightCap;
 		ImageBrush backgroundBrush;
 		double TargetFontSize;
 		Color FontColour;
@@ -46,6 +48,7 @@ namespace jwSkinControls {
 		#region Skinning
 		public void SetSkin (JwSkinPackage pkg) {
 			GetBackground(pkg);
+			LayoutRoot.SizeChanged+=LayoutRoot_SizeChanged;
 
 			ControlbarOverMargin = double.Parse(pkg.GetSettingValue(ControlBarComponent, "margin") ?? "0.0");
 			TargetFontSize = double.Parse(pkg.GetSettingValue(ControlBarComponent, "fontsize") ?? "10.0");
@@ -53,7 +56,6 @@ namespace jwSkinControls {
 
 			var layout = new ControlBarLayout(pkg);
 			BuildControls(pkg, layout);
-			ResetControlHeights();
 
 			UpdateFullScreenButtonState(null, null);
 			UpdateSoundButtonState();
@@ -61,30 +63,61 @@ namespace jwSkinControls {
 			PaddingBorder.Padding = new Thickness(ControlbarOverMargin);
 		}
 
+		void LayoutRoot_SizeChanged(object sender, SizeChangedEventArgs e) {
+			ResetControlHeights();
+			SetBackground();
+		}
+
+		void SetBackground() {
+			BackgroundCanvas.Background = backgroundBrush;
+			BackgroundCanvas.Height = GetTargetHeight();
+
+			double margLeft = 0.0, margRight = 0.0;
+			if (leftCap != null && !double.IsNaN(leftCap.ActualWidth)) margLeft = leftCap.ActualWidth;
+			if (rightCap != null && !double.IsNaN(rightCap.ActualWidth)) margRight = rightCap.ActualWidth;
+
+			BackgroundCanvas.Margin = new Thickness(margLeft, 0.0, margRight, 0.0);
+		}
+
 		/// <summary>
 		/// Some skins have invalid button heights;
 		/// This corrects the container controls to compensate.
 		/// </summary>
 		void ResetControlHeights() {
-			var targetHeight = LayoutRoot.Height;
+			double targetHeight = GetTargetHeight();
+			if (double.IsNaN(targetHeight) || targetHeight <= 0.0) return;
 			foreach (var child in LayoutRoot.Children) {
 				var elem = child as FrameworkElement;
 				if (elem != null) {
 					elem.Height = targetHeight;
-					continue;
 				}
 				var img = child as Image;
 				if (img != null) {
+					img.Stretch = Stretch.Fill;
+					img.VerticalAlignment = VerticalAlignment.Stretch;
 					img.Height = targetHeight;
 					continue;
 				}
 			}
 		}
 
+		double GetTargetHeight() {
+			var bgHeight = ((BitmapImage)backgroundBrush.ImageSource).PixelHeight;
+			var layoutHeight = LayoutRoot.ActualHeight;
+			if (!double.IsNaN(bgHeight) && bgHeight > 1) return bgHeight;
+			if (!double.IsNaN(layoutHeight) && layoutHeight > 1) return layoutHeight;
+			return 75.0; // safety net
+		}
+
 		void GetBackground (JwSkinPackage pkg) {
 			var img = pkg.GetNamedElement(ControlBarComponent, "background");
 			if (img == null) return;
-			backgroundBrush = new ImageBrush { ImageSource = img, Stretch = Stretch.Fill };
+			backgroundBrush = new ImageBrush {
+				ImageSource = img,
+				Stretch = Stretch.Fill,
+				AlignmentX = AlignmentX.Left,
+				AlignmentY = AlignmentY.Top
+			};
 		}
 
 		void BuildControls(JwSkinPackage pkg, ControlBarLayout layout) {
@@ -100,7 +133,6 @@ namespace jwSkinControls {
 					case ControlBarElement.ElementType.Text:
 						if (element.Name == "elapsed") {
 							elapsedText = new JwElapsedText {
-								Background = backgroundBrush,
 								FontSize = TargetFontSize,
 								FontColour = FontColour
 							};
@@ -108,7 +140,6 @@ namespace jwSkinControls {
 							players.EachPlayer(p => players.AddBinding(p, elapsedText));
 						} else if (element.Name == "duration") {
 							durationText = new JwDurationText {
-								Background = backgroundBrush,
 								FontSize = TargetFontSize,
 								FontColour = FontColour
 							};
@@ -124,21 +155,28 @@ namespace jwSkinControls {
 						pkg.BindAndResize((Image)c, ControlBarComponent, element.Name ?? "divider");
 						break;
 
+					case ControlBarElement.ElementType.CapLeft:
+						c = leftCap = new Image();
+						pkg.BindAndResize(leftCap, ControlBarComponent, element.Name ?? "divider");
+						break;
+
+					case ControlBarElement.ElementType.CapRight:
+						c = rightCap = new Image();
+						pkg.BindAndResize(rightCap, ControlBarComponent, element.Name ?? "divider");
+						break;
+
 					case ControlBarElement.ElementType.Button:
 						var btn = BindButton(element, pkg);
-						btn.Background = backgroundBrush;
 						c = btn;
 						break;
 
 					case ControlBarElement.ElementType.TimeSlider:
 						var tsl = BuildTimeSlider(pkg);
-						tsl.Background = backgroundBrush;
 						c = tsl;
 						break;
 
 					case ControlBarElement.ElementType.VolumeSlider:
 						var vsl = BuildVolumeSlider(pkg);
-						vsl.Background = backgroundBrush;
 						c = vsl;
 						break;
 

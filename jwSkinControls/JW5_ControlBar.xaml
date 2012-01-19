@@ -8,6 +8,9 @@
 	d:DesignWidth="640" d:DesignHeight="480">
 
 	<Border x:Name="PaddingBorder" Margin="0" >
-		<Grid x:Name="LayoutRoot" VerticalAlignment="Bottom" />
+		<Grid>
+			<Canvas x:Name="BackgroundCanvas" Margin="0" VerticalAlignment="Bottom" Height="0"/>
+			<Grid x:Name="LayoutRoot" VerticalAlignment="Bottom" />
+		</Grid>
 	</Border>
 </UserControl>

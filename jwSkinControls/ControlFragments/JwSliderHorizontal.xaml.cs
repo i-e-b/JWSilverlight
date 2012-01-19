@@ -41,12 +41,6 @@ namespace jwSkinControls.ControlFragments {
 			}
 		}
 
-		public new Brush Background {
-			set {
-				OuterContainer.Background = value;
-			}
-		}
-
 		public event EventHandler<ProportionEventArgs> TargetProportionChanged;
 
 		/// <summary>
