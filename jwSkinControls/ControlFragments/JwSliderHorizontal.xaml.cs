@@ -98,7 +98,9 @@ namespace jwSkinControls.ControlFragments {
 			if (realWidth < 0) realWidth = 0.0;
 
 			Buffer.Width = realWidth * BufferProgress;
-			Progress.Width = realWidth * SliderProgress;
+			Progress.Stretch = Stretch.Fill;
+			Progress.Width = realWidth;
+			Progress.Clip = new RectangleGeometry { Rect = new Rect(0, 0, realWidth * SliderProgress, Progress.ActualHeight) };
 
 			if (realWidth > 0)
 				Thumb.Margin = new Thickness((realWidth - Thumb.ActualWidth) * thumbProg, 0, 0, 0);
