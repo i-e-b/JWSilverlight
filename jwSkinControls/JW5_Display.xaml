@@ -6,7 +6,7 @@
 	x:Class="jwSkinControls.JW5_Display"
 	d:DesignWidth="640" d:DesignHeight="480">
 
-	<Grid x:Name="LayoutRoot" HorizontalAlignment="Center" VerticalAlignment="Center" >
+	<Grid x:Name="LayoutRoot" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" >
 		<Image x:Name="BackgroundIcon" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="10" Height="10" Stretch="None"/>
 		<Image x:Name="BufferIcon" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="10" Height="10" Stretch="None"/>
 		<ControlFragments:ImageHoverButton x:Name="PlayIcon" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>

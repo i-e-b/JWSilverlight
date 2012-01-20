@@ -59,12 +59,12 @@
     <Content Include="ExampleSkins\iskin.zip" />
     <Content Include="ExampleSkins\mfnew.zip" />
     <Content Include="ExampleSkins\nature01.zip" />
-    <Content Include="ExampleSkins\Read Me.txt" />
     <Content Include="ExampleSkins\sbl.zip" />
     <Content Include="ExampleSkins\simplicity.zip" />
     <Content Include="ExampleSkins\_snakeskin.zip" />
     <Content Include="ExampleSkins\_stitchedbrown.zip" />
     <Content Include="ExampleSkins\_stocking.zip" />
+    <Content Include="ExampleSkins\__Read Me.txt" />
     <Content Include="SideBySide.html" />
     <Content Include="crossdomain.xml" />
     <Content Include="PlaylistsSample.html" />

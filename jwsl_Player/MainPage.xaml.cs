@@ -14,7 +14,7 @@ namespace JwslPlayer {
 		readonly HtmlInteraction bridge;
 		readonly JwSkinPackage jwSkinPackage;
 		string srcPlaylist = "";
-		const double ControlsFadeDelay = 3.0;
+		const double ControlsFadeDelay = 2.5;
 		volatile bool ControlsAreFaded;
 		readonly OpacityFader controlBarFader, dockFader;
 		readonly ComposerControlHelper players;
@@ -27,6 +27,7 @@ namespace JwslPlayer {
 			jwSkinPackage.SkinReady += JwSkinPackageSkinPackageReady;
 
 			Player.MouseLeftButtonUp += Player_MouseLeftButtonUp;
+			Player.Cursor = Cursors.Hand;
 
 			bridge = new HtmlInteraction(this);
 			bridge.AddBinding(Player);

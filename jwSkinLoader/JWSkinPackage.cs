@@ -3,6 +3,7 @@ using System.IO;
 using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Net;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Xml.Linq;
@@ -14,16 +15,36 @@ namespace jwSkinLoader {
 		public string XmlContent {get; private set;}
 
 		public void Load (string packageUrl) {
+			if (string.IsNullOrEmpty(packageUrl)) {
+				UseDefaultSkin();
+				return;
+			}
+
 			var wc = new WebClient();
 			wc.OpenReadCompleted += ReadPackage;
 			wc.OpenReadAsync(new Uri(packageUrl, UriKind.RelativeOrAbsolute));
 		}
 
-		void ReadPackage(object sender, OpenReadCompletedEventArgs e) {
-			if (e.Error != null) throw e.Error;
-			if (e.Cancelled) throw new Exception("Skin download cancelled");
+		void UseDefaultSkin() {
+			var sr = Application.GetResourceStream(new Uri("jwSkinLoader;component/defaultSkin.zip", UriKind.Relative));
+			ReadSkinFromStream(sr.Stream);
+		}
 
-			var zipStream = new ZipInputStream(e.Result);
+		void ReadPackage(object sender, OpenReadCompletedEventArgs e) {
+			if (e.Error != null || e.Cancelled) {
+				UseDefaultSkin();
+				return;
+			}
+
+			try {
+				ReadSkinFromStream(e.Result);
+			} catch {
+				UseDefaultSkin();
+			}
+		}
+
+		void ReadSkinFromStream(Stream stream) {
+			var zipStream = new ZipInputStream(stream);
 
 			ZipEntry file;
 			while ((file = zipStream.GetNextEntry()) != null) {

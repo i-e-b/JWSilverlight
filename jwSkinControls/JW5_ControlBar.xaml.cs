@@ -174,16 +174,19 @@ namespace jwSkinControls {
 					case ControlBarElement.ElementType.Button:
 						var btn = BindButton(element, pkg);
 						c = btn;
+						c.Cursor = Cursors.Hand;
 						break;
 
 					case ControlBarElement.ElementType.TimeSlider:
 						var tsl = BuildTimeSlider(pkg);
 						c = tsl;
+						c.Cursor = Cursors.Hand;
 						break;
 
 					case ControlBarElement.ElementType.VolumeSlider:
 						var vsl = BuildVolumeSlider(pkg);
 						c = vsl;
+						c.Cursor = Cursors.Hand;
 						break;
 
 					default:
