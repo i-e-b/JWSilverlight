@@ -132,9 +132,9 @@ namespace jwSkinControls {
 		void SetupDefaults () {
 			elements.Add(ControlBarElement.Button("play"));
 			elements.Add(ControlBarElement.Button("pause"));
+			elements.Add(ControlBarElement.Button("stop"));
 			elements.Add(ControlBarElement.Button("prev"));
 			elements.Add(ControlBarElement.Button("next"));
-			elements.Add(ControlBarElement.Button("stop"));
 			elements.Add(ControlBarElement.Divider("divider"));
 			elements.Add(ControlBarElement.Text("elapsed"));
 			elements.Add(ControlBarElement.TimeSlider());

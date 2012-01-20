@@ -15,12 +15,15 @@ namespace jwSkinControls {
 		readonly ComposerControlHelper players;
 
 		double ControlbarOverMargin;
+		bool showPlaylistMoveButtons;
 		JwElapsedText elapsedText;
 		JwDurationText durationText;
 		JwSliderHorizontal volumeSlider;
 		JwSliderHorizontal timeSlider;
 		ImageHoverButton playButton;
 		ImageHoverButton pauseButton;
+		ImageHoverButton prevButton;
+		ImageHoverButton nextButton;
 		ImageHoverButton fullScreenButton;
 		ImageHoverButton normalScreenButton;
 		ImageHoverButton muteButton;
@@ -50,15 +53,17 @@ namespace jwSkinControls {
 			GetBackground(pkg);
 			LayoutRoot.SizeChanged+=LayoutRoot_SizeChanged;
 
+			var baseColor = pkg.GetSettingValue("frontcolor");
 			ControlbarOverMargin = double.Parse(pkg.GetSettingValue(ControlBarComponent, "margin") ?? "0.0");
 			TargetFontSize = double.Parse(pkg.GetSettingValue(ControlBarComponent, "fontsize") ?? "10.0");
-			FontColour = (pkg.GetSettingValue(ControlBarComponent, "fontcolor") ?? "0xffffff").HexToColor();
+			FontColour = (pkg.GetSettingValue(ControlBarComponent, "fontcolor") ?? baseColor ?? "0xffffff").HexToColor();
 
 			var layout = new ControlBarLayout(pkg);
 			BuildControls(pkg, layout);
 
 			UpdateFullScreenButtonState(null, null);
 			UpdateSoundButtonState();
+			UpdatePlaylistButtonVisibility();
 			ShowPlayButton();
 			PaddingBorder.Padding = new Thickness(ControlbarOverMargin);
 		}
@@ -123,6 +128,7 @@ namespace jwSkinControls {
 		void BuildControls(JwSkinPackage pkg, ControlBarLayout layout) {
 			SetColumnDefinitions(layout);
 			int i = 0;
+			FrameworkElement lastElement = null;
 			foreach (var element in layout.Elements) {
 				FrameworkElement c;
 
@@ -151,8 +157,8 @@ namespace jwSkinControls {
 						break;
 
 					case ControlBarElement.ElementType.Divider:
-						c = new Image();
-						pkg.BindAndResize((Image)c, ControlBarComponent, element.Name ?? "divider");
+						c = new PairedImage(lastElement);
+						pkg.BindAndResize(((PairedImage)c).Image, ControlBarComponent, element.Name ?? "divider");
 						break;
 
 					case ControlBarElement.ElementType.CapLeft:
@@ -185,6 +191,8 @@ namespace jwSkinControls {
 				}
 
 				LayoutRoot.Children.Add(c);
+				lastElement = c;
+				if (element.Name == "play" || element.Name == "pause") lastElement = null;
 				c.SetValue(Grid.ColumnProperty, i);
 				i++;
 			}
@@ -203,6 +211,9 @@ namespace jwSkinControls {
 
 			if (element.Name == "mute") muteButton = btn;
 			if (element.Name == "unmute") unmuteButton = btn;
+
+			if (element.Name == "prev") prevButton = btn;
+			if (element.Name == "next") nextButton = btn;
 
 			return btn;
 		}
@@ -290,6 +301,14 @@ namespace jwSkinControls {
 					LayoutRoot.ColumnDefinitions.Add(new ColumnDefinition {Width = GridLength.Auto});
 				}
 			}
+		}
+
+		void UpdatePlaylistButtonVisibility () {
+			if (prevButton != null) prevButton.Visibility = (showPlaylistMoveButtons) ? (Visibility.Visible) : (Visibility.Collapsed);
+			if (nextButton != null) nextButton.Visibility = (showPlaylistMoveButtons) ? (Visibility.Visible) : (Visibility.Collapsed);
+
+			// todo: look for a divider immediately (before/after) hidden button, and hide them too.
+
 		}
 		#endregion
 
@@ -398,7 +417,11 @@ namespace jwSkinControls {
 			players.RemoveBinding(PlayerToControl, this);
 			if (elapsedText != null) players.RemoveBinding(PlayerToControl, elapsedText); 
 		}
-		public void PlaylistChanged (IPlaylist NewPlaylist) { }
+		public void PlaylistChanged (IPlaylist NewPlaylist) {
+			showPlaylistMoveButtons = NewPlaylist.Items.Count > 1;
+			UpdatePlaylistButtonVisibility();
+		}
+
 		public void PlayingClipChanged(IPlaylistItem NewClip) { }
 		public void PlayStateChanged(PlayerStatus NewStatus) {  }
 		public void SeekCompleted(PlayerStatus NewStatus) {  }

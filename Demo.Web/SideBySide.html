@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head runat="server">
+	<title>Sample</title>
+</head>
+<body>
+	<div style="float:left">
+		Silverlight:<br />
+		<div id="container_silverlight">Player will show here</div>
+	</div>
+	<div style="float:left">
+		Flash:<br />
+		<div id="container_flash">Player will show here</div>
+	</div>
+	<!-- embed includes and call -->
+	<script type="text/javascript" src="/Scripts/jwplayer.min.js"></script>
+	<script type="text/javascript" src="/Scripts/jwplayer.embed.silverlight.js"></script>
+	<script type="text/javascript">
+		var skin = "/ExampleSkins/simplicity.zip";
+		var playlist =
+		[
+			{
+				duration: "6", file: "/video.mp4",
+				image: "/thumbnail.jpg", title: "JW Player Standard Sample Video",
+				description: "This is a little test video"
+			}
+			//, { duration: "6", file: "/video.mp4", image: "/thumbnail.jpg", title: "JW Player Standard Sample Video", description: "This is a little test video" }
+		];
+
+
+		jwplayer('container_silverlight').setup({
+			height: 297, width: 528,
+			'skin': skin,
+			'playlist': playlist,
+			modes: [ { type: 'silverlight', src: '/ClientBin/jwslPlayer.xap' } ]
+		});
+		jwplayer('container_flash').setup({
+			height: 297, width: 528,
+			'skin': skin,
+			'playlist': playlist,
+			modes: [ { type: 'flash', src: '/ClientBin/player.swf' } ]
+		});
+	</script>
+
+</body>
+</html>

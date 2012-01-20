@@ -20,7 +20,7 @@
 				autoplay: 'true',
 				height: 480,
 				width: 853,
-				skin: '/ExampleSkins/grungetape.zip',
+				skin: '/ExampleSkins/chrome.zip',
 				playlist: [
 					/*{
 						duration: '596',

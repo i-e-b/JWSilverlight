@@ -678,7 +678,7 @@ window.onbeforeunload = function() {
 
 		private void SetupTimer () {
 			if (ActionTimer == null) {
-				ActionTimer = new DispatcherTimer{Interval = TimeSpan.FromMilliseconds(350)};
+				ActionTimer = new DispatcherTimer{Interval = TimeSpan.FromMilliseconds(150)};
 				ActionTimer.Tick += ActionTimer_Tick;
 			}
 

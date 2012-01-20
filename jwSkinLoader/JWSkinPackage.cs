@@ -117,10 +117,28 @@ namespace jwSkinLoader {
 			target.OverImage = GetNamedElement(componentName, overElementName);
 		}
 
+		/// <summary>
+		/// Get a setting for a component
+		/// </summary>
 		public string GetSettingValue(string componentName, string elementName) {
 			var element = GetComponent(componentName)
 				.Elements("settings").Elements("setting")
 				.Where(x=> HasAttributeWithValue(x, "name", elementName))
+				.FirstOrDefault();
+
+			if (element == null) return null;
+			var attr = element.Attribute("value");
+			if (attr == null) return null;
+			return attr.Value;
+		}
+
+		/// <summary>
+		/// Get a general setting
+		/// </summary>
+		public string GetSettingValue (string elementName) {
+			var element = XElement.Parse(XmlContent).Descendants("settings")
+				.Elements("setting")
+				.Where(x => HasAttributeWithValue(x, "name", elementName))
 				.FirstOrDefault();
 
 			if (element == null) return null;

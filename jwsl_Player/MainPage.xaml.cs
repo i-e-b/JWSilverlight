@@ -35,19 +35,19 @@ namespace JwslPlayer {
 				Player.LoadPlaylist(srcPlaylist);
 			}
 
+			AddBinding(Player);
 			ControlBarView.AddBinding(Player);
 			DisplayView.AddBinding(Player);
 			DockView.AddBinding(Player);
 			PlaylistView.AddBinding(Player);
 			CaptionView.AddBinding(Player);
-			this.AddBinding(Player);
 
 			DockView.CaptionVisibilityChanged += DockView_CaptionVisibilityChanged;
 
 			controlBarFader = new OpacityFader(ControlBarView);
 			dockFader = new OpacityFader(DockView);
 			SetFadeTimer();
-			CaptionView.Margin = new Thickness(0, 0, 0, 33);// we don't know the height until images are all loaded... take a guess for now!
+			CaptionView.Margin = new Thickness(0, 0, 0, 75);// we don't know the height until images are all loaded... take a guess for now!
 		}
 
 		void Player_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
@@ -73,7 +73,15 @@ namespace JwslPlayer {
 			DockView.SetSkin(jwSkinPackage);
 			PlaylistView.SetSkin(jwSkinPackage);
 
-			var color = jwSkinPackage.GetSettingValue("display", "backgroundcolor").HexToColor();
+			var color = (
+				jwSkinPackage.GetSettingValue("display", "backgroundcolor")
+				??
+				jwSkinPackage.GetSettingValue("screencolor")
+				??
+				jwSkinPackage.GetSettingValue("backcolor")
+				?? 
+				"0x000000"
+				).HexToColor();
 			LayoutRoot.Background = new SolidColorBrush(color);
 			Player.BackgroundColor = color;
 			UpdateCaptionsMargin();

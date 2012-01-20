@@ -50,7 +50,8 @@ namespace jwSkinControls.ControlFragments {
 		public bool AutoScale { get; set; }
 
 		public void SetSkin (BitmapImage rail, BitmapImage buffer, BitmapImage progress, BitmapImage thumb, BitmapImage leftCap, BitmapImage rightCap) {
-
+			if (buffer == null) buffer = rail;
+			
 			if (AutoScale) {
 				SetWithHeight(Rail, rail);
 				SetWithHeight(Buffer, buffer);

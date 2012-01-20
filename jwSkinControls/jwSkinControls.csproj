@@ -120,6 +120,9 @@
       <DependentUpon>JwSliderHorizontal.xaml</DependentUpon>
     </Compile>
     <Compile Include="Animations\OpacityFader.cs" />
+    <Compile Include="ControlFragments\PairedImage.xaml.cs">
+      <DependentUpon>PairedImage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -174,6 +177,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ControlFragments\JwSliderHorizontal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ControlFragments\PairedImage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
